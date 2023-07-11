@@ -3686,80 +3686,6 @@ vschess.WXF2Node = function(move, fen){
 	}
 };
 
-// ICCS 着法转换为节点 ICCS
-vschess.ICCS2Node = function(move, fen){
-	var RegExp = vschess.RegExp();
-	RegExp.FenShort.test(fen) || (fen = vschess.defaultFen);
-
-	if (!RegExp.ICCS.test(move)) {
-		return { move: "none", movedFen: vschess.defaultFen };
-	}
-
-	var situation = vschess.fenToSituation(fen);
-	var step = move.toLowerCase().split("-");
-	situation[vschess.i2s[step[1]]] = situation[vschess.i2s[step[0]]];
-	situation[vschess.i2s[step[0]]] = 1;
-	situation[0]   = 3    - situation[0];
-	situation[0] === 1 && ++situation[1];
-	return { move: step[0] + step[1], movedFen: vschess.situationToFen(situation) };
-};
-
-// ICCS 着法转换为节点 ICCS（无 Fen 串）
-vschess.ICCS2Node_NoFen = function(move){
-	return RegExp.ICCS.test(move) ? move.replace("-", "").toLowerCase() : "none";
-};
-
-// 着法列表转换为节点 ICCS 列表，列表第一个元素为起始局面 Fen 串
-vschess.stepList2nodeList = function(moveList, fen){
-	var RegExp = vschess.RegExp();
-
-	if (RegExp.FenShort.test(moveList[0])) {
-		moveList = moveList.slice(0);
-		fen      = moveList.shift( );
-	}
-	else {
-		RegExp.FenShort.test(fen) || (fen = vschess.defaultFen);
-	}
-
-	var result = [fen], converter, currentFen = fen, stepData;
-
-	if (moveList.length) {
-		if (RegExp.ICCS.test(moveList[0])) {
-			converter = vschess.ICCS2Node;
-		}
-		else if (RegExp.WXF.test(moveList[0])) {
-			converter = vschess.WXF2Node;
-		}
-		else {
-			converter = vschess.Chinese2Node;
-		}
-
-		for (var i = 0; i < moveList.length; ++i) {
-			var legalList = vschess.legalMoveList(currentFen);
-			stepData = converter(moveList[i], currentFen);
-
-			if (~legalList.indexOf(stepData.move)) {
-				currentFen = stepData.movedFen;
-				result.push(stepData.move);
-			}
-			else {
-				var exchangeMove = moveList[i].substring(3, 5) + "-" + moveList[i].substring(0, 2);
-				stepData = converter(exchangeMove, currentFen);
-
-				if (~legalList.indexOf(stepData.move)) {
-					currentFen = stepData.movedFen;
-					result.push(stepData.move);
-				}
-				else {
-					break;
-				}
-			}
-		}
-	}
-
-	return result;
-};
-
 // 将着法列表转换为标准象棋 PGN 格式
 vschess.moveListToData_PGN = function(moveList, startFen, commentList, infoList, result){
 	var RegExp = vschess.RegExp();
@@ -4197,73 +4123,11 @@ vschess.Node2WXF = function(move, fen){
 	return { move: "None", movedFen: vschess.defaultFen };
 };
 
-// 节点 ICCS 转换为 ICCS 着法
-vschess.Node2ICCS = function(move, fen){
-	var RegExp = vschess.RegExp();
-	RegExp.FenShort.test(fen) || (fen = vschess.defaultFen);
-	var situation = vschess.fenToSituation(fen);
-	situation[vschess.i2s[move.substring(2, 4)]] = situation[vschess.i2s[move.substring(0, 2)]];
-	situation[vschess.i2s[move.substring(0, 2)]] = 1;
-	situation[0]   = 3  -   situation[0];
-	situation[0] === 1 && ++situation[1];
-	return { move: move.toUpperCase().substring(0, 2) + "-" + move.toUpperCase().substring(2, 4), movedFen: vschess.situationToFen(situation) };
-};
-
 // 节点 ICCS 转换为 ICCS 着法（无 Fen 串）
 vschess.Node2ICCS_NoFen = function(move){
 	return move.toUpperCase().substring(0, 2) + "-" + move.toUpperCase().substring(2, 4);
 };
 
-// 节点 ICCS 列表转换为着法列表，列表第一个元素为起始局面 Fen 串
-vschess.nodeList2moveList = function(moveList, fen, format, options, mirror){
-	var RegExp = vschess.RegExp();
-
-	if (RegExp.FenShort.test(moveList[0])) {
-		moveList = moveList.slice(0);
-		fen      = moveList.shift( );
-	}
-	else {
-		RegExp.FenShort.test(fen) || (fen = vschess.defaultFen);
-	}
-
-	mirror && (fen = vschess.turnFen(fen));
-	var result = [fen], currentFen = fen, stepData, move;
-
-	switch (format) {
-		case "iccs": var converter = vschess.Node2ICCS   ; break;
-		case  "wxf": var converter = vschess.Node2WXF    ; break;
-		default    : var converter = vschess.Node2Chinese; break;
-	}
-
-	for (var i = 0; i < moveList.length; ++i) {
-		move = mirror ? vschess.turnMove(moveList[i]) : moveList[i];
-		stepData = converter(move, currentFen, options);
-		currentFen = stepData.movedFen;
-
-		if (stepData.move === "None" || stepData.move === "\u65e0\u6548\u7740\u6cd5") {
-			break;
-		}
-
-		result.push(stepData.move);
-	}
-
-	return result;
-};
-
-// 节点树抽取当前节点 ICCS 列表
-vschess.nodeToNodeList = function(node){
-	var currentNode = node;
-	var fen = currentNode.fen;
-	var result = [fen];
-
-	while (currentNode.next.length) {
-		var defaultIndex = currentNode.defaultIndex || 0;
-		currentNode = currentNode.next[defaultIndex];
-		result.push(currentNode.move);
-	}
-
-	return result;
-};
 
 // WXF 着法字符串转换为 ECCO 开局编号及类型
 vschess.WXF2ECCO = function(wxfList){
