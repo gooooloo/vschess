@@ -1554,9 +1554,6 @@ $.extend(vschess, {
 
     // 可导出棋谱格式列表
     exportFormatList: {
-        PGN_Chinese: "\u4e2d\u6587 PGN \u683c\u5f0f",
-        PGN_WXF: "WXF PGN \u683c\u5f0f",
-        PGN_ICCS: "ICCS PGN \u683c\u5f0f",
         DhtmlXQ: "\u4e1c\u840d DhtmlXQ UBB \u683c\u5f0f",
         ChessDB: "\u4e91\u5e93\u6307\u4ee4\u683c\u5f0f",
         Text: "\u6587\u672c TXT \u683c\u5f0f",
