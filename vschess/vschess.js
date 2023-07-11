@@ -1481,7 +1481,7 @@ $.extend(vschess, {
 	localDownload: !!window.Blob && !!window.URL && "download" in document.createElement("a"),
 
 	// 标签列表
-	tabList: "board move comment info share export edit config".split(" "),
+	tabList: "board move comment info export edit config".split(" "),
 
 	// 钩子列表
 	callbackList: "beforeClickAnimate afterClickAnimate loadFinish selectPiece unSelectPiece afterStartFen afterAnimate".split(" "),
@@ -1539,9 +1539,6 @@ $.extend(vschess, {
 
 	// 粘贴棋谱组件列表
 	editNodeModuleList: ["editNodeEndButton", "editNodeCancelButton", "editNodeTextarea", "editNodeTextareaPlaceholder"],
-
-	// 分享代码组件列表
-	shareCodeModuleList: ["shareHTMLTitle", "shareHTMLTextBox", "shareUBBTitle", "shareUBBTextBox"],
 
 	// 状态参数语义化
 	code: {
@@ -1681,8 +1678,6 @@ $.extend(vschess.defaultOptions, {
 	cloudApi: {
 		startFen: "https://www.xiaxiangqi.com/api/cloud/startfen",
 		saveBook: "https://www.xiaxiangqi.com/api/cloud/savebook",
-		saveBookForShare: "https://www.xiaxiangqi.com/api/cloud/book/save",
-		HTMLShareJS: "https://www.xiaxiangqi.com/static/js/share.js"
 	},
 
 	// 默认推荐起始局面列表
@@ -1714,7 +1709,6 @@ $.extend(vschess.defaultOptions, {
     tagName: {
         comment: "\u68cb\u8c31\u6ce8\u89e3",
         info: "\u68cb\u5c40\u4fe1\u606f",
-        share: "\u68cb\u8c31\u5206\u4eab",
         export: "\u68cb\u8c31\u5bfc\u51fa",
         edit: "\u68cb\u8c31\u5bfc\u5165",
         config: "\u68cb\u76d8\u9009\u9879"
@@ -8833,107 +8827,6 @@ vschess.load.prototype.getCurrentSelect = function(){
 	return this._.currentSelect;
 };
 
-// 创建棋谱分享区域
-vschess.load.prototype.createShare = function(){
-	var _this = this;
-    this.shareTitle = $('<div class="vschess-tab-title vschess-tab-title-share">' + this.options.tagName.share + '</div>');
-	this.shareArea  = $('<div class="vschess-tab-body vschess-tab-body-share"></div>');
-	this.tabArea.children(".vschess-tab-title-share, .vschess-tab-body-share").remove();
-	this.tabArea.append(this.shareTitle);
-	this.tabArea.append(this.shareArea );
-	this.shareTitle.bind(this.options.click, function(){ _this.showTab("share"); });
-	this.createShareGenerateButton();
-	this.createShareHTML();
-	this.createShareUBB();
-	this.createShareImage();
-	return this;
-};
-
-// 创建生成分享信息按钮
-vschess.load.prototype.createShareGenerateButton = function(){
-	var _this = this;
-	this.shareGenerateButton = $('<button type="button" class="vschess-button vschess-tab-body-share-generate-button">\u751f\u6210\u5206\u4eab\u4ee3\u7801</button>');
-	this.shareGenerateButton.appendTo(this.shareArea);
-
-	this.shareGenerateButton.bind(this.options.click, function(){
-		for (var i = 0; i < vschess.shareCodeModuleList.length; ++i) {
-			_this[vschess.shareCodeModuleList[i]].addClass("vschess-tab-body-share-current");
-		}
-
-		_this.shareImageTitle.removeClass("vschess-tab-body-image-current");
-
-		if (_this.options.cloudApi && _this.options.cloudApi.saveBookForShare) {
-			_this.shareHTMLTextInput.val("\u6b63\u5728\u751f\u6210\uff0c\u8bf7\u7a0d\u5019\u3002");
-			_this.shareUBBTextInput .val("\u6b63\u5728\u751f\u6210\uff0c\u8bf7\u7a0d\u5019\u3002");
-			_this.rebuildExportDhtmlXQ();
-
-			$.ajax({
-				url: _this.options.cloudApi.saveBookForShare,
-				type: "post",
-				data: { book: _this.exportData.DhtmlXQ },
-				dataType: "json",
-				success: function(response){
-					if (response.code === 0) {
-						_this.shareUBBTextInput .val("[" + _this.options.ubbTagName + "]" + response.data.id + "[/" + _this.options.ubbTagName + "]");
-						_this.shareHTMLTextInput.val('<script src="' + _this.options.cloudApi.HTMLShareJS + '?id=' + response.data.id + '"></script>');
-					}
-				},
-				error: function(){
-					alert("\u60a8\u7684\u6d4f\u89c8\u5668\u4e0d\u5141\u8bb8\u8de8\u57df\uff0c\u4e0d\u80fd\u4f7f\u7528\u6b64\u529f\u80fd\u3002");
-				}
-			});
-		}
-	});
-
-	return this;
-};
-
-// 创建 HTML 分享信息区域
-vschess.load.prototype.createShareHTML = function(){
-	var _this = this;
-	this.shareHTMLTitle = $('<div class="vschess-tab-body-share-title">HTML \u4ee3\u7801\uff1a</div>');
-	this.shareHTMLTitle.appendTo(this.shareArea);
-	this.shareHTMLTextBox = $('<div class="vschess-tab-body-share-text"></div>');
-	this.shareHTMLTextBox.appendTo(this.shareArea);
-	this.shareHTMLTextInput = $('<input class="vschess-tab-body-share-text-input" value="\u8bf7\u70b9\u51fb\u201c\u751f\u6210\u5206\u4eab\u4ee3\u7801\u201d\u6309\u94ae\u3002" readonly="readonly" />');
-	this.shareHTMLTextInput.appendTo(this.shareHTMLTextBox);
-	this.shareHTMLTextCopy = $('<button type="button" class="vschess-button vschess-tab-body-share-text-copy">\u590d \u5236</button>');
-	this.shareHTMLTextCopy.appendTo(this.shareHTMLTextBox);
-
-	this.shareHTMLTextCopy.bind(this.options.click, function(){
-		_this.copy(_this.shareHTMLTextInput.val(), function(){ _this.showMessage("HTML \u4ee3\u7801\u590d\u5236\u6210\u529f\uff0c\u60a8\u53ef\u4ee5\u76f4\u63a5\u7f51\u9875\u4e2d\u7c98\u8d34\u4f7f\u7528\uff01"); });
-	});
-
-	return this;
-};
-
-// 创建 UBB 分享信息区域
-vschess.load.prototype.createShareUBB = function(){
-	var _this = this;
-	this.shareUBBTitle = $('<div class="vschess-tab-body-share-title">\u8bba\u575b UBB \u4ee3\u7801\uff1a</div>');
-	this.shareUBBTitle.appendTo(this.shareArea);
-	this.shareUBBTextBox = $('<div class="vschess-tab-body-share-text"></div>');
-	this.shareUBBTextBox.appendTo(this.shareArea);
-	this.shareUBBTextInput = $('<input class="vschess-tab-body-share-text-input" value="\u8bf7\u70b9\u51fb\u201c\u751f\u6210\u5206\u4eab\u4ee3\u7801\u201d\u6309\u94ae\u3002" readonly="readonly" />');
-	this.shareUBBTextInput.appendTo(this.shareUBBTextBox);
-	this.shareUBBTextCopy = $('<button type="button" class="vschess-button vschess-tab-body-share-text-copy">\u590d \u5236</button>');
-	this.shareUBBTextCopy.appendTo(this.shareUBBTextBox);
-
-	this.shareUBBTextCopy.bind(this.options.click, function(){
-		_this.copy(_this.shareUBBTextInput.val(), function(){ _this.showMessage("\u8bba\u575b UBB \u4ee3\u7801\u590d\u5236\u6210\u529f\uff0c\u60a8\u53ef\u4ee5\u76f4\u63a5\u5728 BBS \u8bba\u575b\u4e2d\u7c98\u8d34\u4f7f\u7528\uff01"); });
-	});
-
-	return this;
-};
-
-
-// 创建分享图片显示区域
-vschess.load.prototype.createShareImage = function(){
-	var _this = this;
-	this.shareImageTitle = $('<div class="vschess-tab-body-image-area"></div>');
-	this.shareImageTitle.appendTo(this.shareArea);
-	return this;
-};
 
 // 显示指定索引号的局面，负值表示从最后一个局面向前
 vschess.load.prototype.setBoardByStep = function(step, indexUnChange){
@@ -9185,7 +9078,6 @@ vschess.load.prototype.createTab = function(){
 	this.DOM.append(this.tabArea);
 	this.createComment();
 	this.createInfo   ();
-	this.createShare  ();
 	this.createExport ();
 	this.createEdit   ();
 	this.createConfig ();
