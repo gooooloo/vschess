@@ -3323,24 +3323,6 @@ vschess.checkFen = function(fen){
 	return errorList;
 };
 
-// 杀棋着法生成器
-vschess.killMove = function(fen){
-	var RegExp = vschess.RegExp();
-	RegExp.FenShort.test(fen) || (fen = vschess.defaultFen);
-	var legalList = vschess.legalMoveList(fen);
-	var result    = [];
-
-	for (var i = 0; i < legalList.length; ++i) {
-		var movedFen = vschess.fenMovePiece(fen, legalList[i]);
-
-		if (vschess.checkThreat(movedFen) && vschess.legalList(movedFen).length === 0) {
-			result.push(legalList[i]);
-		}
-	}
-
-	return result;
-};
-
 // 是否有杀棋着法
 vschess.hasKillMove = function(situation){
 	if (typeof situation === "string") {
