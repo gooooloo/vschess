@@ -7618,8 +7618,6 @@ vschess.load.prototype.getMoveNameList = function(format, isMirror){
 	typeof isMirror === "undefined" && (isMirror = this.getTurnForMove());
 
 	switch (format) {
-		case  "wxf": return isMirror ? this.moveNameList.    WXFM.slice(0) : this.moveNameList.    WXF.slice(0);
-		case "iccs": return isMirror ? this.moveNameList.   ICCSM.slice(0) : this.moveNameList.   ICCS.slice(0);
 		default    : return isMirror ? this.moveNameList.ChineseM.slice(0) : this.moveNameList.Chinese.slice(0);
 	}
 
