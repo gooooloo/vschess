@@ -7571,7 +7571,6 @@ vschess.load.prototype.refreshMoveSelectListNode = function(){
 	var selectListNode = ['<li class="vschess-move-select-node-begin">===== \u68cb\u5c40\u5f00\u59cb' + (this.commentList[0] ? "*" : "") + ' =====</li>'];
 
 	switch (this.getMoveFormat()) {
-		case "iccs": var moveList = this.getTurnForMove() ? this.moveNameList.   ICCSM.slice(0) : this.moveNameList.   ICCS.slice(0); break;
 		default    : var moveList = this.getTurnForMove() ? this.moveNameList.ChineseM.slice(0) : this.moveNameList.Chinese.slice(0); break;
 	}
 
@@ -7662,7 +7661,6 @@ vschess.load.prototype.refreshChangeSelectListNode = function(){
 	var currentNodeIndex = this.currentNodeList[this.getCurrentStep()];
 
 	switch (this.getMoveFormat()) {
-		case "iccs": var converter = vschess.Node2ICCS	; break;
 		default    : var converter = vschess.Node2Chinese; break;
 	}
 
@@ -7783,7 +7781,6 @@ vschess.load.prototype.refreshMoveListNode = function(){
 // 设置当前着法列表格式
 vschess.load.prototype.setMoveFormat = function(format){
 	switch (format) {
-		case "iccs": this._.moveFormat = "iccs"		; break;
 		default    : this._.moveFormat = "chinese"	; break;
 	}
 
