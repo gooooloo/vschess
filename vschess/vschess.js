@@ -1952,62 +1952,8 @@ vschess.dataToInfo = function(chessData, parseType){
 		return vschess.dataToInfo_DhtmlXQ(chessData);
 	}
 
-	// 标准 PGN 格式
-	if (parseType === "auto" && ~replaceQuote.indexOf('[Game "Chinese Chess"]') || parseType === "pgn") {
-		return vschess.dataToInfo_PGN(chessData);
-	}
-
 	// 未能识别的数据，返回空
 	return {};
-};
-
-// 从标准 PGN 格式中抽取棋局信息
-vschess.dataToInfo_PGN = function(chessData){
-	// 识别模式 A
-	var resultA = {}, original = {};
-	var lines = chessData.split("\n");
-
-	for (var i = 0; i < lines.length; ++i) {
-		var l = $.trim(lines[i]);
-		var start = l.    indexOf("[");
-		var end   = l.lastIndexOf("]");
-
-		if (~start && ~end) {
-			var info  = l.substring(start + 1, end);
-			var name  = info.split(/[\s]/)[0];
-			var value = $.trim(info.replace(name, ""));
-			var quotA = value.charAt(0               ) === "'" || value.charAt(0               ) === '"';
-			var quotB = value.charAt(value.length - 1) === "'" || value.charAt(value.length - 1) === '"';
-			quotA && (value = value.substring(1                  ));
-			quotB && (value = value.substring(0, value.length - 1));
-			original[name] = value;
-		}
-	}
-
-	for (var i in vschess.info.name) {
-		var name = vschess.info.pgn[i] || vschess.fieldNameToCamel(i);
-		original[name] && (resultA[i] = vschess.stripTags(original[name]));
-	}
-
-	// 识别模式 B
-	var resultB = {};
-
-	for (var i in vschess.info.name) {
-		var startTag = "[" + (vschess.info.pgn[i] || vschess.fieldNameToCamel(i));
-		var startPos = chessData.indexOf(startTag);
-
-		if (~startPos) {
-			var value = chessData.substring(startPos + startTag.length + 2, chessData.indexOf("]", startPos) - 1);
-			value && (resultB[i] = vschess.stripTags(value));
-		}
-	}
-
-	// AB 结果集合并
-	for (var i in resultB) {
-		(!resultA[i] || resultB[i].length > resultA[i].length) && (resultA[i] = resultB[i]);
-	}
-
-	return resultA;
 };
 
 // 从东萍象棋 DhtmlXQ 格式中抽取棋局信息
