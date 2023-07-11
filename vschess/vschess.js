@@ -1487,7 +1487,7 @@ $.extend(vschess, {
 	callbackList: "beforeClickAnimate afterClickAnimate loadFinish selectPiece unSelectPiece afterStartFen afterAnimate".split(" "),
 
 	// 二进制棋谱扩展名列表
-	binaryExt: "ccm xqf".split(" "),
+	binaryExt: "xqf".split(" "),
 
 	// 全局样式是否已加载完成的标记
 	globalLoaded: false,
@@ -1808,29 +1808,10 @@ vschess.binaryToNode = function(buffer, parseType){
 		return vschess.binaryToNode_XQF(buffer);
 	}
 
-    // 中国游戏中心 CCM 格式
-	if (parseType === "auto" && buffer[0] === 1 || parseType === "ccm") {
-		return vschess.binaryToNode_CCM(buffer);
-	}
-
     // 未能识别的数据，返回起始局面
 	return { fen: vschess.defaultFen, comment: "", next: [], defaultIndex: 0 };
 };
 
-// 将中国游戏中心 CCM 格式转换为棋谱节点树
-vschess.binaryToNode_CCM = function(buffer) {
-	var stepList = [];
-
-	for (k = 1; k < buffer.length; k += 7) {
-		var fromX = 8 - buffer[k + 2];
-		var   toX = 8 - buffer[k + 3];
-		var fromY = 9 - buffer[k + 4];
-		var   toY = 9 - buffer[k + 5];
-		stepList.push(vschess.b2i[fromY * 9 + fromX] + vschess.b2i[toY * 9 + toX]);
-	}
-
-	return vschess.stepListToNode(vschess.defaultFen, stepList);
-};
 
 // 将象棋演播室 XQF 格式转换为棋谱节点树
 vschess.binaryToNode_XQF = function(buffer) {
@@ -2063,11 +2044,6 @@ vschess.dataToNode = function(chessData, parseType){
 	// 东萍象棋 DhtmlXQ 格式
 	if (parseType === "auto" && ~chessData.indexOf("[DhtmlXQ") || parseType === "DhtmlXQ") {
 		return vschess.dataToNode_DhtmlXQ(chessData);
-	}
-
-	// 中国游戏中心 CCM 格式
-	if (parseType === "auto" && vschess.cca(chessData) === 1 || parseType === "ccm") {
-		return vschess.dataToNode_CCM(chessData);
 	}
 
 	// 长 Fen 串
@@ -6943,7 +6919,7 @@ vschess.load.prototype.createEditOtherButton = function(){
 						var chessInfo = vschess.binaryToInfo(fileData);
 					}
 					else {
-						!RegExp.ShiJia.test(chessData) && (chessData = vschess.iconv2UTF8(fileData));
+						(chessData = vschess.iconv2UTF8(fileData));
 						var chessNode = vschess.dataToNode(chessData);
 						var chessInfo = vschess.dataToInfo(chessData);
 					}
@@ -7044,7 +7020,7 @@ vschess.load.prototype.bindDrag = function(){
 					var chessInfo = vschess.binaryToInfo(fileData);
 				}
 				else {
-					!RegExp.ShiJia.test(chessData) && (chessData = vschess.iconv2UTF8(fileData));
+					(chessData = vschess.iconv2UTF8(fileData));
 					var chessNode = vschess.dataToNode(chessData);
 					var chessInfo = vschess.dataToInfo(chessData);
 				}
