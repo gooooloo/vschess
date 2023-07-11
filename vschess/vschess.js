@@ -5906,7 +5906,6 @@ vschess.load.prototype.createFormatBar = function(){
 	this.formatBar = $('<form method="post" action="' + this.options.cloudApi.saveBook + '" class="vschess-format-bar"></form>');
 
 	switch (this.getMoveFormat()) {
-		case "iccs"		: var formarButton = "ICCS"	; break;
 		case "chinese"	: var formarButton = "\u4e2d \u6587"; break;
 	}
 
@@ -5916,7 +5915,6 @@ vschess.load.prototype.createFormatBar = function(){
 		help		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-help"   >\u5e2e \u52a9</button>'),
 		save		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-save"   >\u4fdd \u5b58</button>'),
 		chinese		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-chinese">\u4e2d \u6587</button>'),
-		iccs		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-iccs"   >ICCS</button>'),
 		saveFormat	: $('<input  type="hidden" class="vschess-format-bar-save-format"   name="format" value="DhtmlXQ" />'),
 		saveInput	: $('<input  type="hidden" class="vschess-format-bar-save-input"    name="data" />'),
 		saveFilename: $('<input  type="hidden" class="vschess-format-bar-save-filename" name="filename" />')
@@ -5924,7 +5922,6 @@ vschess.load.prototype.createFormatBar = function(){
 
 	this.formatBarButton.format.bind(this.options.click, function(){
 		_this.formatBarButton.chinese.toggleClass("vschess-format-bar-button-change");
-		_this.formatBarButton.iccs   .toggleClass("vschess-format-bar-button-change");
 	});
 
 	this.formatBarButton.help.bind(this.options.click, function(){
@@ -5948,15 +5945,9 @@ vschess.load.prototype.createFormatBar = function(){
 
 	this.formatBarButton.chinese.bind(this.options.click, function(){
 		_this.formatBarButton.chinese.removeClass("vschess-format-bar-button-change");
-		_this.formatBarButton.iccs   .removeClass("vschess-format-bar-button-change");
 		_this.setMoveFormat("chinese").refreshMoveListNode();
 	});
 
-	this.formatBarButton.iccs.bind(this.options.click, function(){
-		_this.formatBarButton.chinese.removeClass("vschess-format-bar-button-change");
-		_this.formatBarButton.iccs   .removeClass("vschess-format-bar-button-change");
-		_this.setMoveFormat("iccs").refreshMoveListNode();
-	});
 
 	for (var i in this.formatBarButton) {
 		this.formatBar.append(this.formatBarButton[i]);
