@@ -3385,7 +3385,7 @@ vschess.addCSS = function(options, type, href){
 vschess.init = function(options){
 	// 全局样式，统一 Web Audio API
 	if (!vschess.inited) {
-		vschess.AudioContext = window.AudioContext || window.webkitAudioContext;
+		vschess.AudioContext = false;
 		vschess.AudioContext = vschess.AudioContext ? new vschess.AudioContext() : false;
 		vschess.addCSS(options, 'global', options.globalCSS);
 		vschess.inited = true;
