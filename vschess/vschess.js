@@ -2014,7 +2014,6 @@ vschess.RegExp = function(){
 		// 通用棋步识别正则表达式
 		Chinese	: /[\u8f66\u8eca\u4fe5\u9a6c\u99ac\u508c\u76f8\u8c61\u4ed5\u58eb\u5e05\u5e25\u5c06\u5c07\u70ae\u5305\u7832\u5175\u5352\u524d\u4e2d\u540e\u5f8c\u4e00\u4e8c\u4e09\u56db\u4e94\u58f9\u8d30\u53c1\u8086\u4f0d\uff11\uff12\uff13\uff14\uff151-5][\u8f66\u8eca\u4fe5\u9a6c\u99ac\u508c\u76f8\u8c61\u4ed5\u58eb\u70ae\u5305\u7832\u5175\u5352\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u58f9\u8d30\u53c1\u8086\u4f0d\u9646\u67d2\u634c\u7396\uff11\uff12\uff13\uff14\uff15\uff16\uff17\uff18\uff191-9][\u8fdb\u9032\u9000\u5e73][\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u58f9\u8d30\u53c1\u8086\u4f0d\u9646\u67d2\u634c\u7396\uff11\uff12\uff13\uff14\uff15\uff16\uff17\uff18\uff191-9]/g,
 		Node	: /[A-Ia-i][0-9][A-Ia-i][0-9]/g,
-		WXF		: /[RNHBEAKCPrnhbeakcp\+\-1-5][RNHBEAKCPrnhbeakcpd1-9\+\-\.][\+\-\.][1-9]/g,
 
 		// 特殊兵东萍表示法
 		Pawn	: /[\+\-2][1-9][\+\-\.][1-9]/
@@ -3479,210 +3478,6 @@ vschess.load.prototype.resetDPR = function(){
 	vschess.dpr = window.devicePixelRatio || 1;
 	$(this.DOM).attr("data-vschess-dpr", vschess.dpr);
 	return this;
-};
-
-// 中文着法转换为节点 ICCS
-vschess.Chinese2Node = function(move, fen){
-	var RegExp = vschess.RegExp();
-	RegExp.FenShort.test(fen) || (fen = vschess.defaultFen);
-
-	if (!RegExp.Chinese.test(move)) {
-		return { move: "none", movedFen: vschess.defaultFen };
-	}
-
-	var cStr = "\u8f66\u8eca\u4fe5\u9a6c\u99ac\u508c\u76f8\u8c61\u4ed5\u58eb\u5e05\u5e25\u5c06\u5c07\u70ae\u5305\u7832\u5175\u5352\u524d\u8fdb\u9032\u540e\u5f8c\u9000\u5e73\u4e2d\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u58f9\u8d30\u53c1\u8086\u4f0d\u9646\u67d2\u634c\u7396\uff11\uff12\uff13\uff14\uff15\uff16\uff17\uff18\uff19123456789";
-	var eStr = "RRRNNNBBAAKKKKCCCPP+++---..123456789123456789123456789123456789";
-	var moveSplit = move.split("");
-
-	for (var i = 0; i < 4; ++i) {
-		moveSplit[i] = eStr.charAt(cStr.indexOf(moveSplit[i]));
-	}
-
-	return vschess.WXF2Node(moveSplit.join(""), fen);
-};
-
-// WXF 着法转换为节点 ICCS
-vschess.WXF2Node = function(move, fen){
-	var RegExp = vschess.RegExp();
-	RegExp.FenShort.test(fen) || (fen = vschess.defaultFen);
-
-	if (!RegExp.WXF.test(move)) {
-		return { move: "none", movedFen: vschess.defaultFen };
-	}
-
-	move = move
-		.replace(/^([RNHBEAKCPrnhbeakcp])([\+\-\.])/g, "$2$1")
-		.replace(/^([Pp])[Aa]/g, "1$1").replace(/^([Pp])[Bb]/g, "2$1").replace(/^([Pp])[Cc]/g, "3$1")
-		.replace(/^([Pp])[Dd]/g, "4$1").replace(/^([Pp])[Ee]/g, "5$1").replace(/^([Pp])[\.]/g, ".$1");
-
-	var from = 0, to = 0;
-
-	// 黑方旋转处理
-	if (fen.split(" ")[1] === "b") {
-		var situation = vschess.fenToSituation(vschess.roundFen(fen));
-		var moveSplit = move.toLowerCase().split("");
-		var player    = 2, N = 34, B = 35, A = 36, P = 39;
-	}
-	// 红方直接处理
-	else {
-		var situation = vschess.fenToSituation(fen);
-		var moveSplit = move.toUpperCase().split("");
-		var player    = 1, N = 18, B = 19, A = 20, P = 23;
-	}
-
-	// 前
-	if (moveSplit[0] === "+") {
-		// 特殊兵卒东萍表示法
-		if (vschess.isNumber(moveSplit[1])) {
-			for (var i = 60 - moveSplit[1]; i < 204 && !from; i += 16) {
-				situation[i] === P && (from = i);
-			}
-		}
-		// 兵卒
-		else if (moveSplit[1].toUpperCase() === "P") {
-			for (i = 51; i < 60 && !from; ++i) {
-				for (var j = i, pList = []; j < 204; j += 16) {
-					situation[j] === P && pList.push(j);
-				}
-
-				pList.length > 1 && (from = pList[0]);
-			}
-		}
-		// 车马相象仕士帅将炮
-		else {
-			for (var i = 51; i < 204 && !from; ++i) {
-				situation[i] === vschess.f2n[moveSplit[1]] && (from = i);
-			}
-		}
-	}
-	// 后
-	else if (moveSplit[0] === "-") {
-		// 特殊兵卒东萍表示法
-		if (vschess.isNumber(moveSplit[1])) {
-			for (var i = 204 - moveSplit[1]; i > 50 && !from; i -= 16) {
-				situation[i] === P && (from = i);
-			}
-		}
-		// 兵卒
-		else if (moveSplit[1].toUpperCase() === "P") {
-			for (i = 51; i < 60 && !from; ++i) {
-				for (var j = i, pList = []; j < 204; j += 16) {
-					situation[j] === P && pList.push(j);
-				}
-
-				pList.length > 1 && (from = pList.pop());
-			}
-		}
-		// 车马相象仕士帅将炮
-		else {
-			for (var i = 203; i > 50 && !from; --i) {
-				situation[i] === vschess.f2n[moveSplit[1]] && (from = i);
-			}
-		}
-	}
-	// 中
-	else if (moveSplit[0] === ".") {
-		for (i = 51; i < 60 && !from; ++i) {
-			for (var j = i, pList = []; j < 204; j += 16) {
-				situation[j] === P && pList.push(j);
-			}
-
-			pList.length > 2 && (from = pList[1]);
-		}
-	}
-	// 车马相象仕士帅将炮兵卒
-	else if (isNaN(moveSplit[0])) {
-		for (var i = 60 - moveSplit[1]; i < 204 && !from; i += 16) {
-			situation[i] === vschess.f2n[moveSplit[0]] && (from = i);
-		}
-	}
-	// 特殊兵卒象棋巫师表示法
-	else {
-		for (var i = 59, pList = []; i > 50; --i) {
-			for (var j = i, pColList = []; j < 204; j += 16) {
-				situation[j] === P && pColList.push(j);
-			}
-
-			pColList.length > 1 && (pList = pList.concat(pColList));
-		}
-
-		from = pList[moveSplit[0] - 1];
-	}
-
-	// 马
-	if (situation[from] === N) {
-		if (moveSplit[2] === "+") {
-			switch (moveSplit[3] - 12 + from % 16) {
-				case -1: to = from - 31; break;
-				case -2: to = from - 14; break;
-				case  1: to = from - 33; break;
-				case  2: to = from - 18; break;
-			}
-		}
-		else {
-			switch (moveSplit[3] - 12 + from % 16) {
-				case -1: to = from + 33; break;
-				case -2: to = from + 18; break;
-				case  1: to = from + 31; break;
-				case  2: to = from + 14; break;
-			}
-		}
-	}
-	// 相象
-	else if (situation[from] === B) {
-		switch (moveSplit[2] + moveSplit[3]) {
-			case "+1": to = 171; from && (from = 201); break;
-			case "-1": to = 171; from && (from = 137); break;
-			case "+9": to = 163; from && (from = 197); break;
-			case "-9": to = 163; from && (from = 133); break;
-			case "+3": to = 137; from && (from = from === 167 ? 167 : 171); break;
-			case "-3": to = 201; from && (from = from === 167 ? 167 : 171); break;
-			case "+7": to = 133; from && (from = from === 167 ? 167 : 163); break;
-			case "-7": to = 197; from && (from = from === 167 ? 167 : 163); break;
-			case "+5": to = 167; from &&  from < 195 && (from += 64); break;
-			case "-5": to = 167; from &&  from > 139 && (from -= 64); break;
-		}
-	}
-	// 仕士
-	else if (situation[from] === A) {
-		switch (moveSplit[2] + moveSplit[3]) {
-			case "+4": to = 168; from && (from = 183); break;
-			case "-4": to = 200; from && (from = 183); break;
-			case "+6": to = 166; from && (from = 183); break;
-			case "-6": to = 198; from && (from = 183); break;
-			case "+5": to = 183; from &&  from < 195 && (from += 32); break;
-			case "-5": to = 183; from &&  from > 171 && (from -= 32); break;
-		}
-	}
-	// 车帅将炮兵卒
-	else {
-		if (moveSplit[2] === "+") {
-			to = from - moveSplit[3] * 16;
-		}
-		else if (moveSplit[2] === "-") {
-			to = from + moveSplit[3] * 16;
-		}
-		else {
-			to = from + 12 - from % 16 - moveSplit[3];
-		}
-	}
-
-	if (from && to) {
-		situation[to  ]   = situation[from];
-		situation[from]   = 1;
-		situation[0   ]   = 3    - situation[0];
-		situation[0   ] === 1 && ++situation[1];
-
-		if (player === 1) {
-			return { move: vschess.s2i[from] + vschess.s2i[to], movedFen: vschess.situationToFen(situation) };
-		}
-		else {
-			return { move: vschess.roundMove(vschess.s2i[from] + vschess.s2i[to]), movedFen: vschess.roundFen(vschess.situationToFen(situation)) };
-		}
-	}
-	else {
-		return { move: "none", movedFen: vschess.defaultFen };
-	}
 };
 
 // 将着法列表转换为文本 TXT 格式
@@ -6441,24 +6236,6 @@ vschess.load.prototype.movePieceByPieceIndex = function(from, to, animationTime,
 	return this;
 };
 
-// 根据节点 ICCS 移动一枚棋子
-vschess.load.prototype.movePieceByNode = function(move, animationTime, callback, callbackIllegal){
-	this.getTurnForMove() && (move = vschess.turnMove(move));
-	var from = vschess.turn[this.getTurn()][vschess.i2b[move.substring(0, 2)]];
-	var to   = vschess.turn[this.getTurn()][vschess.i2b[move.substring(2, 4)]];
-	return this.movePieceByPieceIndex(from, to, animationTime, callback, callbackIllegal);
-};
-
-// 根据中文着法移动一枚棋子
-vschess.load.prototype.movePieceByChinese = function(move, animationTime, callback, callbackIllegal){
-	return this.movePieceByNode(vschess.Chinese2Node(move, this.getCurrentFen()).move, animationTime, callback, callbackIllegal);
-};
-
-// 根据 WXF 着法移动一枚棋子
-vschess.load.prototype.movePieceByWXF = function(move, animationTime, callback, callbackIllegal){
-	return this.movePieceByNode(vschess.WXF2Node(move, this.getCurrentFen()).move, animationTime, callback, callbackIllegal);
-};
-
 // 以动画方式过渡到下一个局面
 vschess.load.prototype.animateToNext = function(animationTime, callback){
 	if (this.animating || this.getCurrentStep() >= this.lastSituationIndex()) {
@@ -6532,7 +6309,6 @@ vschess.load.prototype.rebuildSituation = function(){
 	var turnFen = vschess.turnFen(this.node.fen);
 
 	this.moveNameList = {
-		WXF		: [this.node.fen], WXFM		: [turnFen],
 		Chinese	: [this.node.fen], ChineseM	: [turnFen]
 	};
 
@@ -6562,8 +6338,6 @@ vschess.load.prototype.rebuildSituation = function(){
 		var wxf  = vschess.Node2WXF(currentNode.move, prevFen).move;
 		var wxfM = wxf.charCodeAt(1) > 96 ? vschess.Node2WXF(vschess.turnMove(currentNode.move), vschess.turnFen(prevFen)).move : vschess.turnWXF(wxf);
 
-		this.moveNameList.    WXF .push(wxf );
-		this.moveNameList.    WXFM.push(wxfM);
 		this.moveNameList.Chinese .push(vschess.Node2Chinese(wxf , prevFen, this.options));
 		this.moveNameList.ChineseM.push(vschess.Node2Chinese(wxfM, prevFen, this.options));
 	}
