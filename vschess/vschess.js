@@ -2070,32 +2070,9 @@ vschess.dataToNode = function(chessData, parseType){
 		return vschess.dataToNode_ShiJia(chessData);
 	}
 
-	// 标准 PGN 格式
-	if (parseType === "auto" && ~chessData.indexOf('[Game "Chinese Chess"]') || parseType === "pgn") {
-		return vschess.dataToNode_PGN(chessData);
-	}
-
 	// 中国游戏中心 CCM 格式
 	if (parseType === "auto" && vschess.cca(chessData) === 1 || parseType === "ccm") {
 		return vschess.dataToNode_CCM(chessData);
-	}
-
-	// 发现着法，尝试识别
-	if (RegExp.Chinese.test(chessData)) {
-		return vschess.dataToNode_PGN('[Game "Chinese Chess"]' + chessData);
-	}
-
-	if (RegExp.WXF.test(chessData)) {
-		return vschess.dataToNode_PGN('[Game "Chinese Chess"][Format "WXF"]' + chessData);
-	}
-
-	if (RegExp.ICCS.test(chessData)) {
-		return vschess.dataToNode_PGN('[Game "Chinese Chess"][Format "ICCS"]' + chessData);
-	}
-
-	// 简易坐标格式兼容，将简易坐标转换为 ICCS 格式，然后直接调用 ICCS 转换器转换，其实 PGN 格式并没有此种着法格式。
-	if (RegExp.Node.test(chessData)) {
-		return vschess.dataToNode_PGN('[Game "Chinese Chess"][Format "Node"]' + chessData);
 	}
 
 	// 长 Fen 串
@@ -2115,127 +2092,6 @@ vschess.dataToNode = function(chessData, parseType){
 
 	// 未能识别的数据，返回起始局面
 	return { fen: vschess.defaultFen, comment: "", next: [], defaultIndex: 0 };
-};
-
-
-// 将标准 PGN 格式转换为棋谱节点树
-vschess.dataToNode_PGN = function(chessData){
-	var originalChessData = chessData, RegExp = vschess.RegExp();
-
-	// 识别着法格式
-	if (~chessData.indexOf('[Format "Node"]')) {
-		var format = "node";
-		chessData = chessData
-			.replace(/\[(.*)\]/g, "").replace(/\((.*)\)/g, "").replace(/[0-9]+\./g, "").replace(/1\-0([\S\s]*)/g, "")
-			.replace(/0\-1([\S\s]*)/g, "").replace(/1\/2\-1\/2([\S\s]*)/g, "");
-	}
-	else if (~chessData.indexOf('[Format "ICCS"]')) {
-		var format = "iccs";
-		chessData = chessData
-			.replace(/\[(.*)\]/g, "").replace(/\((.*)\)/g, "").replace(/[0-9]+\./g, "").replace(/1\-0([\S\s]*)/g, "")
-			.replace(/0\-1([\S\s]*)/g, "").replace(/1\/2\-1\/2([\S\s]*)/g, "");
-	}
-	else if (~chessData.indexOf('[Format "WXF"]')) {
-		var format = "wxf";
-		chessData = chessData
-			.replace(/\[(.*)\]/g, "").replace(/\((.*)\)/g, "").replace(/1\-0([\S\s]*)/g, "").replace(/0\-1([\S\s]*)/g, "")
-			.replace(/1\/2\-1\/2([\S\s]*)/g, "");
-	}
-	else {
-		var format = "chinese";
-		chessData = chessData
-			.replace(/\[(.*)\]/g, "").replace(/\((.*)\)/g, "").replace(/[0-9]+\./g, "").replace(/1\-0([\S\s]*)/g, "")
-			.replace(/0\-1([\S\s]*)/g, "").replace(/1\/2\-1\/2([\S\s]*)/g, "");
-	}
-
-	// 抽取注释
-	var RegExp_PGN_Comment = /\{([^\{\}]*)\}/, RegExp_PGN_Comment_Result, commentList = [];
-
-	while (RegExp_PGN_Comment_Result = RegExp_PGN_Comment.exec(chessData)) {
-		commentList.push(RegExp_PGN_Comment_Result[1]);
-		chessData = chessData.replace(RegExp_PGN_Comment, "COMMENT");
-	}
-
-	// 映射着法和对应的注释
-	var dataSplitByMove = [], commentListByStep = [];
-
-	switch (format) {
-		case "node": dataSplitByMove = chessData.split(RegExp.Node	 ); break;
-		case "iccs": dataSplitByMove = chessData.split(RegExp.ICCS	 ); break;
-		case "wxf" : dataSplitByMove = chessData.split(RegExp.WXF	 ); break;
-		default    : dataSplitByMove = chessData.split(RegExp.Chinese); break;
-	}
-
-	for (var i = 0, j = 0; i < dataSplitByMove.length; ++i) {
-		~dataSplitByMove[i].indexOf("COMMENT") && (commentListByStep[i] = commentList[j++]);
-	}
-
-	// 抽取起始 Fen 串
-	var match, startFen, noFenData;
-
-	if (match = RegExp.FenLong.exec(originalChessData)) {
-		startFen  = match[0];
-		noFenData = chessData.replace(RegExp.FenMini, "");
-	}
-	else if (match = RegExp.FenShort.exec(originalChessData)) {
-		startFen = match[0] + " - - 0 1";
-		noFenData = chessData.replace(RegExp.FenMini, "");
-	}
-	else if (match = RegExp.FenMini.exec(originalChessData)) {
-		startFen = match[0] + " w - - 0 1";
-		noFenData = chessData.replace(RegExp.FenMini, "");
-	}
-	else {
-		startFen = vschess.defaultFen;
-		noFenData = chessData;
-	}
-
-	// 抽取着法
-	var moveList = [];
-
-	if (format === "node") {
-		while (match = RegExp.Node.exec(noFenData)) {
-			moveList.push(vschess.Node2ICCS_NoFen(match[0]));
-		}
-	}
-	else if (format === "iccs") {
-		while (match = RegExp.ICCS.exec(noFenData)) {
-			moveList.push(match[0]);
-		}
-	}
-	else if (format === "wxf") {
-		while (match = RegExp.WXF.exec(noFenData)) {
-			moveList.push(match[0]);
-		}
-	}
-	else {
-		while (match = RegExp.Chinese.exec(noFenData)) {
-			moveList.push(match[0]);
-		}
-	}
-
-	// 生成节点树
-	var stepList = vschess.stepList2nodeList(moveList, startFen);
-
-	// 交换先后手，用于纠正 Fen 串的先后手错误和自动识别迷你 Fen 串的先后手
-	var fenChangePlayer = vschess.fenChangePlayer(startFen);
-	var stepListM = vschess.stepList2nodeList(moveList, fenChangePlayer);
-
-	if (stepListM.length > stepList.length) {
-		startFen = fenChangePlayer;
-		stepList = stepListM;
-	}
-
-	function makeBranch(list, target, b, i){
-		var step = list.shift();
-		var next = { move: step, comment: commentListByStep[i] || "", next: [], defaultIndex: 0 };
-		target.next.push(next);
-		list.length && makeBranch(list, next, b, i + 1);
-	}
-
-	var result = { fen: stepList.shift(), comment: commentListByStep[0] || "", next: [], defaultIndex: 0 };
-	stepList.length && makeBranch(stepList, result, 0, 1);
-	return result;
 };
 
 
