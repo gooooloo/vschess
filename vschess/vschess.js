@@ -4919,49 +4919,6 @@ vschess.turn_DHJHtmlXQ = function(chessData){
 	return DHJHtmlXQ_EachLine.join("\n");
 };
 
-// 将棋谱节点树转换为鹏飞象棋 PFC 格式
-vschess.nodeToData_PengFei = function(nodeData, infoList, result, isMirror){
-	function getXmlByNode(nodeData, isDefault){
-		var xmlData = ['<n m="', isMirror ? vschess.turnMove(nodeData.move) : nodeData.move, '" c="', nodeData.comment.replace(/\"/g, "&quot;"), '"'];
-		isDefault && xmlData.push(' default="true"');
-		xmlData.push(">");
-
-		for (var i = 0; i < nodeData.next.length; ++i) {
-			xmlData.push(getXmlByNode(nodeData.next[i], nodeData.defaultIndex === i));
-		}
-
-		xmlData.push('</n>');
-		return xmlData.join("");
-	}
-
-	var xmlData = ['<?xml version="1.0" encoding="utf-8"?><n version="2" win="' + result + '" m="', isMirror ? vschess.turnFen(nodeData.fen) : nodeData.fen, '" c="', nodeData.comment.replace(/\"/g, "&quot;"), '"'];
-
-	for (var i in infoList) {
-		xmlData.push(" ", vschess.info.pfc[i] || i, '="', infoList[i].replace(/\"/g, "&quot;"), '"');
-	}
-
-	xmlData.push(">");
-
-	for (var i = 0; i < nodeData.next.length; ++i) {
-		xmlData.push(getXmlByNode(nodeData.next[i], nodeData.defaultIndex === i));
-	}
-
-	xmlData.push("</n>");
-	return xmlData.join("").replace(/\"><\/n>/g, '" />');
-};
-
-// 翻转鹏飞象棋 PFC 格式
-vschess.turn_PengFei = function(chessData){
-	chessData = chessData.split('m="');
-	var end = chessData[1].indexOf('"');
-	chessData[1] = vschess.turnFen(chessData[1].substring(0, end)) + chessData[1].substring(end);
-
-	for (i = 2; i < chessData.length; ++i) {
-		chessData[i] = vschess.turnMove(chessData[i].substring(0, 4)) + chessData[i].substring(4);
-	}
-
-	return chessData.join('m="');
-};
 
 // 将着法列表转换为 QQ 象棋 CHE 格式
 vschess.moveListToData_QQ = function(moveList, isMirror){
@@ -7776,7 +7733,7 @@ vschess.load.prototype.createExportList = function(){
 	}
 
 	this.exportFormat.bind("change", function(){
-		if (_this.getNodeLength() >= vschess.bigBookCritical && (this.value === "PengFei" || this.value === "DhtmlXQ")) {
+		if (_this.getNodeLength() >= vschess.bigBookCritical && (this.value === "DhtmlXQ")) {
 			_this.exportDownload.removeClass("vschess-tab-body-export-current");
 			_this.exportCopy    .removeClass("vschess-tab-body-export-current");
 			_this.exportGenerate.   addClass("vschess-tab-body-export-current");
@@ -7800,7 +7757,6 @@ vschess.load.prototype.createExportList = function(){
 
 		setTimeout(function(){
 			switch (_this.exportFormat.val()) {
-				case "PengFei": _this.rebuildExportPengFei(); _this.setExportFormat("PengFei", true); break;
 				default       : _this.rebuildExportDhtmlXQ(); _this.setExportFormat("DhtmlXQ", true); break;
 			}
 
@@ -7827,9 +7783,6 @@ vschess.load.prototype.createExportList = function(){
 			}
 			else if (exportFormat.indexOf("QQ") === 0) {
 				_this.localDownload(fileName + ".che", GBKArray, { type: "application/octet-stream" });
-			}
-			else if (exportFormat === "PengFei") {
-				_this.localDownload(fileName + ".pfc", UTF8Text, { type: "application/octet-stream" });
 			}
 			else {
 				_this.localDownload(fileName + ".txt", UTF8Text, { type: "text/plain" });
@@ -7878,7 +7831,7 @@ vschess.load.prototype.setExportFormat = function(format, force){
 
         this.exportTextarea.val("\u4ece\u5f00\u5c40\u5f00\u59cb\uff1a\n" + longData + "\n\n\u4ece\u5403\u5b50\u5f00\u59cb\uff1a\n" + shortData);
     }
-	else if ((format === "PengFei" || format === "DhtmlXQ") && !force && this.getNodeLength() >= vschess.bigBookCritical) {
+	else if ((format === "DhtmlXQ") && !force && this.getNodeLength() >= vschess.bigBookCritical) {
 		// 大棋谱需要加参数才同步
 		this.exportCopy    .removeClass("vschess-tab-body-export-current");
 		this.exportDownload.removeClass("vschess-tab-body-export-current");
@@ -7903,7 +7856,6 @@ vschess.load.prototype.rebuildExportAll = function(all){
     this.rebuildExportDHJHtmlXQ();
 
 	// 大棋谱生成东萍 DhtmlXQ 格式和鹏飞 PFC 格式比较拖性能
-	(this.getNodeLength() < vschess.bigBookCritical || all) && this.rebuildExportPengFei();
 	(this.getNodeLength() < vschess.bigBookCritical || all) && this.rebuildExportDhtmlXQ();
 
 	this.hideExportFormatIfNeedStart();
@@ -7967,13 +7919,6 @@ vschess.load.prototype.rebuildExportQQ = function(){
 	var moveList = this.moveList.slice(1);
 	this.exportData.QQ  = vschess.moveListToData_QQ(moveList      );
 	this.exportData.QQM = vschess.moveListToData_QQ(moveList, true);
-	return this;
-};
-
-// 重建鹏飞 PFC 格式棋谱
-vschess.load.prototype.rebuildExportPengFei = function(){
-	this.exportData.PengFei  = vschess.nodeToData_PengFei(this.node, this.chessInfo, this.getResultByCurrent());
-	this.exportData.PengFeiM = vschess.turn_PengFei(this.exportData.PengFei);
 	return this;
 };
 
