@@ -7454,20 +7454,8 @@ vschess.load.prototype.rebuildExportAll = function(all){
 
 // 重建 PGN 格式棋谱
 vschess.load.prototype.rebuildExportPGN = function(){
-	this.rebuildExportPGN_Chinese();
 	this.rebuildExportPGN_WXF    ();
 	this.rebuildExportPGN_ICCS   ();
-	return this;
-};
-
-// 重建中文 PGN 格式棋谱
-vschess.load.prototype.rebuildExportPGN_Chinese = function(){
-	var moveList  = this.moveNameList.Chinese .slice(0);
-	var moveListM = this.moveNameList.ChineseM.slice(0);
-	var startFen  = moveList .shift();
-	var startFenM = moveListM.shift();
-	this.exportData.PGN_Chinese  = vschess.moveListToData_PGN(moveList , startFen , this.commentList, this.chessInfo, this.getResultByCurrent());
-	this.exportData.PGN_ChineseM = vschess.moveListToData_PGN(moveListM, startFenM, this.commentList, this.chessInfo, this.getResultByCurrent());
 	return this;
 };
 
