@@ -2311,46 +2311,6 @@ vschess.countPieceLength = function(situation){
 	return count;
 };
 
-// 根据前后 Fen 串计算着法
-vschess.compareFen = function(fromFen, toFen, format){
-	var RegExp = vschess.RegExp();
-	RegExp.FenShort.test(fromFen) || (fromFen = vschess.defaultFen);
-	RegExp.FenShort.test(  toFen) || (  toFen = vschess.defaultFen);
-
-	var from = 0, to = 0;
-
-	var fromSituation = vschess.fenToSituation(fromFen);
-	var   toSituation = vschess.fenToSituation(  toFen);
-
-	for (var i = 51; i < 204; ++i) {
-		if (fromSituation[i] !== toSituation[i]) {
-			if (fromSituation[i] > 1 && toSituation[i] === 1) {
-				from = i;
-			}
-			else {
-				to = i;
-			}
-		}
-	}
-
-	if (from && to) {
-		var move = vschess.s2i[from] + vschess.s2i[to];
-
-		switch (format) {
-			case "node": return move;
-			case "iccs": return vschess.Node2ICCS_NoFen(move);
-			case "wxf" : return vschess.Node2WXF    (move, fromFen).move;
-			default    : return vschess.Node2Chinese(move, fromFen).move;
-		}
-	}
-
-	switch (format) {
-		case "node": return "none";
-		case "iccs": return "Error";
-		case "wxf" : return "None";
-		default    : return "\u65e0\u6548\u7740\u6cd5";
-	}
-};
 
 // Fen 串移动一枚棋子
 vschess.fenMovePiece = function(fen, move){
