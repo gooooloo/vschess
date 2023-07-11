@@ -1682,7 +1682,6 @@ $.extend(vschess.defaultOptions, {
 		startFen: "https://www.xiaxiangqi.com/api/cloud/startfen",
 		saveBook: "https://www.xiaxiangqi.com/api/cloud/savebook",
 		saveBookForShare: "https://www.xiaxiangqi.com/api/cloud/book/save",
-		saveBookForWeixin: "https://www.xiaxiangqi.com/api/cloud/book/weixincode",
 		HTMLShareJS: "https://www.xiaxiangqi.com/static/js/share.js"
 	},
 
@@ -8844,7 +8843,6 @@ vschess.load.prototype.createShare = function(){
 	this.tabArea.append(this.shareArea );
 	this.shareTitle.bind(this.options.click, function(){ _this.showTab("share"); });
 	this.createShareGenerateButton();
-	this.createWeixinGenerateButton();
 	this.createShareHTML();
 	this.createShareUBB();
 	this.createShareImage();
@@ -8934,43 +8932,6 @@ vschess.load.prototype.createShareImage = function(){
 	var _this = this;
 	this.shareImageTitle = $('<div class="vschess-tab-body-image-area"></div>');
 	this.shareImageTitle.appendTo(this.shareArea);
-	return this;
-};
-
-// 创建生成小程序码按钮
-vschess.load.prototype.createWeixinGenerateButton = function(){
-	var _this = this;
-	this.weixinGenerateButton = $('<button type="button" class="vschess-button vschess-tab-body-share-generate-button">\u751f\u6210\u5c0f\u7a0b\u5e8f\u7801</button>');
-	this.weixinGenerateButton.appendTo(this.shareArea);
-
-	this.weixinGenerateButton.bind(this.options.click, function(){
-		for (var i = 0; i < vschess.shareCodeModuleList.length; ++i) {
-			_this[vschess.shareCodeModuleList[i]].removeClass("vschess-tab-body-share-current");
-		}
-
-		_this.shareImageTitle.addClass("vschess-tab-body-image-current");
-
-		if (_this.options.cloudApi && _this.options.cloudApi.saveBookForWeixin) {
-			_this.shareImageTitle.text("\u6b63\u5728\u751f\u6210\uff0c\u8bf7\u7a0d\u5019\u3002");
-			_this.rebuildExportDhtmlXQ();
-
-			$.ajax({
-				url: _this.options.cloudApi.saveBookForWeixin,
-				type: "post",
-				data: { book: _this.exportData.DhtmlXQ, step: _this.getCurrentStep() },
-				dataType: "json",
-				success: function(response){
-					if (response.code === 0) {
-						_this.shareImageTitle.html('<a href="' + response.data.url + '" target="_blank"><img src="' + response.data.url + '" /></a>');
-					}
-				},
-				error: function(){
-					alert("\u60a8\u7684\u6d4f\u89c8\u5668\u4e0d\u5141\u8bb8\u8de8\u57df\uff0c\u4e0d\u80fd\u4f7f\u7528\u6b64\u529f\u80fd\u3002");
-				}
-			});
-		}
-	});
-
 	return this;
 };
 
