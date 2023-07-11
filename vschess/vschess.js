@@ -1984,11 +1984,6 @@ vschess.dataToInfo = function(chessData, parseType){
 		return vschess.dataToInfo_PGN(chessData);
 	}
 
-	// PlayOK 格式
-	if (parseType === "auto" && ~chessData.indexOf("START{") || parseType === "playok") {
-		return vschess.dataToInfo_PlayOK(chessData);
-	}
-
 	// 未能识别的数据，返回空
 	return {};
 };
@@ -2055,40 +2050,6 @@ vschess.dataToInfo_PGN = function(chessData){
 	return resultA;
 };
 
-// 从 PlayOK 格式中抽取棋局信息
-vschess.dataToInfo_PlayOK = function(chessData){
-	var result = {};
-	var lines = chessData.split("\n");
-
-	for (var i = 0; i < lines.length; ++i) {
-		var line = $.trim(lines[i]);
-
-		if (line.indexOf("RED") === 0) {
-			var RED = line.split(";");
-			result.red = $.trim(RED[0].replace("RED", ""));
-			result.redrating = RED[1];
-		}
-		else if (line.indexOf("BLACK") === 0) {
-			var BLACK = line.split(";");
-			result.black = $.trim(BLACK[0].replace("BLACK", ""));
-			result.blackrating = BLACK[1];
-		}
-		else if (line.indexOf("RESULT") === 0) {
-			result.result = $.trim(line.replace("RESULT", ""));
-		}
-		else if (line.indexOf("DATE") === 0) {
-			result.date = $.trim(line.replace("DATE", "")).split(" ")[0];
-		}
-		else if (line.indexOf("BLACK") === 0) {
-			var EVENT = line.split(";");
-			result.event = $.trim(EVENT[0].replace("EVENT", ""));
-			result.group = EVENT[1];
-		}
-	}
-
-	return result;
-};
-
 // 从东萍象棋 DhtmlXQ 格式中抽取棋局信息
 vschess.dataToInfo_DhtmlXQ = function(chessData){
 	var eachLine = chessData.split("[DhtmlXQ");
@@ -2138,11 +2099,6 @@ vschess.dataToNode = function(chessData, parseType){
 	// 标准 PGN 格式
 	if (parseType === "auto" && ~chessData.indexOf('[Game "Chinese Chess"]') || parseType === "pgn") {
 		return vschess.dataToNode_PGN(chessData);
-	}
-
-	// PlayOK 格式
-	if (parseType === "auto" && ~chessData.indexOf("START{") || parseType === "playok") {
-		return vschess.dataToNode_PlayOK(chessData);
 	}
 
 	// 中国游戏中心 CCM 格式
@@ -2336,12 +2292,6 @@ vschess.dataToNode_PGN = function(chessData){
 	return result;
 };
 
-// 将 PlayOK 格式转换为棋谱节点树
-vschess.dataToNode_PlayOK = function(chessData){
-	var start = chessData.indexOf("{");
-	var end   = chessData.indexOf("}");
-	return vschess.dataToNode_PGN('[Game "Chinese Chess"][Format "WXF"]' + chessData.substring(start + 1, end));
-};
 
 // 将东萍象棋 DhtmlXQ 格式转换为棋谱节点树
 vschess.dataToNode_DhtmlXQ = function(chessData, onlyFen){
