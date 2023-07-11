@@ -5906,7 +5906,6 @@ vschess.load.prototype.createFormatBar = function(){
 	this.formatBar = $('<form method="post" action="' + this.options.cloudApi.saveBook + '" class="vschess-format-bar"></form>');
 
 	switch (this.getMoveFormat()) {
-		case "wxf"		: var formarButton = "WXF"	; break;
 		case "iccs"		: var formarButton = "ICCS"	; break;
 		case "chinese"	: var formarButton = "\u4e2d \u6587"; break;
 	}
@@ -5917,7 +5916,6 @@ vschess.load.prototype.createFormatBar = function(){
 		help		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-help"   >\u5e2e \u52a9</button>'),
 		save		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-save"   >\u4fdd \u5b58</button>'),
 		chinese		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-chinese">\u4e2d \u6587</button>'),
-		wxf			: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-wxf"    >WXF</button>'),
 		iccs		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-iccs"   >ICCS</button>'),
 		saveFormat	: $('<input  type="hidden" class="vschess-format-bar-save-format"   name="format" value="DhtmlXQ" />'),
 		saveInput	: $('<input  type="hidden" class="vschess-format-bar-save-input"    name="data" />'),
@@ -5926,7 +5924,6 @@ vschess.load.prototype.createFormatBar = function(){
 
 	this.formatBarButton.format.bind(this.options.click, function(){
 		_this.formatBarButton.chinese.toggleClass("vschess-format-bar-button-change");
-		_this.formatBarButton.wxf    .toggleClass("vschess-format-bar-button-change");
 		_this.formatBarButton.iccs   .toggleClass("vschess-format-bar-button-change");
 	});
 
@@ -5951,21 +5948,12 @@ vschess.load.prototype.createFormatBar = function(){
 
 	this.formatBarButton.chinese.bind(this.options.click, function(){
 		_this.formatBarButton.chinese.removeClass("vschess-format-bar-button-change");
-		_this.formatBarButton.wxf    .removeClass("vschess-format-bar-button-change");
 		_this.formatBarButton.iccs   .removeClass("vschess-format-bar-button-change");
 		_this.setMoveFormat("chinese").refreshMoveListNode();
 	});
 
-	this.formatBarButton.wxf.bind(this.options.click, function(){
-		_this.formatBarButton.chinese.removeClass("vschess-format-bar-button-change");
-		_this.formatBarButton.wxf    .removeClass("vschess-format-bar-button-change");
-		_this.formatBarButton.iccs   .removeClass("vschess-format-bar-button-change");
-		_this.setMoveFormat("wxf").refreshMoveListNode();
-	});
-
 	this.formatBarButton.iccs.bind(this.options.click, function(){
 		_this.formatBarButton.chinese.removeClass("vschess-format-bar-button-change");
-		_this.formatBarButton.wxf    .removeClass("vschess-format-bar-button-change");
 		_this.formatBarButton.iccs   .removeClass("vschess-format-bar-button-change");
 		_this.setMoveFormat("iccs").refreshMoveListNode();
 	});
@@ -7604,7 +7592,6 @@ vschess.load.prototype.refreshMoveSelectListNode = function(){
 
 	switch (this.getMoveFormat()) {
 		case "iccs": var moveList = this.getTurnForMove() ? this.moveNameList.   ICCSM.slice(0) : this.moveNameList.   ICCS.slice(0); break;
-		case "wxf" : var moveList = this.getTurnForMove() ? this.moveNameList.    WXFM.slice(0) : this.moveNameList.    WXF.slice(0); break;
 		default    : var moveList = this.getTurnForMove() ? this.moveNameList.ChineseM.slice(0) : this.moveNameList.Chinese.slice(0); break;
 	}
 
@@ -7696,7 +7683,6 @@ vschess.load.prototype.refreshChangeSelectListNode = function(){
 
 	switch (this.getMoveFormat()) {
 		case "iccs": var converter = vschess.Node2ICCS	; break;
-		case "wxf" : var converter = vschess.Node2WXF	; break;
 		default    : var converter = vschess.Node2Chinese; break;
 	}
 
@@ -7818,7 +7804,6 @@ vschess.load.prototype.refreshMoveListNode = function(){
 vschess.load.prototype.setMoveFormat = function(format){
 	switch (format) {
 		case "iccs": this._.moveFormat = "iccs"		; break;
-		case "wxf" : this._.moveFormat = "wxf"		; break;
 		default    : this._.moveFormat = "chinese"	; break;
 	}
 
