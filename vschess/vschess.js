@@ -2187,11 +2187,6 @@ vschess.dataToNode = function(chessData, parseType){
 		return vschess.dataToNode_DHJHtmlXQ(chessData);
 	}
 
-	// QQ新中国象棋格式
-	if (parseType === "auto" && RegExp.QQNew.test(chessData) || parseType === "qqnew") {
-		return vschess.dataToNode_QQNew(chessData);
-	}
-
 	// 象棋世家格式
 	if (parseType === "auto" && RegExp.ShiJia.test(chessData) || parseType === "shijia") {
 		return vschess.dataToNode_ShiJia(chessData);
@@ -2595,18 +2590,6 @@ vschess.dataToNode_DHJHtmlXQ = function(chessData){
 	return vschess.dataToNode_DhtmlXQ(chessData);
 };
 
-// 将 QQ 新中国象棋格式转换为棋谱节点树
-vschess.dataToNode_QQNew = function(chessData) {
-	var match, stepList = [];
-	var RegExp = vschess.RegExp();
-
-	while (match = RegExp.QQNew.exec(chessData)) {
-		stepList.push(vschess.fcc(105 - match[2]) + match[1] + vschess.fcc(105 - match[4]) + match[3]);
-	}
-
-	return vschess.stepListToNode(vschess.defaultFen, stepList);
-};
-
 // 将象棋世家格式转换为棋谱节点树
 vschess.dataToNode_ShiJia = function(chessData, onlyFen) {
 	var RegExp_Fen  = /([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+)(?:[\s]+)\+([BbRr])/g;
@@ -2680,7 +2663,6 @@ vschess.RegExp = function(){
 		WXF		: /[RNHBEAKCPrnhbeakcp\+\-1-5][RNHBEAKCPrnhbeakcpd1-9\+\-\.][\+\-\.][1-9]/g,
 
 		// 自动识别棋谱格式正则表达式
-		QQNew	: /(?:[0-9]+) 32 (?:[0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) 0 (?:[0-9]+) 0/g,
 		ShiJia	: /Moves(.*)Ends(.*)CommentsEnd/g,
 
 		// 特殊兵东萍表示法
@@ -4854,36 +4836,6 @@ vschess.turn_DHJHtmlXQ = function(chessData){
 	return DHJHtmlXQ_EachLine.join("\n");
 };
 
-
-// 将着法列表转换为 QQ 象棋 CHE 格式
-vschess.moveListToData_QQ = function(moveList, isMirror){
-	var result = ["1 ", moveList.length, " "], srcCol, dstCol, src;
-
-	var board = [
-		 8,  6,  4,  2,  0,  1,  3,  5,  7,
-		 0,  0,  0,  0,  0,  0,  0,  0,  0,
-		 0, 10,  0,  0,  0,  0,  0,  9,  0,
-		15,  0, 14,  0, 13,  0, 12,  0, 11,
-		 0,  0,  0,  0,  0,  0,  0,  0,  0,
-		 0,  0,  0,  0,  0,  0,  0,  0,  0,
-		27,  0, 28,  0, 29,  0, 30,  0, 31,
-		 0, 25,  0,  0,  0,  0,  0, 26,  0,
-		 0,  0,  0,  0,  0,  0,  0,  0,  0,
-		23, 21, 19, 17, 16, 18, 20, 22, 24
-	];
-
-	for (var i = 0; i < moveList.length; ++i) {
-		var moveSplit = moveList[i].split("");
-		var from = vschess.i2b[moveList[i].substring(0, 2)];
-		var to   = vschess.i2b[moveList[i].substring(2, 4)];
-		srcCol = isMirror ? vschess.cca(moveSplit[0]) - 97 : 105 - vschess.cca(moveSplit[0]);
-		dstCol = isMirror ? vschess.cca(moveSplit[2]) - 97 : 105 - vschess.cca(moveSplit[2]);
-		result.push(board[from], " 32 ", 1 - i % 2, " ", moveSplit[1], " ", srcCol, " ", moveSplit[3], " ", dstCol, " 0 ", i + 1, " 0 ");
-		board[to] = board[from];
-	}
-
-	return result.join("");
-};
 
 // 节点 ICCS 转换为中文着法（兼容 WXF 着法转换为中文着法，直接返回结果字符串）
 vschess.Node2Chinese = function(move, fen, options){
@@ -7716,9 +7668,6 @@ vschess.load.prototype.createExportList = function(){
 			if (exportFormat.indexOf("PGN") === 0) {
 				_this.localDownload(fileName + ".pgn", GBKArray, { type: "application/octet-stream" });
 			}
-			else if (exportFormat.indexOf("QQ") === 0) {
-				_this.localDownload(fileName + ".che", GBKArray, { type: "application/octet-stream" });
-			}
 			else {
 				_this.localDownload(fileName + ".txt", UTF8Text, { type: "text/plain" });
 			}
@@ -7787,7 +7736,6 @@ vschess.load.prototype.setExportFormat = function(format, force){
 vschess.load.prototype.rebuildExportAll = function(all){
 	this.rebuildExportPGN();
 	this.rebuildExportText();
-	this.rebuildExportQQ();
     this.rebuildExportDHJHtmlXQ();
 
 	// 大棋谱生成东萍 DhtmlXQ 格式和鹏飞 PFC 格式比较拖性能
@@ -7846,14 +7794,6 @@ vschess.load.prototype.rebuildExportText = function(){
 	var startFenM = moveListM.shift();
 	this.exportData.Text  = vschess.moveListToText(moveList , startFen , this.commentList, this.chessInfo, this.getResultByCurrent());
 	this.exportData.TextM = vschess.moveListToText(moveListM, startFenM, this.commentList, this.chessInfo, this.getResultByCurrent());
-	return this;
-};
-
-// 重建 QQ 象棋 CHE 格式棋谱
-vschess.load.prototype.rebuildExportQQ = function(){
-	var moveList = this.moveList.slice(1);
-	this.exportData.QQ  = vschess.moveListToData_QQ(moveList      );
-	this.exportData.QQM = vschess.moveListToData_QQ(moveList, true);
 	return this;
 };
 
