@@ -2065,11 +2065,6 @@ vschess.dataToNode = function(chessData, parseType){
 		return vschess.dataToNode_DhtmlXQ(chessData);
 	}
 
-	// 象棋世家格式
-	if (parseType === "auto" && RegExp.ShiJia.test(chessData) || parseType === "shijia") {
-		return vschess.dataToNode_ShiJia(chessData);
-	}
-
 	// 中国游戏中心 CCM 格式
 	if (parseType === "auto" && vschess.cca(chessData) === 1 || parseType === "ccm") {
 		return vschess.dataToNode_CCM(chessData);
@@ -2223,38 +2218,6 @@ vschess.dataToNode_DhtmlXQ = function(chessData, onlyFen){
 };
 
 
-// 将象棋世家格式转换为棋谱节点树
-vschess.dataToNode_ShiJia = function(chessData, onlyFen) {
-	var RegExp_Fen  = /([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+)(?:[\s]+)\+([BbRr])/g;
-	var RegExp_Move = /([0-9][a-zA-Z]-[0-9][a-zA-Z])/g;
-	var match = RegExp_Fen.exec(chessData), stepList = [];
-
-	if (match) {
-		var chessman  = "*PPPPPCCNNRRBBAAKpppppccnnrrbbaak";
-		var situation = vschess.fenToSituation(vschess.blankFen);
-		situation[0]  = match[33].toUpperCase() === "B" ? 2 : 1;
-
-		for (var i = 1; i < 33; ++i) {
-			situation[match[i] - 1] = vschess.f2n[chessman.charAt(i)];
-		}
-
-		var fen = vschess.situationToFen(situation);
-	}
-	else {
-		var fen = vschess.defaultFen;
-	}
-
-	if (onlyFen) {
-		return fen;
-	}
-
-	while (match = RegExp_Move.exec(chessData)) {
-		var move = match[1].toUpperCase().split("");
-		stepList.push(vschess.fcc(+move[0] + 97) + (vschess.cca(move[1]) - 65) + vschess.fcc(+move[3] + 97) + (vschess.cca(move[4]) - 65));
-	}
-
-	return vschess.stepListToNode(fen, stepList);
-};
 
 // 将着法列表转换为棋谱节点树
 vschess.stepListToNode = function(fen, stepList){
@@ -2294,9 +2257,6 @@ vschess.RegExp = function(){
 		Node	: /[A-Ia-i][0-9][A-Ia-i][0-9]/g,
 		ICCS	: /[A-Ia-i][0-9]-[A-Ia-i][0-9]/g,
 		WXF		: /[RNHBEAKCPrnhbeakcp\+\-1-5][RNHBEAKCPrnhbeakcpd1-9\+\-\.][\+\-\.][1-9]/g,
-
-		// 自动识别棋谱格式正则表达式
-		ShiJia	: /Moves(.*)Ends(.*)CommentsEnd/g,
 
 		// 特殊兵东萍表示法
 		Pawn	: /[\+\-2][1-9][\+\-\.][1-9]/
@@ -6825,9 +6785,6 @@ vschess.load.prototype.fillEditBoardByText = function(chessData){
 
 	if (~chessData.indexOf("[DhtmlXQ]")) {
 		fen = vschess.dataToNode_DhtmlXQ(chessData, true);
-	}
-	else if (RegExp_Match = RegExp.ShiJia.exec(chessData)) {
-		fen = vschess.dataToNode_ShiJia(chessData, true);
 	}
 	else if (RegExp_Match = RegExp.FenLong.exec(chessData)) {
 		fen = RegExp_Match[0];
