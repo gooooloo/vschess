@@ -1441,30 +1441,6 @@ var vschess = {
 			date		: "create-time"
 		},
 		DhtmlXQ: {},
-		DHJHtmlXQ: {
-			title		: 10,
-			event		: 11,
-			date		: 13,
-			place		: 14,
-			round		: 15,
-			table		: 16,
-			red			: 17,
-			redname		: 18,
-			redlevel	: 19,
-			redrating	: 20,
-			black		: 21,
-			blackname	: 22,
-			blacklevel	: 23,
-			blackrating	: 24,
-			result		: 28,
-			redtime		: 29,
-			blacktime	: 30,
-			open		: 36,
-			variation	: 37,
-			remark		: 40,
-			author		: 41,
-			record		: 42
-		},
 		pgn: {
 			place		: "Site",
 			open		: "Opening",
@@ -1586,7 +1562,6 @@ $.extend(vschess, {
         PGN_ICCS: "ICCS PGN \u683c\u5f0f",
         PengFei: "\u9e4f\u98de PFC \u683c\u5f0f",
         DhtmlXQ: "\u4e1c\u840d DhtmlXQ UBB \u683c\u5f0f",
-        DHJHtmlXQ: "\u5e7f\u4e1c\u8c61\u68cb\u7f51 DHJHtmlXQ \u683c\u5f0f",
         ChessDB: "\u4e91\u5e93\u6307\u4ee4\u683c\u5f0f",
         Text: "\u6587\u672c TXT \u683c\u5f0f",
         QQ: "\uff31\uff31 CHE \u683c\u5f0f",
@@ -2017,11 +1992,6 @@ vschess.dataToInfo = function(chessData, parseType){
 		return vschess.dataToInfo_DhtmlXQ(chessData);
 	}
 
-	// 打虎将 DHJHtmlXQ 格式
-	if (parseType === "auto" && ~replaceQuote.indexOf("[DHJHtmlXQ") || parseType === "DHJHtmlXQ") {
-		return vschess.dataToInfo_DHJHtmlXQ(chessData);
-	}
-
 	// 标准 PGN 格式
 	if (parseType === "auto" && ~replaceQuote.indexOf('[Game "Chinese Chess"]') || parseType === "pgn") {
 		return vschess.dataToInfo_PGN(chessData);
@@ -2158,15 +2128,6 @@ vschess.dataToInfo_DhtmlXQ = function(chessData){
 	return result;
 };
 
-// 从广东象棋网打虎将 DHJHtmlXQ 格式中抽取棋局信息
-vschess.dataToInfo_DHJHtmlXQ = function(chessData){
-	for (var i in vschess.info.DHJHtmlXQ) {
-		chessData = chessData.replace(RegExp("DHJHtmlXQ_" + vschess.info.DHJHtmlXQ[i], "g"), "DhtmlXQ_" + i);
-	}
-
-	return vschess.dataToInfo_DhtmlXQ(chessData);
-};
-
 // 将原始数据转换为棋谱节点树，这里的变招都是节点，变招的切换即为默认节点的切换
 vschess.dataToNode = function(chessData, parseType){
 	var match, RegExp = vschess.RegExp();
@@ -2180,11 +2141,6 @@ vschess.dataToNode = function(chessData, parseType){
 	// 东萍象棋 DhtmlXQ 格式
 	if (parseType === "auto" && ~chessData.indexOf("[DhtmlXQ") || parseType === "DhtmlXQ") {
 		return vschess.dataToNode_DhtmlXQ(chessData);
-	}
-
-	// 打虎将 DHJHtmlXQ 格式
-	if (parseType === "auto" && ~chessData.indexOf("[DHJHtmlXQ") || parseType === "DHJHtmlXQ") {
-		return vschess.dataToNode_DHJHtmlXQ(chessData);
 	}
 
 	// 象棋世家格式
@@ -2527,68 +2483,6 @@ vschess.dataToNode_DhtmlXQ = function(chessData, onlyFen){
 	return result;
 };
 
-// 将广东象棋网打虎将 DHJHtmlXQ 格式转换为棋谱节点树
-vschess.dataToNode_DHJHtmlXQ = function(chessData){
-	chessData = chessData.replace(/DHJHtmlXQ/g, "DhtmlXQ");
-	chessData = chessData.replace(/DhtmlXQ_31/g, "DhtmlXQ_fen");
-	chessData = chessData.replace(/DhtmlXQ_32/g, "DhtmlXQ_startPlayer");
-	chessData = chessData.replace(/DhtmlXQ_33/g, "DhtmlXQ_startStep");
-	chessData = chessData.replace(/DhtmlXQ_34/g, "DhtmlXQ_movelist");
-	chessData = chessData.replace(/game_comment_/g, "DhtmlXQ_comment");
-	chessData = chessData.replace(/comment_/g, "DhtmlXQ_comment");
-
-	if (~chessData.indexOf("[DhtmlXQ_startPlayer")) {
-		var start = chessData.indexOf("[DhtmlXQ_startPlayer");
-		var end   = chessData.indexOf("[/DhtmlXQ_", start);
-		var begin = chessData.substring(start + 21, end);
-		begin = +begin === 1 ? "b" : "w";
-	}
-	else {
-		var begin = "w";
-	}
-
-	if (~chessData.indexOf("[DhtmlXQ_startStep")) {
-		var start = chessData.indexOf("[DhtmlXQ_startStep");
-		var end   = chessData.indexOf("[/DhtmlXQ_", start);
-		var step  = chessData.substring(start + 19, end);
-		step = begin === "w" ? Math.floor(step / 2) + 1 : Math.ceil(step / 2) + 1;
-	}
-	else {
-		var step = 1;
-	}
-
-	if (~chessData.indexOf("[DhtmlXQ_fen")) {
-		var start = chessData.indexOf("[DhtmlXQ_fen");
-		var end   = chessData.indexOf("[/DhtmlXQ_", start);
-		var fen   = chessData.substring(start + 13, end);
-
-		if (fen) {
-			fen = vschess.arrayToFen(fen.split("")) + " " + begin + " - - 0 " + step;
-		}
-		else {
-			fen = vschess.defaultFen;
-		}
-
-		chessData = chessData.replace(chessData.substring(start, end + 14), "[DhtmlXQ_fen]" + fen + "[/DhtmlXQ_fen]");
-	}
-
-	if (~chessData.indexOf("[DhtmlXQ_movelist")) {
-		var start = chessData.indexOf("[DhtmlXQ_movelist");
-		var end   = chessData.indexOf("[/DhtmlXQ_", start);
-		var moves = chessData.substring(start + 18, end);
-
-		var moveSplit = moves.split("");
-
-		for (var i = 1; i < moveSplit.length; i += 2) {
-			moveSplit[i] = 9 - moveSplit[i];
-		}
-
-		moves = moveSplit.join("");
-		chessData = chessData.replace(chessData.substring(start, end + 19), "[DhtmlXQ_movelist]" + moves + "[/DhtmlXQ_movelist]");
-	}
-
-	return vschess.dataToNode_DhtmlXQ(chessData);
-};
 
 // 将象棋世家格式转换为棋谱节点树
 vschess.dataToNode_ShiJia = function(chessData, onlyFen) {
@@ -4765,77 +4659,6 @@ vschess.turn_DhtmlXQ = function(chessData){
 
 	return DhtmlXQ_EachLine.join("\n");
 };
-
-// 将棋谱节点树转换为广东象棋网打虎将 DHJHtmlXQ 格式
-vschess.nodeToData_DHJHtmlXQ = function(nodeData, infoList, isMirror){
-	var DHJHtmlXQ = [];
-	var isB   =  nodeData.fen.split(" ")[1] === "b";
-	var round = +nodeData.fen.split(" ")[5];
-	DHJHtmlXQ[31] = vschess.fenToArray(nodeData.fen).join("");
-	DHJHtmlXQ[32] = isB ? 1 : 0;
-	DHJHtmlXQ[33] = round * 2 - isB ? 1 : 2;
-
-	var nextList = nodeData.next, moveList = [], commentList = [nodeData.comment], step = 0;
-
-	while (nextList.length) {
-		var moveSplit = nextList[0].move.split("");
-		moveList   .push(vschess.cca(moveSplit[0]) - 97, moveSplit[1], vschess.cca(moveSplit[2]) - 97, moveSplit[3]);
-		commentList.push(nextList[0].comment);
-		nextList = nextList[0].next;
-	}
-
-	DHJHtmlXQ[34] = moveList.join("");
-
-	for (var i in vschess.info.DHJHtmlXQ) {
-		if (infoList[i]) {
-			DHJHtmlXQ[vschess.info.DHJHtmlXQ[i]] = infoList[i];
-		}
-	}
-
-	var result = ["[DHJHtmlXQ]"];
-
-	for (var i = 0; i < DHJHtmlXQ.length; ++i) {
-		if (typeof DHJHtmlXQ[i] !== "undefined") {
-			result.push("[DHJHtmlXQ_" + i + "]" + DHJHtmlXQ[i] + "[/DHJHtmlXQ_" + i + "]");
-		}
-	}
-
-	for (var i = 0; i < commentList.length; ++i) {
-		if (commentList[i].length) {
-			result.push("[game_comment_0_" + i + "]" + commentList[i] + "[/comment_0_" + i + "]");
-		}
-	}
-
-	result.push("[/DHJHtmlXQ]");
-	return isMirror ? vschess.turn_DHJHtmlXQ(result.join("\n")) : result.join("\n");
-};
-
-// 翻转广东象棋网打虎将 DHJHtmlXQ 格式
-vschess.turn_DHJHtmlXQ = function(chessData){
-	var DHJHtmlXQ_EachLine = chessData.split("\n");
-
-	for (var i = 0; i < DHJHtmlXQ_EachLine.length; ++i) {
-		var l = DHJHtmlXQ_EachLine[i];
-
-		if (~l.indexOf("[DHJHtmlXQ_31")) {
-			var startSplit = l.substring(l.indexOf("[DHJHtmlXQ_31") + 14, l.indexOf("[/DHJHtmlXQ_")).split("");
-			startSplit = vschess.fenToArray(vschess.turnFen(vschess.arrayToFen(startSplit)));
-			DHJHtmlXQ_EachLine[i] = "[DHJHtmlXQ_31]" + startSplit.join("") + "[/DHJHtmlXQ_31]";
-		}
-		else if (~l.indexOf("[DHJHtmlXQ_34")) {
-			var moveSplit = l.substring(l.indexOf("[DHJHtmlXQ_34") + 14, l.indexOf("[/DHJHtmlXQ_")).split("");
-
-			for (var j = 0; j < moveSplit.length; j += 2) {
-				moveSplit[j] < 9 && (moveSplit[j] = 8 - moveSplit[j]);
-			}
-
-			DHJHtmlXQ_EachLine[i] = "[DHJHtmlXQ_34]" + moveSplit.join("") + "[/DHJHtmlXQ_34]";
-		}
-	}
-
-	return DHJHtmlXQ_EachLine.join("\n");
-};
-
 
 // 节点 ICCS 转换为中文着法（兼容 WXF 着法转换为中文着法，直接返回结果字符串）
 vschess.Node2Chinese = function(move, fen, options){
@@ -7736,7 +7559,6 @@ vschess.load.prototype.setExportFormat = function(format, force){
 vschess.load.prototype.rebuildExportAll = function(all){
 	this.rebuildExportPGN();
 	this.rebuildExportText();
-    this.rebuildExportDHJHtmlXQ();
 
 	// 大棋谱生成东萍 DhtmlXQ 格式和鹏飞 PFC 格式比较拖性能
 	(this.getNodeLength() < vschess.bigBookCritical || all) && this.rebuildExportDhtmlXQ();
@@ -7804,12 +7626,6 @@ vschess.load.prototype.rebuildExportDhtmlXQ = function(){
 	return this;
 };
 
-// 重建广东象棋网 DHJHtmlXQ 格式棋谱
-vschess.load.prototype.rebuildExportDHJHtmlXQ = function(){
-	this.exportData.DHJHtmlXQ  = vschess.nodeToData_DHJHtmlXQ(this.node, this.chessInfo);
-	this.exportData.DHJHtmlXQM = vschess.turn_DHJHtmlXQ(this.exportData.DHJHtmlXQ);
-	return this;
-};
 
 // 非标准起始局面隐藏掉部分不支持的导出格式
 vschess.load.prototype.hideExportFormatIfNeedStart = function(){
