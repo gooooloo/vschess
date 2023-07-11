@@ -1679,7 +1679,6 @@ $.extend(vschess.defaultOptions, {
 
 	// 云服务 API 地址
 	cloudApi: {
-		gif: "https://www.xiaxiangqi.com/api/cloud/gif",
 		startFen: "https://www.xiaxiangqi.com/api/cloud/startfen",
 		saveBook: "https://www.xiaxiangqi.com/api/cloud/savebook",
 		saveBookForShare: "https://www.xiaxiangqi.com/api/cloud/book/save",
@@ -8845,7 +8844,6 @@ vschess.load.prototype.createShare = function(){
 	this.tabArea.append(this.shareArea );
 	this.shareTitle.bind(this.options.click, function(){ _this.showTab("share"); });
 	this.createShareGenerateButton();
-	this.createGifGenerateButton();
 	this.createWeixinGenerateButton();
 	this.createShareHTML();
 	this.createShareUBB();
@@ -8930,40 +8928,6 @@ vschess.load.prototype.createShareUBB = function(){
 	return this;
 };
 
-// 创建生成 Gif 图按钮
-vschess.load.prototype.createGifGenerateButton = function(){
-	var _this = this;
-	this.gifGenerateButton = $('<button type="button" class="vschess-button vschess-tab-body-image-generate-button">\u751f\u6210 Gif \u52a8\u753b</button>');
-	this.gifGenerateButton.appendTo(this.shareArea);
-
-	this.gifGenerateButton.bind(this.options.click, function(){
-		if (_this.options.cloudApi && _this.options.cloudApi.gif) {
-			for (var i = 0; i < vschess.shareCodeModuleList.length; ++i) {
-				_this[vschess.shareCodeModuleList[i]].removeClass("vschess-tab-body-share-current");
-			}
-
-			_this.shareImageTitle.addClass("vschess-tab-body-image-current");
-			_this.shareImageTitle.text("\u6b63\u5728\u751f\u6210\uff0c\u8bf7\u7a0d\u5019\u3002");
-
-			$.ajax({
-				url: _this.options.cloudApi.gif,
-				type: "post",
-				data: { movelist: _this.getMoveList().join(",") },
-				dataType: "json",
-				success: function(response){
-					if (response.code === 0) {
-						_this.shareImageTitle.html('<a href="' + response.data.url + '" target="_blank"><img src="' + response.data.url + '" /></a>');
-					}
-				},
-				error: function(){
-					alert("\u60a8\u7684\u6d4f\u89c8\u5668\u4e0d\u5141\u8bb8\u8de8\u57df\uff0c\u4e0d\u80fd\u4f7f\u7528\u6b64\u529f\u80fd\u3002");
-				}
-			});
-		}
-	});
-
-	return this;
-};
 
 // 创建分享图片显示区域
 vschess.load.prototype.createShareImage = function(){
