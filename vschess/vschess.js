@@ -1564,12 +1564,8 @@ $.extend(vschess, {
         DhtmlXQ: "\u4e1c\u840d DhtmlXQ UBB \u683c\u5f0f",
         ChessDB: "\u4e91\u5e93\u6307\u4ee4\u683c\u5f0f",
         Text: "\u6587\u672c TXT \u683c\u5f0f",
-        QQ: "\uff31\uff31 CHE \u683c\u5f0f",
         TextBoard: "\u6587\u5b57\u68cb\u76d8"
     },
-
-	// 必须为起始局面才可以导出的棋谱格式列表
-	exportFormatListIfNeedStart: "QQ".split(" ")
 });
 
 // 程序默认参数
@@ -7563,7 +7559,6 @@ vschess.load.prototype.rebuildExportAll = function(all){
 	// 大棋谱生成东萍 DhtmlXQ 格式和鹏飞 PFC 格式比较拖性能
 	(this.getNodeLength() < vschess.bigBookCritical || all) && this.rebuildExportDhtmlXQ();
 
-	this.hideExportFormatIfNeedStart();
 	return this;
 };
 
@@ -7623,23 +7618,6 @@ vschess.load.prototype.rebuildExportText = function(){
 vschess.load.prototype.rebuildExportDhtmlXQ = function(){
 	this.exportData.DhtmlXQ  = vschess.nodeToData_DhtmlXQ(this.node, this.chessInfo);
 	this.exportData.DhtmlXQM = vschess.turn_DhtmlXQ(this.exportData.DhtmlXQ);
-	return this;
-};
-
-
-// 非标准起始局面隐藏掉部分不支持的导出格式
-vschess.load.prototype.hideExportFormatIfNeedStart = function(){
-	if (this.getFenByStep(0).split(" ", 2).join(" ") === vschess.defaultFen.split(" ", 2).join(" ")) {
-		for (var i in vschess.exportFormatList) {
-			this.exportFormatOptions[i][0].style.display = "block";
-		}
-	}
-	else {
-		for (var i = 0; i < vschess.exportFormatListIfNeedStart.length; ++i) {
-			this.exportFormatOptions[vschess.exportFormatListIfNeedStart[i]][0].style.display = "none";
-		}
-	}
-
 	return this;
 };
 
