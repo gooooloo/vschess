@@ -7352,9 +7352,6 @@ vschess.load.prototype.createExportList = function(){
 		_this.exportTextarea.val("\u6b63\u5728\u751f\u6210\u68cb\u8c31\uff0c\u8bf7\u7a0d\u5019\u3002");
 
 		setTimeout(function(){
-			switch (_this.exportFormat.val()) {
-				default       : _this.rebuildExportDhtmlXQ(); _this.setExportFormat("DhtmlXQ", true); break;
-			}
 
 			_this.exportGenerate.removeClass("vschess-tab-body-export-current");
 			_this.exportDownload.   addClass("vschess-tab-body-export-current");
@@ -7443,19 +7440,11 @@ vschess.load.prototype.setExportFormat = function(format, force){
 
 // 重建所有棋谱
 vschess.load.prototype.rebuildExportAll = function(all){
-	this.rebuildExportPGN();
 	this.rebuildExportText();
 
-	// 大棋谱生成东萍 DhtmlXQ 格式和鹏飞 PFC 格式比较拖性能
-	(this.getNodeLength() < vschess.bigBookCritical || all) && this.rebuildExportDhtmlXQ();
-
 	return this;
 };
 
-// 重建 PGN 格式棋谱
-vschess.load.prototype.rebuildExportPGN = function(){
-	return this;
-};
 
 // 重建文本 TXT 格式棋谱
 vschess.load.prototype.rebuildExportText = function(){
