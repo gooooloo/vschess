@@ -2014,7 +2014,6 @@ vschess.RegExp = function(){
 		// 通用棋步识别正则表达式
 		Chinese	: /[\u8f66\u8eca\u4fe5\u9a6c\u99ac\u508c\u76f8\u8c61\u4ed5\u58eb\u5e05\u5e25\u5c06\u5c07\u70ae\u5305\u7832\u5175\u5352\u524d\u4e2d\u540e\u5f8c\u4e00\u4e8c\u4e09\u56db\u4e94\u58f9\u8d30\u53c1\u8086\u4f0d\uff11\uff12\uff13\uff14\uff151-5][\u8f66\u8eca\u4fe5\u9a6c\u99ac\u508c\u76f8\u8c61\u4ed5\u58eb\u70ae\u5305\u7832\u5175\u5352\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u58f9\u8d30\u53c1\u8086\u4f0d\u9646\u67d2\u634c\u7396\uff11\uff12\uff13\uff14\uff15\uff16\uff17\uff18\uff191-9][\u8fdb\u9032\u9000\u5e73][\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u58f9\u8d30\u53c1\u8086\u4f0d\u9646\u67d2\u634c\u7396\uff11\uff12\uff13\uff14\uff15\uff16\uff17\uff18\uff191-9]/g,
 		Node	: /[A-Ia-i][0-9][A-Ia-i][0-9]/g,
-		ICCS	: /[A-Ia-i][0-9]-[A-Ia-i][0-9]/g,
 		WXF		: /[RNHBEAKCPrnhbeakcp\+\-1-5][RNHBEAKCPrnhbeakcpd1-9\+\-\.][\+\-\.][1-9]/g,
 
 		// 特殊兵东萍表示法
@@ -4055,12 +4054,6 @@ vschess.Node2WXF = function(move, fen){
 
 	return { move: "None", movedFen: vschess.defaultFen };
 };
-
-// 节点 ICCS 转换为 ICCS 着法（无 Fen 串）
-vschess.Node2ICCS_NoFen = function(move){
-	return move.toUpperCase().substring(0, 2) + "-" + move.toUpperCase().substring(2, 4);
-};
-
 
 // WXF 着法字符串转换为 ECCO 开局编号及类型
 vschess.WXF2ECCO = function(wxfList){
@@ -7512,7 +7505,6 @@ vschess.load.prototype.rebuildSituation = function(){
 
 	this.moveNameList = {
 		WXF		: [this.node.fen], WXFM		: [turnFen],
-		ICCS	: [this.node.fen], ICCSM	: [turnFen],
 		Chinese	: [this.node.fen], ChineseM	: [turnFen]
 	};
 
@@ -7542,8 +7534,6 @@ vschess.load.prototype.rebuildSituation = function(){
 		var wxf  = vschess.Node2WXF(currentNode.move, prevFen).move;
 		var wxfM = wxf.charCodeAt(1) > 96 ? vschess.Node2WXF(vschess.turnMove(currentNode.move), vschess.turnFen(prevFen)).move : vschess.turnWXF(wxf);
 
-		this.moveNameList.   ICCS .push(vschess.Node2ICCS_NoFen(			   currentNode.move ));
-		this.moveNameList.   ICCSM.push(vschess.Node2ICCS_NoFen(vschess.turnMove(currentNode.move)));
 		this.moveNameList.    WXF .push(wxf );
 		this.moveNameList.    WXFM.push(wxfM);
 		this.moveNameList.Chinese .push(vschess.Node2Chinese(wxf , prevFen, this.options));
