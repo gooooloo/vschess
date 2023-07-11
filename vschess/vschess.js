@@ -5914,15 +5914,10 @@ vschess.load.prototype.createFormatBar = function(){
 		format		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-format" >\u683c \u5f0f</button>'),
 		help		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-help"   >\u5e2e \u52a9</button>'),
 		save		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-save"   >\u4fdd \u5b58</button>'),
-		chinese		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-chinese">\u4e2d \u6587</button>'),
 		saveFormat	: $('<input  type="hidden" class="vschess-format-bar-save-format"   name="format" value="DhtmlXQ" />'),
 		saveInput	: $('<input  type="hidden" class="vschess-format-bar-save-input"    name="data" />'),
 		saveFilename: $('<input  type="hidden" class="vschess-format-bar-save-filename" name="filename" />')
 	};
-
-	this.formatBarButton.format.bind(this.options.click, function(){
-		_this.formatBarButton.chinese.toggleClass("vschess-format-bar-button-change");
-	});
 
 	this.formatBarButton.help.bind(this.options.click, function(){
 		_this.showHelpArea();
@@ -5942,12 +5937,6 @@ vschess.load.prototype.createFormatBar = function(){
 			_this.formatBar.trigger("submit");
 		}
 	});
-
-	this.formatBarButton.chinese.bind(this.options.click, function(){
-		_this.formatBarButton.chinese.removeClass("vschess-format-bar-button-change");
-		_this.setMoveFormat("chinese").refreshMoveListNode();
-	});
-
 
 	for (var i in this.formatBarButton) {
 		this.formatBar.append(this.formatBarButton[i]);
