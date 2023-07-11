@@ -1969,11 +1969,6 @@ vschess.dataToInfo = function(chessData, parseType){
 	var replaceQuote = chessData.replace(/\'/g, '"');
 	parseType = parseType || "auto";
 
-	// 标准节点树格式，即鹏飞象棋 PFC 格式
-	if (parseType === "auto" && ~replaceQuote.indexOf("n version") || parseType === "pfc") {
-		return vschess.dataToInfo_PFC(chessData);
-	}
-
 	// 东萍象棋 DhtmlXQ 格式
 	if (parseType === "auto" && ~replaceQuote.indexOf("[DhtmlXQ") || parseType === "DhtmlXQ") {
 		return vschess.dataToInfo_DhtmlXQ(chessData);
@@ -1986,19 +1981,6 @@ vschess.dataToInfo = function(chessData, parseType){
 
 	// 未能识别的数据，返回空
 	return {};
-};
-
-// 从鹏飞象棋 PFC 格式中抽取棋局信息
-vschess.dataToInfo_PFC = function(chessData){
-	chessData = chessData.replace("<!--", "").replace("-->", "").replace(/<\?xml(.*)\?>/, "");
-	chessData = chessData.replace(/<n/ig, "<div").replace(/\/>/ig, "></div>").replace(/<\/n>/ig, "</div>");
-	var node  = $($.trim(chessData)), result = {};
-
-	for (var i in vschess.info.name) {
-		node.attr(i) && (result[i] = vschess.stripTags(node.attr(i)));
-	}
-
-	return result;
 };
 
 // 从标准 PGN 格式中抽取棋局信息
@@ -2081,11 +2063,6 @@ vschess.dataToNode = function(chessData, parseType){
 	var match, RegExp = vschess.RegExp();
 	parseType = parseType || "auto";
 
-	// 鹏飞象棋 PFC 格式
-	if (parseType === "auto" && ~chessData.indexOf("n version") || parseType === "pfc") {
-		return vschess.dataToNode_PFC(chessData);
-	}
-
 	// 东萍象棋 DhtmlXQ 格式
 	if (parseType === "auto" && ~chessData.indexOf("[DhtmlXQ") || parseType === "DhtmlXQ") {
 		return vschess.dataToNode_DhtmlXQ(chessData);
@@ -2143,34 +2120,6 @@ vschess.dataToNode = function(chessData, parseType){
 	return { fen: vschess.defaultFen, comment: "", next: [], defaultIndex: 0 };
 };
 
-// 将鹏飞象棋 PFC 格式转换为棋谱节点树
-vschess.dataToNode_PFC = function(chessData){
-	if (~chessData.indexOf("[pfchessrecord]")) {
-		var start = chessData.indexOf("<!--");
-		var end   = chessData.indexOf("-->");
-		chessData = chessData.substring(start + 4, end).replace(/<\?xml(.*)\?>/, "");
-	}
-	else {
-		chessData = chessData.replace("<!--", "").replace("-->", "").replace(/<\?xml(.*)\?>/, "");
-	}
-
-	chessData  = chessData.replace(/<n/ig, "<div").replace(/\/>/ig, "></div>").replace(/<\/n>/ig, "</div>");
-	var node   = $($.trim(chessData));
-	var result = { fen: node.attr("m"), comment: node.attr("c") || "", next: [], defaultIndex: 0 };
-
-	function insertNext(node, target){
-		node.children("div").each(function(index){
-			var each = $(this);
-			var insert = { move: each.attr("m"), comment: each.attr("c") || "", next: [], defaultIndex: 0 };
-			each.attr("default") && (target.defaultIndex = index);
-			target.next.push(insert);
-			insertNext(each, insert);
-		});
-	}
-
-	insertNext(node, result);
-	return result;
-};
 
 // 将标准 PGN 格式转换为棋谱节点树
 vschess.dataToNode_PGN = function(chessData){
