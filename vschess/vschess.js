@@ -7454,19 +7454,6 @@ vschess.load.prototype.rebuildExportAll = function(all){
 
 // 重建 PGN 格式棋谱
 vschess.load.prototype.rebuildExportPGN = function(){
-	this.rebuildExportPGN_ICCS   ();
-	return this;
-};
-
-
-// 重建 ICCS PGN 格式棋谱
-vschess.load.prototype.rebuildExportPGN_ICCS = function(){
-	var moveList  = this.moveNameList.ICCS .slice(0);
-	var moveListM = this.moveNameList.ICCSM.slice(0);
-	var startFen  = moveList .shift();
-	var startFenM = moveListM.shift();
-	this.exportData.PGN_ICCS  = vschess.moveListToData_PGN(moveList , startFen , this.commentList, this.chessInfo, this.getResultByCurrent());
-	this.exportData.PGN_ICCSM = vschess.moveListToData_PGN(moveListM, startFenM, this.commentList, this.chessInfo, this.getResultByCurrent());
 	return this;
 };
 
