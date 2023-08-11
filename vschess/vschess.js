@@ -5304,17 +5304,11 @@ vschess.load.prototype.setExportFormat = function(format, force){
         this.exportCopy    .   addClass("vschess-tab-body-export-current");
         this.exportDownload.   addClass("vschess-tab-body-export-current");
 
-        // 从开局开始
         var list = this.getMoveList();
         var fen = list.shift().split(" ").slice(0, 2).join(" ");
         var longData = list.length ? fen + " moves " + list.join(" ") : fen;
 
-        // 从吃子开始
-        var list = this.getUCCIList();
-        var fen = list.shift().split(" ").slice(0, 2).join(" ");
-        var shortData = list.length ? fen + " moves " + list.join(" ") : fen;
-
-        this.exportTextarea.val("\u4ece\u5f00\u5c40\u5f00\u59cb\uff1a\n" + longData + "\n\n\u4ece\u5403\u5b50\u5f00\u59cb\uff1a\n" + shortData);
+        this.exportTextarea.val(longData);
     }
 	else if ((format === "DhtmlXQ") && !force && this.getNodeLength() >= vschess.bigBookCritical) {
 		// 大棋谱需要加参数才同步
