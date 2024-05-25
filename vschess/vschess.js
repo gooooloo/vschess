@@ -5105,7 +5105,7 @@ vschess.load.prototype.createEditOtherButton = function(){
 
     function setReviewNode(node)
     {
-		_this.setNode(node, overwrite_global_node=false);
+		_this.setNode(node);
 		_this.rebuildSituation();
         _this.setBoardByStep(0);
 		_this.refreshMoveSelectListNode();
@@ -5121,7 +5121,7 @@ vschess.load.prototype.createEditOtherButton = function(){
 	this.editRandomReviewButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-begin-button">随机复习</button>');
 	this.editRandomReviewButton.appendTo(this.editArea);
 	this.editRandomReviewButton.bind(this.options.click, function(){
-        if (!_this.global_node) return;
+        if (!_this.global_node) _this.global_node = _this.node;
 
         var node = {..._this.global_node};
         var current = node;
@@ -5139,7 +5139,10 @@ vschess.load.prototype.createEditOtherButton = function(){
 	this.editQuitRandomReviewButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-begin-button">退出随机复习</button>');
 	this.editQuitRandomReviewButton.appendTo(this.editArea);
 	this.editQuitRandomReviewButton.bind(this.options.click, function(){
-        if (_this.global_node) setReviewNode(_this.global_node);
+        if (_this.global_node) {
+            setReviewNode(_this.global_node);
+            _this.global_node = undefined;
+        }
 	});
 
 	return this;
@@ -6344,8 +6347,7 @@ vschess.load.prototype.getNodeLength = function(){
 };
 
 // 设置当前节点树
-vschess.load.prototype.setNode = function(node, overwrite_global_node = true){
-    if (overwrite_global_node) this.global_node = node;
+vschess.load.prototype.setNode = function(node){
 	this.node = node;
 	this.refreshNodeLength();
 	return this;
