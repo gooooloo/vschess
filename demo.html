@@ -6,38 +6,17 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script type="text/javascript" src="jquery/jquery.js"></script>
     <script type="text/javascript" src="vschess/vschess.js"></script>
+    <script type="text/javascript" src="red_opening.txt"></script>
+    <script type="text/javascript" src="black_opening.txt"></script>
     <title>中国象棋</title>
 </head>
 
 <div class="vschess">
-    [DhtmlXQ]
-    [DhtmlXQ_binit]1433473949999969150028640646999929026050404199629942090343633858[/DhtmlXQ_binit]
-    [DhtmlXQ_movelist]141041301011304128200210202841301141504133214050155542525552415228585241695741525776524176554152554352414362505162435150435541525563524163715051715251526454[/DhtmlXQ_movelist]
-    [DhtmlXQ_move_0_9_1]33214041214241404261[/DhtmlXQ_move_0_9_1]
-    [DhtmlXQ_move_1_12_2]103111314131422331321512[/DhtmlXQ_move_1_12_2]
-    [DhtmlXQ_move_2_16_3]31411511[/DhtmlXQ_move_2_16_3]
-    [DhtmlXQ_move_2_15_4]1511313211123231422331411211[/DhtmlXQ_move_2_15_4]
-    [DhtmlXQ_move_2_14_5]41421512[/DhtmlXQ_move_2_14_5]
-    [DhtmlXQ_move_1_12_6]41421512[/DhtmlXQ_move_1_12_6]
-    [DhtmlXQ_move_0_8_7]103111104130103040301510[/DhtmlXQ_move_0_8_7]
-    [DhtmlXQ_move_0_7_8]2022413033214041214241420002[/DhtmlXQ_move_0_7_8]
-    [DhtmlXQ_move_8_12_9]41404261[/DhtmlXQ_move_8_12_9]
-    [DhtmlXQ_move_8_8_10]103111104130103040301510[/DhtmlXQ_move_8_8_10]
-    [DhtmlXQ_move_0_4_11]021011415041332140501555425255524152285852416957415257765241765541525543524143625051624351526454[/DhtmlXQ_move_0_4_11]
-    [DhtmlXQ_move_11_27_12]4355[/DhtmlXQ_move_11_27_12]
-    [DhtmlXQ_move_11_26_13]5150435541525563524163715051715251526454[/DhtmlXQ_move_11_26_13]
-    [DhtmlXQ_move_11_10_14]41525552[/DhtmlXQ_move_11_10_14]
-    [DhtmlXQ_move_11_6_15]62413321[/DhtmlXQ_move_11_6_15]
-    [DhtmlXQ_comment0]红弃车马，炮胜，多种胜法。[/DhtmlXQ_comment0]
-    [DhtmlXQ_comment39]红胜1。[/DhtmlXQ_comment39]
-    [DhtmlXQ_comment8_13]红胜2。[/DhtmlXQ_comment8_13]
-    [DhtmlXQ_comment9_13]红胜3。[/DhtmlXQ_comment9_13]
-    [/DhtmlXQ]
 </div>
 
 <script type="text/javascript">
     $(".vschess").each(function (index) {
-        new vschess.load(this, { defaultTab: "edit" });
+        new vschess.load(this, { defaultTab: "edit", black_opening: black_opening, red_opening: red_opening });
     });
 </script>
 </body>

@@ -1523,7 +1523,7 @@ $.extend(vschess, {
 	dpr: window.devicePixelRatio || 1,
 
 	// 编辑局面开始按钮列表
-	editStartList: ["editStartButton", "editNodeStartButton", "editBeginButton", "editBlankButton", "editOpenButton", "editRandomReviewButton", "editQuitRandomReviewButton"],
+	editStartList: ["editStartButton", "editNodeStartButton", "editBeginButton", "editBlankButton", "editOpenButton", "editRandomReviewButton", "editQuitRandomReviewButton", "editRedOpeningButton", "editBlackOpeningButton"],
 
 	// 编辑局面组件列表
 	editModuleList: ["editEndButton", "editCancelButton", "editTips", "editTextarea", "editTextareaPlaceholder", "editPieceArea", "editBoard", "recommendClass", "recommendList", "editEditStartText", "editEditStartRound", "editEditStartPlayer"],
@@ -2437,14 +2437,19 @@ vschess.iconv2UTF8 = function(array){
 };
 
 // 简单合并，不做处理
-vschess.join = function(array){
-	var result = [];
+vschess.join = function (array) {
+  var result = [];
 
-	for (var i = 0; i < array.length; ++i) {
-		result.push(vschess.fcc(array[i]));
-	}
+  for (var i = 0; i < array.length; ++i) {
+    result.push(vschess.fcc(array[i]));
+  }
 
-	return result.join("");
+  return result
+    .join("")
+    .replace("\r\n", "\n")
+    .split("\n")
+    .filter((line) => line.startsWith("["))
+    .join("\n");
 };
 
 // 动态加载 CSS，用 Zepto 或 jQuery 方式加载的外部 CSS 在低版本 IE 下不生效，所以使用原生方法
@@ -4130,8 +4135,20 @@ vschess.load.prototype.createFormatBar = function(){
 		_this.setSaved(true);
 
 		if (vschess.localDownload) {
-			var UTF8Text = _this.exportData.DhtmlXQ.replace(/\n/g, "\r\n").replace(/\r\r/g, "\r");
-			_this.localDownload((_this.chessInfo.title || "中国象棋") + ".txt", UTF8Text, { type: "text/plain" });
+			let UTF8Text = _this.exportData.DhtmlXQ.replace(/\n/g, "\r\n").replace(/\r\r/g, "\r");
+            let title = (_this.chessInfo.title || '中国象棋') + ".txt";
+
+            if (_this.loadingRedOpening) {
+              UTF8Text = "const red_opening = `\n" + UTF8Text + "\n`;";
+              title = "red_opening.txt";
+            }
+
+            if (_this.loadingBlackOpening) {
+                UTF8Text = "const black_opening = `\n" + UTF8Text + "\n`;";
+                title = "black_opening.txt";
+            }
+
+			_this.localDownload(title, UTF8Text, { type: "text/plain" });
 		}
 		else {
 			_this.formatBarButton.saveInput   .val(_this.exportData.DhtmlXQ);
@@ -4550,6 +4567,10 @@ vschess.load.prototype.createEditEndButton = function(){
 			_this.setExportFormat();
 			_this.setTurn(turn);
 			_this.setSaved(true);
+
+            _this.loadingRedOpening = false;
+            _this.loadingBlackOpening = false;
+            _this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
 		}
 	});
 
@@ -4957,6 +4978,10 @@ vschess.load.prototype.createNodeEndButton = function(){
 		_this.hideEditModule();
 		_this.showEditStartButton();
 		_this.setSaved(true);
+
+        _this.loadingRedOpening = false;
+        _this.loadingBlackOpening = false;
+        _this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
 	});
 
 	return this;
@@ -5013,7 +5038,6 @@ vschess.load.prototype.createEditOtherButton = function(){
 	this.editOpenButton.appendTo(this.editArea);
 	this.editOpenFile = $('<input type="file" class="vschess-tab-body-edit-open-file" id="' + buttonId + '" />');
 	this.editOpenFile.appendTo(this.editArea);
-
 	this.editOpenFile.bind("change", function(){
 		if (typeof FileReader === "function") {
 			if (this.files.length) {
@@ -5055,6 +5079,10 @@ vschess.load.prototype.createEditOtherButton = function(){
 					_this.hideEditModule();
 					_this.showEditStartButton();
 					_this.setSaved(true);
+
+                    _this.loadingRedOpening = false;
+                    _this.loadingBlackOpening = false;
+                    _this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
 				}
 			}
 		}
@@ -5085,6 +5113,10 @@ vschess.load.prototype.createEditOtherButton = function(){
 		_this.setExportFormat();
 		_this.setTurn(0);
 		_this.setSaved(true);
+
+        _this.loadingRedOpening = false;
+        _this.loadingBlackOpening = false;
+        _this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
 	});
 
 	// 清空棋盘按钮
@@ -5114,7 +5146,6 @@ vschess.load.prototype.createEditOtherButton = function(){
 		_this.refreshInfoEditor();
 		_this.rebuildExportAll();
 		_this.setExportFormat();
-		_this.setTurn(0);
     }
 
 	// 随机复习按钮
@@ -5145,6 +5176,53 @@ vschess.load.prototype.createEditOtherButton = function(){
         }
 	});
 
+    function loadOpening(chessData) {
+      const chessNode = vschess.dataToNode(chessData);
+      const chessInfo = vschess.dataToInfo(chessData);
+      _this.setBoardByStep(0);
+      _this.setNode(chessNode);
+      _this.rebuildSituation();
+      _this.refreshMoveSelectListNode();
+      _this.setBoardByStep(0);
+      _this.chessInfo = chessInfo;
+      _this.insertInfoByCurrent();
+      _this.refreshInfoEditor();
+      _this.rebuildExportAll();
+      _this.setExportFormat();
+      _this.editNodeTextarea.val("");
+      _this.hideNodeEditModule();
+      _this.hideEditModule();
+      _this.showEditStartButton();
+      _this.setSaved(true);
+    }
+
+	this.editRedOpeningButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-begin-button">红方开局库</button>');
+	this.editRedOpeningButton.appendTo(this.editArea);
+	this.editRedOpeningButton.bind(this.options.click, function(){
+        if (_this.options.red_opening) {
+            loadOpening(_this.options.red_opening);
+            _this.setTurn(0);
+            _this.loadingRedOpening = true;
+            _this.loadingBlackOpening = false;
+            _this.setChessTitle('红方开局库');
+        } else {
+            alert("红方开局库未开启");
+        }
+	});
+
+	this.editBlackOpeningButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-begin-button">黑方开局库</button>');
+	this.editBlackOpeningButton.appendTo(this.editArea);
+	this.editBlackOpeningButton.bind(this.options.click, function(){
+        if (_this.options.black_opening) {
+            loadOpening(_this.options.black_opening);
+            _this.setTurn(3);
+            _this.loadingRedOpening = false;
+            _this.loadingBlackOpening = true;
+            _this.setChessTitle('黑方开局库');
+        } else {
+            alert("黑方开局库未开启");
+        }
+	});
 	return this;
 };
 
@@ -5200,6 +5278,10 @@ vschess.load.prototype.bindDrag = function(){
 				_this.setSaved(true);
 				_this.hideHelpArea();
 				_this.hideInfoEditor();
+
+                _this.loadingRedOpening = false;
+                _this.loadingBlackOpening = false;
+            _this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
 			}
 		}
 	});
