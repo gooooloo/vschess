@@ -1407,35 +1407,35 @@ var vschess = {
 	// 棋谱信息项目列表
 	info: {
 		name: {
-			title		: "\u68cb\u5c40\u6807\u9898",
-			event		: "\u8d5b\u4e8b\u540d\u79f0",
-			red			: "\u7ea2\u65b9\u540d\u79f0",
-			redteam		: "\u7ea2\u65b9\u56e2\u4f53",
-			redname		: "\u7ea2\u65b9\u59d3\u540d",
-			redeng		: "\u7ea2\u65b9\u82f1\u6587\u540d",
-			redlevel	: "\u7ea2\u65b9\u7b49\u7ea7",
-			redrating	: "\u7ea2\u65b9\u7b49\u7ea7\u5206",
-			redtime		: "\u7ea2\u65b9\u7528\u65f6",
-			black		: "\u9ed1\u65b9\u540d\u79f0",
-			blackteam	: "\u9ed1\u65b9\u56e2\u4f53",
-			blackname	: "\u9ed1\u65b9\u59d3\u540d",
-			blackeng	: "\u9ed1\u65b9\u82f1\u6587\u540d",
-			blacklevel	: "\u9ed1\u65b9\u7b49\u7ea7",
-			blackrating	: "\u9ed1\u65b9\u7b49\u7ea7\u5206",
-			blacktime	: "\u9ed1\u65b9\u7528\u65f6",
-			ecco		: "\u5f00\u5c40\u7f16\u53f7",
-			open		: "\u5e03\u5c40\u7c7b\u578b",
-			variation	: "\u53d8\u4f8b\u7c7b\u578b",
-			result		: "\u5bf9\u5c40\u7ed3\u679c",
-			remark		: "\u8bc4\u6ce8\u4eba\u5458",
-			author		: "\u68cb\u8c31\u4f5c\u8005",
-			group		: "\u8d5b\u4e8b\u7ec4\u522b",
-			date		: "\u6bd4\u8d5b\u65e5\u671f",
-			place		: "\u6bd4\u8d5b\u5730\u70b9",
-			round		: "\u6bd4\u8d5b\u8f6e\u6b21",
-			table		: "\u6bd4\u8d5b\u53f0\u6b21",
-			judge		: "\u6267\u53f0\u88c1\u5224",
-			record		: "\u68cb\u8c31\u8bb0\u5f55\u5458"
+			title		: "棋局标题",
+			event		: "赛事名称",
+			red			: "红方名称",
+			redteam		: "红方团体",
+			redname		: "红方姓名",
+			redeng		: "红方英文名",
+			redlevel	: "红方等级",
+			redrating	: "红方等级分",
+			redtime		: "红方用时",
+			black		: "黑方名称",
+			blackteam	: "黑方团体",
+			blackname	: "黑方姓名",
+			blackeng	: "黑方英文名",
+			blacklevel	: "黑方等级",
+			blackrating	: "黑方等级分",
+			blacktime	: "黑方用时",
+			ecco		: "开局编号",
+			open		: "布局类型",
+			variation	: "变例类型",
+			result		: "对局结果",
+			remark		: "评注人员",
+			author		: "棋谱作者",
+			group		: "赛事组别",
+			date		: "比赛日期",
+			place		: "比赛地点",
+			round		: "比赛轮次",
+			table		: "比赛台次",
+			judge		: "执台裁判",
+			record		: "棋谱记录员"
 		},
 		pfc: {
 			date		: "create-time"
@@ -1545,10 +1545,10 @@ $.extend(vschess, {
 
     // 可导出棋谱格式列表
     exportFormatList: {
-        DhtmlXQ: "\u4e1c\u840d DhtmlXQ UBB \u683c\u5f0f",
-        ChessDB: "\u4e91\u5e93\u6307\u4ee4\u683c\u5f0f",
-        Text: "\u6587\u672c TXT \u683c\u5f0f",
-        TextBoard: "\u6587\u5b57\u68cb\u76d8"
+        DhtmlXQ: "东萍 DhtmlXQ UBB 格式",
+        ChessDB: "云库指令格式",
+        Text: "文本 TXT 格式",
+        TextBoard: "文字棋盘"
     },
 });
 
@@ -1556,10 +1556,10 @@ $.extend(vschess, {
 vschess.defaultOptions = {
 	// 中文着法文字
 	ChineseChar: {
-		Piece	 : "\u8f66\u9a6c\u76f8\u4ed5\u5e05\u70ae\u5175\u8f66\u9a6c\u8c61\u58eb\u5c06\u70ae\u5352",
-		Number	 : "\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\uff11\uff12\uff13\uff14\uff15\uff16\uff17\uff18\uff19",
-		PawnIndex: "\u4e00\u4e8c\u4e09\u56db\u4e94\u4e00\u4e8c\u4e09\u56db\u4e94",
-		Text	 : "\u524d\u4e2d\u540e\u8fdb\u9000\u5e73"
+		Piece	 : "车马相仕帅炮兵车马象士将炮卒",
+		Number	 : "一二三四五六七八九１２３４５６７８９",
+		PawnIndex: "一二三四五一二三四五",
+		Text	 : "前中后进退平"
 	}
 };
 
@@ -1654,12 +1654,12 @@ $.extend(vschess.defaultOptions, {
 
 	// 起始局面提示信息
 	startTips: [
-		"\u84dd\u8272\u7684\u7740\u6cd5\u542b\u6709\u53d8\u7740",
-		"\u6807\u6709\u661f\u53f7\u7684\u7740\u6cd5\u542b\u6709\u6ce8\u89e3",
-		"\u652f\u6301\u4e1c\u840d\u3001\u9e4f\u98de\u7b49\u591a\u79cd\u683c\u5f0f",
-		"\u5355\u51fb\u201c\u590d\u5236\u201d\u590d\u5236\u5f53\u524d\u5c40\u9762",
-		'<a href="https://www.xiaxiangqi.com/vschess/" target="_blank">\u5fae\u601d\u8c61\u68cb\u64ad\u653e\u5668 V' + vschess.version + "</a>",
-		'<a href="https://margin.top/" target="_blank">Margin.Top &copy; \u7248\u6743\u6240\u6709</a>'
+		"蓝色的着法含有变着",
+		"标有星号的着法含有注解",
+		"支持东萍、鹏飞等多种格式",
+		"单击“复制”复制当前局面",
+		'<a href="https://www.xiaxiangqi.com/vschess/" target="_blank">微思象棋播放器 V' + vschess.version + "</a>",
+		'<a href="https://margin.top/" target="_blank">Margin.Top &copy; 版权所有</a>'
 	],
 
 	// 云服务 API 地址
@@ -1670,57 +1670,57 @@ $.extend(vschess.defaultOptions, {
 
 	// 默认推荐起始局面列表
 	recommendList: [
-		{ name: "\u5e38\u7528\u5f00\u5c40", fenList: [
-			{ name: "\u7a7a\u767d\u68cb\u76d8", fen: "9/9/9/9/9/9/9/9/9/9 w - - 0 1" },
-			{ name: "\u53ea\u6709\u5e05\u5c06", fen: "5k3/9/9/9/9/9/9/9/9/3K5 w - - 0 1" },
-			{ name: "\u6807\u51c6\u5f00\u5c40", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
-			{ name: "\u7ea2\u8ba9\u5de6\u9a6c", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/R1BAKABNR w - - 0 1" },
-			{ name: "\u9ed1\u8ba9\u5de6\u9a6c", fen: "rnbakab1r/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
-			{ name: "\u7ea2\u8ba9\u53f3\u9a6c", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKAB1R w - - 0 1" },
-			{ name: "\u9ed1\u8ba9\u53f3\u9a6c", fen: "r1bakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
-			{ name: "\u7ea2\u8ba9\u53cc\u9a6c", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/R1BAKAB1R w - - 0 1" },
-			{ name: "\u9ed1\u8ba9\u53cc\u9a6c", fen: "r1bakab1r/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
-			{ name: "\u7ea2\u8ba9\u53cc\u4ed5", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNB1K1BNR w - - 0 1" },
-			{ name: "\u9ed1\u8ba9\u53cc\u58eb", fen: "rnb1k1bnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
-			{ name: "\u7ea2\u8ba9\u53cc\u76f8", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RN1AKA1NR w - - 0 1" },
-			{ name: "\u9ed1\u8ba9\u53cc\u8c61", fen: "rn1aka1nr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
-			{ name: "\u7ea2\u8ba9\u4ed5\u76f8", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RN2K2NR w - - 0 1" },
-			{ name: "\u9ed1\u8ba9\u58eb\u8c61", fen: "rn2k2nr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
-			{ name: "\u7ea2\u8ba9\u4e94\u5175", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/9/1C5C1/9/RNBAKABNR w - - 0 1" },
-			{ name: "\u9ed1\u8ba9\u4e94\u5352", fen: "rnbakabnr/9/1c5c1/9/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
-			{ name: "\u7ea2\u8ba9\u4e5d\u5b50", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/9/1C5C1/9/RN2K2NR w - - 0 1" },
-			{ name: "\u9ed1\u8ba9\u4e5d\u5b50", fen: "rn2k2nr/9/1c5c1/9/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" }
+		{ name: "常用开局", fenList: [
+			{ name: "空白棋盘", fen: "9/9/9/9/9/9/9/9/9/9 w - - 0 1" },
+			{ name: "只有帅将", fen: "5k3/9/9/9/9/9/9/9/9/3K5 w - - 0 1" },
+			{ name: "标准开局", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
+			{ name: "红让左马", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/R1BAKABNR w - - 0 1" },
+			{ name: "黑让左马", fen: "rnbakab1r/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
+			{ name: "红让右马", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKAB1R w - - 0 1" },
+			{ name: "黑让右马", fen: "r1bakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
+			{ name: "红让双马", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/R1BAKAB1R w - - 0 1" },
+			{ name: "黑让双马", fen: "r1bakab1r/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
+			{ name: "红让双仕", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNB1K1BNR w - - 0 1" },
+			{ name: "黑让双士", fen: "rnb1k1bnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
+			{ name: "红让双相", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RN1AKA1NR w - - 0 1" },
+			{ name: "黑让双象", fen: "rn1aka1nr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
+			{ name: "红让仕相", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RN2K2NR w - - 0 1" },
+			{ name: "黑让士象", fen: "rn2k2nr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
+			{ name: "红让五兵", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/9/1C5C1/9/RNBAKABNR w - - 0 1" },
+			{ name: "黑让五卒", fen: "rnbakabnr/9/1c5c1/9/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" },
+			{ name: "红让九子", fen: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/9/1C5C1/9/RN2K2NR w - - 0 1" },
+			{ name: "黑让九子", fen: "rn2k2nr/9/1c5c1/9/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1" }
 		]}
     ],
 
     // 标签名称
     tagName: {
-        comment: "\u68cb\u8c31\u6ce8\u89e3",
-        info: "\u68cb\u5c40\u4fe1\u606f",
-        export: "\u68cb\u8c31\u5bfc\u51fa",
-        edit: "\u68cb\u8c31\u5bfc\u5165",
-        config: "\u68cb\u76d8\u9009\u9879"
+        comment: "棋谱注解",
+        info: "棋局信息",
+        export: "棋谱导出",
+        edit: "棋谱导入",
+        config: "棋盘选项"
     }
 });
 
 // 默认帮助信息
-vschess.defaultOptions.help  = '<h1>\u5fae\u601d\u8c61\u68cb\u64ad\u653e\u5668 V' + vschess.version + ' \u5e2e\u52a9\u4fe1\u606f</h1>';
+vschess.defaultOptions.help  = '<h1>微思象棋播放器 V' + vschess.version + ' 帮助信息</h1>';
 vschess.defaultOptions.help += '<hr />';
-vschess.defaultOptions.help += '<h2>1.&ensp;&ensp;\u5355\u51fb\u201c\u64ad\u653e\u201d\u6309\u94ae\uff0c\u53ef\u4ee5\u81ea\u52a8\u64ad\u653e\u68cb\u5c40\uff1b\u64ad\u653e\u8fc7\u7a0b\u4e2d\uff0c\u5355\u51fb\u201c\u6682\u505c\u201d\u6309\u94ae\uff0c\u68cb\u5c40\u505c\u6b62\u81ea\u52a8\u64ad\u653e\u3002</h2>';
-vschess.defaultOptions.help += '<h2>2.&ensp;&ensp;\u5355\u51fb\u201c\u524d\u8fdb\u201d\u3001\u201c\u540e\u9000\u201d\u6309\u94ae\uff0c\u6bcf\u6b21\u53d8\u53161\u6b65\uff1b\u5355\u51fb\u201c\u5feb\u8fdb\u201d\u3001\u201c\u5feb\u9000\u201d\u6309\u94ae\uff0c\u6bcf\u6b21\u53d8\u5316#quickStepOffsetRound#\u4e2a\u56de\u5408\uff0c\u5373#quickStepOffset#\u6b65\u3002</h2>';
-vschess.defaultOptions.help += '<h2>3.&ensp;&ensp;\u5355\u51fb\u201c\u590d\u5236\u201d\u6309\u94ae\uff0c\u53ef\u4ee5\u590d\u5236\u5f53\u524d\u5c40\u9762\u3002</h2>';
-vschess.defaultOptions.help += '<h2>4.&ensp;&ensp;\u590d\u5236\u5c40\u9762\u540e\uff0c\u53ef\u4ee5\u76f4\u63a5\u5728\u4e13\u4e1a\u8c61\u68cb\u8f6f\u4ef6\u4e2d\u7c98\u8d34\u4f7f\u7528\u3002</h2>';
-vschess.defaultOptions.help += '<h2>5.&ensp;&ensp;\u5206\u6790\u5c40\u9762\u65f6\uff0c\u5efa\u8bae\u5c06\u5c40\u9762\u590d\u5236\u5230\u4e13\u4e1a\u8c61\u68cb\u8f6f\u4ef6\u4e2d\u8fdb\u884c\u5206\u6790\u3002</h2>';
-vschess.defaultOptions.help += '<h2>6.&ensp;&ensp;\u53ef\u4ee5\u76f4\u63a5\u5728\u68cb\u76d8\u4e0a\u8d70\u68cb\uff0c\u4fbf\u4e8e\u5206\u6790\u5c40\u9762\u3002</h2>';
-vschess.defaultOptions.help += '<h2>7.&ensp;&ensp;\u5728\u7740\u6cd5\u5217\u8868\u4e2d\u53ef\u4ee5\u8c03\u6574\u53d8\u62db\u987a\u5e8f\u6216\u5220\u9664\u7740\u6cd5\u3002</h2>';
-vschess.defaultOptions.help += '<h2>8.&ensp;&ensp;\u6ce8\u91ca\u4fee\u6539\u540e\u76f4\u63a5\u5728\u6ce8\u91ca\u533a\u5916\u9762\u4efb\u610f\u5904\u5355\u51fb\u5373\u53ef\u751f\u6548\u3002</h2>';
-vschess.defaultOptions.help += '<h2>9.&ensp;&ensp;\u7f16\u8f91\u5c40\u9762\u4f1a\u5931\u53bb\u5f53\u524d\u68cb\u8c31\uff0c\u8bf7\u6ce8\u610f\u4fdd\u5b58\u3002</h2>';
-vschess.defaultOptions.help += '<h2>10.&ensp;\u7f16\u8f91\u5c40\u9762\u6807\u7b7e\u4e2d\uff0c\u53ef\u4ee5\u76f4\u63a5\u6253\u5f00\u7535\u8111\u4e2d\u7684\u68cb\u8c31\uff0c\u4e5f\u53ef\u4ee5\u76f4\u63a5\u5c06\u68cb\u8c31\u6587\u4ef6\u62d6\u62fd\u5230\u672c\u68cb\u76d8\u4e0a\u3002</h2>';
-vschess.defaultOptions.help += '<h2>11.&ensp;\u652f\u6301\u4e1c\u840d\u3001\u9e4f\u98de\u3001\u8c61\u68cb\u4e16\u5bb6\u3001\u6807\u51c6PGN\u3001\u4e2d\u56fd\u6e38\u620f\u4e2d\u5fc3\u3001QQ\u8c61\u68cb\u7b49\u683c\u5f0f\uff0c\u5176\u4ed6\u683c\u5f0f\u7a0b\u5e8f\u4e5f\u4f1a\u5c1d\u8bd5\u81ea\u52a8\u8bc6\u522b\u3002</h2>';
-vschess.defaultOptions.help += '<h2>12.&ensp;\u68cb\u76d8\u9009\u9879\u4e2d\uff0c\u53ef\u4ee5\u63a7\u5236\u68cb\u76d8\u65b9\u5411\u3001\u64ad\u653e\u901f\u5ea6\u3001\u8d70\u5b50\u58f0\u97f3\u7b49\u3002</h2>';
-vschess.defaultOptions.help += '<h2>13.&ensp;\u68cb\u8c31\u5206\u4eab\u529f\u80fd\u751f\u6210\u7684\u8bba\u575b UBB \u4ee3\u7801\uff0c\u53ef\u4ee5\u5728\u652f\u6301\u8be5\u4ee3\u7801\u7684\u8bba\u575b\u4e2d\u4f7f\u7528\u3002<a href="https://www.xiaxiangqi.com/" target="_blank">\u3010\u67e5\u770b\u90fd\u6709\u54ea\u4e9b\u8bba\u575b\u652f\u6301\u8be5\u4ee3\u7801\u3011</a></h2>';
+vschess.defaultOptions.help += '<h2>1.&ensp;&ensp;单击“播放”按钮，可以自动播放棋局；播放过程中，单击“暂停”按钮，棋局停止自动播放。</h2>';
+vschess.defaultOptions.help += '<h2>2.&ensp;&ensp;单击“前进”、“后退”按钮，每次变化1步；单击“快进”、“快退”按钮，每次变化#quickStepOffsetRound#个回合，即#quickStepOffset#步。</h2>';
+vschess.defaultOptions.help += '<h2>3.&ensp;&ensp;单击“复制”按钮，可以复制当前局面。</h2>';
+vschess.defaultOptions.help += '<h2>4.&ensp;&ensp;复制局面后，可以直接在专业象棋软件中粘贴使用。</h2>';
+vschess.defaultOptions.help += '<h2>5.&ensp;&ensp;分析局面时，建议将局面复制到专业象棋软件中进行分析。</h2>';
+vschess.defaultOptions.help += '<h2>6.&ensp;&ensp;可以直接在棋盘上走棋，便于分析局面。</h2>';
+vschess.defaultOptions.help += '<h2>7.&ensp;&ensp;在着法列表中可以调整变招顺序或删除着法。</h2>';
+vschess.defaultOptions.help += '<h2>8.&ensp;&ensp;注释修改后直接在注释区外面任意处单击即可生效。</h2>';
+vschess.defaultOptions.help += '<h2>9.&ensp;&ensp;编辑局面会失去当前棋谱，请注意保存。</h2>';
+vschess.defaultOptions.help += '<h2>10.&ensp;编辑局面标签中，可以直接打开电脑中的棋谱，也可以直接将棋谱文件拖拽到本棋盘上。</h2>';
+vschess.defaultOptions.help += '<h2>11.&ensp;支持东萍、鹏飞、象棋世家、标准PGN、中国游戏中心、QQ象棋等格式，其他格式程序也会尝试自动识别。</h2>';
+vschess.defaultOptions.help += '<h2>12.&ensp;棋盘选项中，可以控制棋盘方向、播放速度、走子声音等。</h2>';
+vschess.defaultOptions.help += '<h2>13.&ensp;棋谱分享功能生成的论坛 UBB 代码，可以在支持该代码的论坛中使用。<a href="https://www.xiaxiangqi.com/" target="_blank">【查看都有哪些论坛支持该代码】</a></h2>';
 vschess.defaultOptions.help += '<hr />';
-vschess.defaultOptions.help += '<h2><a href="https://www.xiaxiangqi.com/vschess/" target="_blank">\u5fae\u601d\u8c61\u68cb\u64ad\u653e\u5668 V' + vschess.version + '</a> <a href="https://margin.top/" target="_blank">Margin.Top &copy; \u7248\u6743\u6240\u6709</a></h2>';
+vschess.defaultOptions.help += '<h2><a href="https://www.xiaxiangqi.com/vschess/" target="_blank">微思象棋播放器 V' + vschess.version + '</a> <a href="https://margin.top/" target="_blank">Margin.Top &copy; 版权所有</a></h2>';
 
 // IE6 兼容，棋子 PNG 图片透明，如果需要自定义棋子图片路径，请参考官方文档
 vschess.IE6Compatible_setPieceTransparent = function(options){
@@ -2172,7 +2172,7 @@ vschess.invertFen = function(fen){
 // 获取棋局信息显示文本
 vschess.showText = function(showText, item){
 	var map = {
-		result: { "*": "", "1-0": "\u7ea2\u80dc", "0-1": "\u9ed1\u80dc", "1/2-1/2": "\u548c\u68cb" }
+		result: { "*": "", "1-0": "红胜", "0-1": "黑胜", "1/2-1/2": "和棋" }
 	};
 
 	return map[item] && map[item][showText] || showText;
@@ -2182,9 +2182,9 @@ vschess.showText = function(showText, item){
 vschess.dataText = function(dataText, item){
 	var map = {
 		result: {
-			"\u7ea2\u80dc": "1-0", "\u7ea2\u5148\u80dc": "1-0", "\u9ed1\u8d1f": "1-0",
-			"\u7ea2\u8d1f": "0-1", "\u7ea2\u5148\u8d1f": "0-1", "\u9ed1\u80dc": "0-1", "0-1": "0-1",
-			"\u7ea2\u548c": "1/2-1/2", "\u7ea2\u5148\u548c": "1/2-1/2", "\u548c\u68cb": "1/2-1/2", "\u548c": "1/2-1/2",
+			"红胜": "1-0", "红先胜": "1-0", "黑负": "1-0",
+			"红负": "0-1", "红先负": "0-1", "黑胜": "0-1", "0-1": "0-1",
+			"红和": "1/2-1/2", "红先和": "1/2-1/2", "和棋": "1/2-1/2", "和": "1/2-1/2",
 			"1-0": "1-0", "0-1": "0-1", "1/2-1/2": "1/2-1/2",
 			__default__: "*"
 		}
@@ -2350,31 +2350,31 @@ vschess.textBoard = function(fen, options) {
 
 	var isB = vschess.fenIsB(fen);
 	var board = vschess.fenToArray(fen);
-	var text = [isB ? "\u9ed1\u65b9 \u8d70\u68cb\u65b9\n\n" : "\u9ed1\u65b9\n\n"];
+	var text = [isB ? "黑方 走棋方\n\n" : "黑方\n\n"];
 
 	var boardText = [
-		" \u250c-", "-\u252c-", "-\u252c-", "-\u252c-", "-\u252c-", "-\u252c-", "-\u252c-", "-\u252c-", "-\u2510 ",
-		" \u251c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u203b-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u2524 ",
-		" \u251c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u2524 ",
-		" \u251c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u2524 ",
-		" \u251c-", "-\u2534-", "-\u2534-", "-\u2534-", "-\u2534-", "-\u2534-", "-\u2534-", "-\u2534-", "-\u2524 ",
-		" \u251c-", "-\u252c-", "-\u252c-", "-\u252c-", "-\u252c-", "-\u252c-", "-\u252c-", "-\u252c-", "-\u2524 ",
-		" \u251c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u2524 ",
-		" \u251c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u2524 ",
-		" \u251c-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u203b-", "-\u253c-", "-\u253c-", "-\u253c-", "-\u2524 ",
-		" \u2514-", "-\u2534-", "-\u2534-", "-\u2534-", "-\u2534-", "-\u2534-", "-\u2534-", "-\u2534-", "-\u2518 "
+		" ┌-", "-┬-", "-┬-", "-┬-", "-┬-", "-┬-", "-┬-", "-┬-", "-┐ ",
+		" ├-", "-┼-", "-┼-", "-┼-", "-※-", "-┼-", "-┼-", "-┼-", "-┤ ",
+		" ├-", "-┼-", "-┼-", "-┼-", "-┼-", "-┼-", "-┼-", "-┼-", "-┤ ",
+		" ├-", "-┼-", "-┼-", "-┼-", "-┼-", "-┼-", "-┼-", "-┼-", "-┤ ",
+		" ├-", "-┴-", "-┴-", "-┴-", "-┴-", "-┴-", "-┴-", "-┴-", "-┤ ",
+		" ├-", "-┬-", "-┬-", "-┬-", "-┬-", "-┬-", "-┬-", "-┬-", "-┤ ",
+		" ├-", "-┼-", "-┼-", "-┼-", "-┼-", "-┼-", "-┼-", "-┼-", "-┤ ",
+		" ├-", "-┼-", "-┼-", "-┼-", "-┼-", "-┼-", "-┼-", "-┼-", "-┤ ",
+		" ├-", "-┼-", "-┼-", "-┼-", "-※-", "-┼-", "-┼-", "-┼-", "-┤ ",
+		" └-", "-┴-", "-┴-", "-┴-", "-┴-", "-┴-", "-┴-", "-┴-", "-┘ "
 	];
 
 	var insertLine = ["",
-		"\n \u2502  \u2502  \u2502  \u2502\uff3c\u2502\uff0f\u2502  \u2502  \u2502  \u2502 \n",
-		"\n \u2502  \u2502  \u2502  \u2502\uff0f\u2502\uff3c\u2502  \u2502  \u2502  \u2502 \n",
-		"\n \u2502  \u2502  \u2502  \u2502  \u2502  \u2502  \u2502  \u2502  \u2502 \n",
-		"\n \u2502  \u2502  \u2502  \u2502  \u2502  \u2502  \u2502  \u2502  \u2502 \n",
-		"\n \u2502    \u695a  \u6cb3          \u6c49  \u754c    \u2502 \n",
-		"\n \u2502  \u2502  \u2502  \u2502  \u2502  \u2502  \u2502  \u2502  \u2502 \n",
-		"\n \u2502  \u2502  \u2502  \u2502  \u2502  \u2502  \u2502  \u2502  \u2502 \n",
-		"\n \u2502  \u2502  \u2502  \u2502\uff3c\u2502\uff0f\u2502  \u2502  \u2502  \u2502 \n",
-		"\n \u2502  \u2502  \u2502  \u2502\uff0f\u2502\uff3c\u2502  \u2502  \u2502  \u2502 \n"
+		"\n │  │  │  │＼│／│  │  │  │ \n",
+		"\n │  │  │  │／│＼│  │  │  │ \n",
+		"\n │  │  │  │  │  │  │  │  │ \n",
+		"\n │  │  │  │  │  │  │  │  │ \n",
+		"\n │    楚  河          汉  界    │ \n",
+		"\n │  │  │  │  │  │  │  │  │ \n",
+		"\n │  │  │  │  │  │  │  │  │ \n",
+		"\n │  │  │  │＼│／│  │  │  │ \n",
+		"\n │  │  │  │／│＼│  │  │  │ \n"
 	];
 
 	for (var i = 0; i < 90; ++i) {
@@ -2382,8 +2382,8 @@ vschess.textBoard = function(fen, options) {
 		text.push(board[i] === "*" ? boardText[i] : piece(board[i]));
 	}
 
-	text.push(isB ? "\n\n\u7ea2\u65b9" : "\n\n\u7ea2\u65b9 \u8d70\u68cb\u65b9");
-	return text.join("").replace(/--/g, "\u2500");
+	text.push(isB ? "\n\n红方" : "\n\n红方 走棋方");
+	return text.join("").replace(/--/g, "─");
 };
 
 // 字符串清除标签
@@ -2965,7 +2965,7 @@ vschess.checkFen = function(fen){
 	var RegExp = vschess.RegExp();
 
 	if (!RegExp.FenShort.test(fen)) {
-		return ["Fen \u4e32\u4e0d\u5408\u6cd5"];
+		return ["Fen 串不合法"];
 	}
 
 	var errorList = [], board = vschess.fenToArray(fen), Kk = false;
@@ -2976,61 +2976,61 @@ vschess.checkFen = function(fen){
 	}
 
 	for (var i = 0; i < 90; ++i) {
-		board[i] === "K" && !~[ 66, 67, 68, 75, 76, 77, 84, 85, 86 ].indexOf(i    )  && push("\u7ea2\u65b9\u5e05\u7684\u4f4d\u7f6e\u4e0d\u7b26\u5408\u89c4\u5219");
-		board[i] === "k" && !~[  3,  4,  5, 12, 13, 14, 21, 22, 23 ].indexOf(i    )  && push("\u9ed1\u65b9\u5c06\u7684\u4f4d\u7f6e\u4e0d\u7b26\u5408\u89c4\u5219");
-		board[i] === "B" && !~[     47, 51, 63, 67, 71, 83, 87     ].indexOf(i    )  && push("\u7ea2\u65b9\u76f8\u7684\u4f4d\u7f6e\u4e0d\u7b26\u5408\u89c4\u5219");
-		board[i] === "b" && !~[      2,  6, 18, 22, 26, 38, 42     ].indexOf(i    )  && push("\u9ed1\u65b9\u8c61\u7684\u4f4d\u7f6e\u4e0d\u7b26\u5408\u89c4\u5219");
-		board[i] === "A" && !~[         66, 68, 76, 84, 86         ].indexOf(i    )  && push("\u7ea2\u65b9\u4ed5\u7684\u4f4d\u7f6e\u4e0d\u7b26\u5408\u89c4\u5219");
-		board[i] === "a" && !~[          3,  5, 13, 21, 23         ].indexOf(i    )  && push("\u9ed1\u65b9\u58eb\u7684\u4f4d\u7f6e\u4e0d\u7b26\u5408\u89c4\u5219");
-		board[i] === "P" && (i >= 63 || i >= 45 && !~[0, 2, 4, 6, 8].indexOf(i % 9)) && push("\u7ea2\u65b9\u5175\u7684\u4f4d\u7f6e\u4e0d\u7b26\u5408\u89c4\u5219");
-		board[i] === "p" && (i <  27 || i <  45 && !~[0, 2, 4, 6, 8].indexOf(i % 9)) && push("\u9ed1\u65b9\u5352\u7684\u4f4d\u7f6e\u4e0d\u7b26\u5408\u89c4\u5219");
+		board[i] === "K" && !~[ 66, 67, 68, 75, 76, 77, 84, 85, 86 ].indexOf(i    )  && push("红方帅的位置不符合规则");
+		board[i] === "k" && !~[  3,  4,  5, 12, 13, 14, 21, 22, 23 ].indexOf(i    )  && push("黑方将的位置不符合规则");
+		board[i] === "B" && !~[     47, 51, 63, 67, 71, 83, 87     ].indexOf(i    )  && push("红方相的位置不符合规则");
+		board[i] === "b" && !~[      2,  6, 18, 22, 26, 38, 42     ].indexOf(i    )  && push("黑方象的位置不符合规则");
+		board[i] === "A" && !~[         66, 68, 76, 84, 86         ].indexOf(i    )  && push("红方仕的位置不符合规则");
+		board[i] === "a" && !~[          3,  5, 13, 21, 23         ].indexOf(i    )  && push("黑方士的位置不符合规则");
+		board[i] === "P" && (i >= 63 || i >= 45 && !~[0, 2, 4, 6, 8].indexOf(i % 9)) && push("红方兵的位置不符合规则");
+		board[i] === "p" && (i <  27 || i <  45 && !~[0, 2, 4, 6, 8].indexOf(i % 9)) && push("黑方卒的位置不符合规则");
 
 		++total[board[i]];
 
 		if (board[i] === "K") {
 			for (var j = i - 9; j > 0; j -= 9) {
 				if (board[j] !== "*") {
-					board[j] === "k" && (Kk = true) && push("\u5e05\u5c06\u9762\u5bf9\u9762\u4e86");
+					board[j] === "k" && (Kk = true) && push("帅将面对面了");
 					break;
 				}
 			}
 		}
 	}
 
-	board[45] === "P" && board[54] === "P" && push("\u7ea2\u65b9\u4e5d\u8def\u51fa\u73b0\u672a\u8fc7\u6cb3\u7684\u91cd\u53e0\u5175");
-	board[47] === "P" && board[56] === "P" && push("\u7ea2\u65b9\u4e03\u8def\u51fa\u73b0\u672a\u8fc7\u6cb3\u7684\u91cd\u53e0\u5175");
-	board[49] === "P" && board[58] === "P" && push("\u7ea2\u65b9\u4e94\u8def\u51fa\u73b0\u672a\u8fc7\u6cb3\u7684\u91cd\u53e0\u5175");
-	board[51] === "P" && board[60] === "P" && push("\u7ea2\u65b9\u4e09\u8def\u51fa\u73b0\u672a\u8fc7\u6cb3\u7684\u91cd\u53e0\u5175");
-	board[53] === "P" && board[62] === "P" && push("\u7ea2\u65b9\u4e00\u8def\u51fa\u73b0\u672a\u8fc7\u6cb3\u7684\u91cd\u53e0\u5175");
-	board[27] === "p" && board[36] === "p" && push("\u9ed1\u65b9\uff11\u8def\u51fa\u73b0\u672a\u8fc7\u6cb3\u7684\u91cd\u53e0\u5352");
-	board[29] === "p" && board[38] === "p" && push("\u9ed1\u65b9\uff13\u8def\u51fa\u73b0\u672a\u8fc7\u6cb3\u7684\u91cd\u53e0\u5352");
-	board[31] === "p" && board[40] === "p" && push("\u9ed1\u65b9\uff15\u8def\u51fa\u73b0\u672a\u8fc7\u6cb3\u7684\u91cd\u53e0\u5352");
-	board[33] === "p" && board[42] === "p" && push("\u9ed1\u65b9\uff17\u8def\u51fa\u73b0\u672a\u8fc7\u6cb3\u7684\u91cd\u53e0\u5352");
-	board[35] === "p" && board[44] === "p" && push("\u9ed1\u65b9\uff19\u8def\u51fa\u73b0\u672a\u8fc7\u6cb3\u7684\u91cd\u53e0\u5352");
+	board[45] === "P" && board[54] === "P" && push("红方九路出现未过河的重叠兵");
+	board[47] === "P" && board[56] === "P" && push("红方七路出现未过河的重叠兵");
+	board[49] === "P" && board[58] === "P" && push("红方五路出现未过河的重叠兵");
+	board[51] === "P" && board[60] === "P" && push("红方三路出现未过河的重叠兵");
+	board[53] === "P" && board[62] === "P" && push("红方一路出现未过河的重叠兵");
+	board[27] === "p" && board[36] === "p" && push("黑方１路出现未过河的重叠卒");
+	board[29] === "p" && board[38] === "p" && push("黑方３路出现未过河的重叠卒");
+	board[31] === "p" && board[40] === "p" && push("黑方５路出现未过河的重叠卒");
+	board[33] === "p" && board[42] === "p" && push("黑方７路出现未过河的重叠卒");
+	board[35] === "p" && board[44] === "p" && push("黑方９路出现未过河的重叠卒");
 
-	total.R > 2 && push("\u7ea2\u65b9\u51fa\u73b0\u4e86" + total.R + "\u4e2a\u8f66\uff0c\u591a\u4e86" + (total.R - 2) + "\u4e2a");
-	total.r > 2 && push("\u9ed1\u65b9\u51fa\u73b0\u4e86" + total.r + "\u4e2a\u8f66\uff0c\u591a\u4e86" + (total.r - 2) + "\u4e2a");
-	total.N > 2 && push("\u7ea2\u65b9\u51fa\u73b0\u4e86" + total.N + "\u4e2a\u9a6c\uff0c\u591a\u4e86" + (total.N - 2) + "\u4e2a");
-	total.n > 2 && push("\u9ed1\u65b9\u51fa\u73b0\u4e86" + total.n + "\u4e2a\u9a6c\uff0c\u591a\u4e86" + (total.n - 2) + "\u4e2a");
-	total.B > 2 && push("\u7ea2\u65b9\u51fa\u73b0\u4e86" + total.B + "\u4e2a\u76f8\uff0c\u591a\u4e86" + (total.B - 2) + "\u4e2a");
-	total.b > 2 && push("\u9ed1\u65b9\u51fa\u73b0\u4e86" + total.b + "\u4e2a\u8c61\uff0c\u591a\u4e86" + (total.b - 2) + "\u4e2a");
-	total.A > 2 && push("\u7ea2\u65b9\u51fa\u73b0\u4e86" + total.A + "\u4e2a\u4ed5\uff0c\u591a\u4e86" + (total.A - 2) + "\u4e2a");
-	total.a > 2 && push("\u9ed1\u65b9\u51fa\u73b0\u4e86" + total.a + "\u4e2a\u58eb\uff0c\u591a\u4e86" + (total.a - 2) + "\u4e2a");
-	total.C > 2 && push("\u7ea2\u65b9\u51fa\u73b0\u4e86" + total.C + "\u4e2a\u70ae\uff0c\u591a\u4e86" + (total.C - 2) + "\u4e2a");
-	total.c > 2 && push("\u9ed1\u65b9\u51fa\u73b0\u4e86" + total.c + "\u4e2a\u70ae\uff0c\u591a\u4e86" + (total.c - 2) + "\u4e2a");
-	total.P > 5 && push("\u7ea2\u65b9\u51fa\u73b0\u4e86" + total.P + "\u4e2a\u5175\uff0c\u591a\u4e86" + (total.P - 5) + "\u4e2a");
-	total.p > 5 && push("\u9ed1\u65b9\u51fa\u73b0\u4e86" + total.p + "\u4e2a\u5352\uff0c\u591a\u4e86" + (total.p - 5) + "\u4e2a");
-	total.K > 1 && push("\u7ea2\u65b9\u51fa\u73b0\u4e86" + total.K + "\u4e2a\u5e05\uff0c\u591a\u4e86" + (total.K - 1) + "\u4e2a");
-	total.k > 1 && push("\u9ed1\u65b9\u51fa\u73b0\u4e86" + total.k + "\u4e2a\u5c06\uff0c\u591a\u4e86" + (total.k - 1) + "\u4e2a");
-	total.K < 1 && push("\u7ea2\u65b9\u5fc5\u987b\u6709\u4e00\u4e2a\u5e05");
-	total.k < 1 && push("\u9ed1\u65b9\u5fc5\u987b\u6709\u4e00\u4e2a\u5c06");
+	total.R > 2 && push("红方出现了" + total.R + "个车，多了" + (total.R - 2) + "个");
+	total.r > 2 && push("黑方出现了" + total.r + "个车，多了" + (total.r - 2) + "个");
+	total.N > 2 && push("红方出现了" + total.N + "个马，多了" + (total.N - 2) + "个");
+	total.n > 2 && push("黑方出现了" + total.n + "个马，多了" + (total.n - 2) + "个");
+	total.B > 2 && push("红方出现了" + total.B + "个相，多了" + (total.B - 2) + "个");
+	total.b > 2 && push("黑方出现了" + total.b + "个象，多了" + (total.b - 2) + "个");
+	total.A > 2 && push("红方出现了" + total.A + "个仕，多了" + (total.A - 2) + "个");
+	total.a > 2 && push("黑方出现了" + total.a + "个士，多了" + (total.a - 2) + "个");
+	total.C > 2 && push("红方出现了" + total.C + "个炮，多了" + (total.C - 2) + "个");
+	total.c > 2 && push("黑方出现了" + total.c + "个炮，多了" + (total.c - 2) + "个");
+	total.P > 5 && push("红方出现了" + total.P + "个兵，多了" + (total.P - 5) + "个");
+	total.p > 5 && push("黑方出现了" + total.p + "个卒，多了" + (total.p - 5) + "个");
+	total.K > 1 && push("红方出现了" + total.K + "个帅，多了" + (total.K - 1) + "个");
+	total.k > 1 && push("黑方出现了" + total.k + "个将，多了" + (total.k - 1) + "个");
+	total.K < 1 && push("红方必须有一个帅");
+	total.k < 1 && push("黑方必须有一个将");
 
 	if (!Kk) {
 		if (vschess.checkThreat(fen) && vschess.checkThreat(vschess.fenChangePlayer(fen))) {
-			push("\u7ea2\u9ed1\u53cc\u65b9\u540c\u65f6\u88ab\u5c06\u519b");
+			push("红黑双方同时被将军");
 		}
 		else if (vschess.checkThreat(vschess.fenChangePlayer(fen))) {
-			fen.split(" ")[1] === "b" ? push("\u8f6e\u5230\u9ed1\u65b9\u8d70\u68cb\uff0c\u4f46\u6b64\u65f6\u7ea2\u65b9\u6b63\u5728\u88ab\u5c06\u519b") : push("\u8f6e\u5230\u7ea2\u65b9\u8d70\u68cb\uff0c\u4f46\u6b64\u65f6\u9ed1\u65b9\u6b63\u5728\u88ab\u5c06\u519b");
+			fen.split(" ")[1] === "b" ? push("轮到黑方走棋，但此时红方正在被将军") : push("轮到红方走棋，但此时黑方正在被将军");
 		}
 	}
 
@@ -3291,7 +3291,7 @@ vschess.load.prototype.initArguments = function(){
 // 创建加载界面
 vschess.load.prototype.createLoading = function(selector){
 	this.chessData = this.options.chessData === false ? this.DOM.html() : this.options.chessData;
-	this.DOM.html('<div class="vschess-loading">\u68cb\u76d8\u52a0\u8f7d\u4e2d\uff0c\u8bf7\u7a0d\u5019\u3002</div>');
+	this.DOM.html('<div class="vschess-loading">棋盘加载中，请稍候。</div>');
 	this.DOM.addClass("vschess-loaded vschess-style-" + this.options.style + " vschess-layout-" + this.options.layout);
 	this.DOM.attr("data-vschess-dpr", vschess.dpr);
 	return this;
@@ -3373,28 +3373,28 @@ vschess.moveListToText = function(moveList, startFen, commentList, infoList, res
 
 	var startFenSplit =  startFen.split(" ");
 	var startRound    = +startFenSplit[5] || 1;
-	var text = ["\u4e2d\u56fd\u8c61\u68cb\u5bf9\u5c40\u8bb0\u5f55\n"];
+	var text = ["中国象棋对局记录\n"];
 
 	for (var i in infoList) {
-		text.push(vschess.info.name[i], "\uff1a", vschess.showText(infoList[i], i), "\n");
+		text.push(vschess.info.name[i], "：", vschess.showText(infoList[i], i), "\n");
 	}
 
-	startFen === vschess.defaultFen || text.push("\u5f00\u5c40 Fen \u4e32\uff1a", startFen, "\n");
-	text.push(commentList[0] ? "\uff08" + commentList[0] + "\uff09\n" : "");
+	startFen === vschess.defaultFen || text.push("开局 Fen 串：", startFen, "\n");
+	text.push(commentList[0] ? "（" + commentList[0] + "）\n" : "");
 
 	if (startFenSplit[1] === "b") {
 		for (var i = 0; i < moveList.length; ++i) {
 			if (i === 0) {
 				var round = startRound;
 				round = vschess.strpad(round, Math.ceil((moveList.length + 1) / 2).toString().length, " ", "left");
-				text.push(round, ". \u2026\u2026\u2026\u2026 ", moveList[i], commentList[i + 1] ? "\n\uff08" + commentList[i + 1] + "\uff09" : "", "\n");
+				text.push(round, ". ………… ", moveList[i], commentList[i + 1] ? "\n（" + commentList[i + 1] + "）" : "", "\n");
 			}
 			else {
 				var round = (i + 1) / 2 + startRound;
 				round = vschess.strpad(round, Math.ceil((moveList.length + 1) / 2).toString().length, " ", "left");
 				i % 2 && text.push(round, ". ");
-				text.push(moveList[i], commentList[i + 1] ? "\n\uff08" + commentList[i + 1] + "\uff09" : "");
-				commentList[i + 1] && i % 2 && i != moveList.length - 1 && text.push("\n", round, ". \u2026\u2026\u2026\u2026");
+				text.push(moveList[i], commentList[i + 1] ? "\n（" + commentList[i + 1] + "）" : "");
+				commentList[i + 1] && i % 2 && i != moveList.length - 1 && text.push("\n", round, ". …………");
 				text.push(i % 2 ? " " : "\n");
 			}
 		}
@@ -3404,8 +3404,8 @@ vschess.moveListToText = function(moveList, startFen, commentList, infoList, res
 			var round = i / 2 + startRound;
 			round = vschess.strpad(round, Math.ceil(moveList.length / 2).toString().length, " ", "left");
 			i % 2 || text.push(round, ". ");
-			text.push(moveList[i], commentList[i + 1] ? "\n\uff08" + commentList[i + 1] + "\uff09" : "");
-			commentList[i + 1] && !(i % 2) && i != moveList.length - 1 && text.push("\n", round, ". \u2026\u2026\u2026\u2026");
+			text.push(moveList[i], commentList[i + 1] ? "\n（" + commentList[i + 1] + "）" : "");
+			commentList[i + 1] && !(i % 2) && i != moveList.length - 1 && text.push("\n", round, ". …………");
 			text.push(i % 2 ? "\n" : " ");
 		}
 	}
@@ -3414,7 +3414,7 @@ vschess.moveListToText = function(moveList, startFen, commentList, infoList, res
 	var resultStr = vschess.showText(result, "result");
 
 	if (resultStr) {
-		if (text.split("").pop() === "\uff09") {
+		if (text.split("").pop() === "）") {
 			text += "\n" + resultStr;
 		}
 		else {
@@ -3607,7 +3607,7 @@ vschess.Node2Chinese = function(move, fen, options){
 		var wxfData  = vschess.Node2WXF(move, fen);
 
 		if (wxfData.move === "None") {
-			return { move: "\u65e0\u6548\u7740\u6cd5", movedFen: vschess.defaultFen };
+			return { move: "无效着法", movedFen: vschess.defaultFen };
 		}
 		else {
 			var wxfSplit = wxfData.move.replace(/^([RNHBEAKCP])([\+\-])/g, "$2$1").replace("Pa", "1P").replace("Pb", "2P").replace("Pc", "3P").replace("Pd", "4P").replace("Pe", "5P").replace(/^P\./, ".P").split("");
@@ -3846,12 +3846,12 @@ vschess.load.prototype.setCommentByStep = function(step){
 // 创建棋谱注解区域空白提示
 vschess.load.prototype.createCommentPlaceholder = function(){
 	if (vschess.placeholder) {
-		this.commentTextarea.attr({ "placeholder": "\u8fd9\u91cc\u53ef\u4ee5\u586b\u5199\u6ce8\u89e3" });
+		this.commentTextarea.attr({ "placeholder": "这里可以填写注解" });
 		return this;
 	}
 
 	var _this = this, commentMonitor;
-	this.commentTextareaPlaceholder = $('<div class="vschess-tab-body-comment-textarea-placeholder">\u8fd9\u91cc\u53ef\u4ee5\u586b\u5199\u6ce8\u89e3</div>');
+	this.commentTextareaPlaceholder = $('<div class="vschess-tab-body-comment-textarea-placeholder">这里可以填写注解</div>');
 	this.commentArea.append(this.commentTextareaPlaceholder);
 	this.commentTextarea.bind("focus", function(){ commentMonitor = setInterval(function(){ _this.commentTextarea.val() ? _this.commentTextareaPlaceholder.hide() : _this.commentTextareaPlaceholder.show(); }, 20); });
 	this.commentTextarea.bind("blur" , function(){ clearInterval(commentMonitor); });
@@ -3894,53 +3894,53 @@ vschess.load.prototype.createConfigSwitch = function(){
 	this.configRange  = {};
 	this.configSelect = {};
 
-	this.addConfigItem("turnX", "\u5de6\u53f3\u7ffb\u8f6c", "boolean", true, "", function(){
+	this.addConfigItem("turnX", "左右翻转", "boolean", true, "", function(){
 		_this.setTurn(_this.configValue["turnY"] * 2 + _this.configValue["turnX"], 1);
 	});
 
-	this.addConfigItem("turnY", "\u4e0a\u4e0b\u7ffb\u8f6c", "boolean", true, "", function(){
+	this.addConfigItem("turnY", "上下翻转", "boolean", true, "", function(){
 		_this.setTurn(_this.configValue["turnY"] * 2 + _this.configValue["turnX"], 1);
 	});
 
-	this.addConfigItem("moveTips", "\u8d70\u5b50\u63d0\u793a", "boolean", true, "", function(){
+	this.addConfigItem("moveTips", "走子提示", "boolean", true, "", function(){
 		_this._.moveTips = _this.configValue["moveTips"];
 	});
 
-	this.addConfigItem("sound", "\u8d70\u5b50\u97f3\u6548", "boolean", true, "", function(){
+	this.addConfigItem("sound", "走子音效", "boolean", true, "", function(){
 		_this._.sound = _this.configValue["sound"];
 	});
 
-	this.addConfigItem("speakMove", "\u7740\u6cd5\u6717\u8bfb", "boolean", false, "", function(){
+	this.addConfigItem("speakMove", "着法朗读", "boolean", false, "", function(){
 		_this._.speakMove = _this.configValue["speakMove"];
 	});
 
-	this.addConfigItem("saveTips", "\u4fdd\u5b58\u63d0\u793a", "boolean", true, "", function(){
+	this.addConfigItem("saveTips", "保存提示", "boolean", true, "", function(){
 		_this._.saveTips = _this.configValue["saveTips"];
 	});
 
-	this.addConfigItem("pieceRotate", "\u68cb\u5b50\u65cb\u8f6c", "boolean", true, "", function(){
+	this.addConfigItem("pieceRotate", "棋子旋转", "boolean", true, "", function(){
 		_this._.pieceRotate = _this.configValue["pieceRotate"];
 		_this.setBoardByStep();
 	});
 
-	this.addConfigItem("banRepeatLongThreat", "\u7981\u6b62\u957f\u6253", "boolean", true, "", function(){
+	this.addConfigItem("banRepeatLongThreat", "禁止长打", "boolean", true, "", function(){
 		_this._.banRepeatLongThreat = _this.configValue["banRepeatLongThreat"];
 	});
 
-	this.addConfigItem("banRepeatLongKill", "\u7981\u6b62\u4e00\u5c06\u4e00\u6740" , "boolean", true, "", function(){
+	this.addConfigItem("banRepeatLongKill", "禁止一将一杀" , "boolean", true, "", function(){
 		_this._.banRepeatLongKill = _this.configValue["banRepeatLongKill"];
 		_this.repeatLongKillMoveList = _this._.banRepeatLongKill ? _this.getRepeatLongKillMove() : [];
 	});
 
-	this.addConfigItem("illegalTips", "\u8fdd\u4f8b\u63d0\u793a", "boolean", true, "", function(){
+	this.addConfigItem("illegalTips", "违例提示", "boolean", true, "", function(){
 		_this._.illegalTips = _this.configValue["illegalTips"];
 	});
 
-	this.addConfigItem("playGap", "\u64ad\u653e\u95f4\u9694", "select" , 5, "0.1\u79d2:1,0.2\u79d2:2,0.5\u79d2:5,1\u79d2:10,2\u79d2:20,5\u79d2:50", function(){
+	this.addConfigItem("playGap", "播放间隔", "select" , 5, "0.1秒:1,0.2秒:2,0.5秒:5,1秒:10,2秒:20,5秒:50", function(){
 		_this._.playGap = _this.configValue["playGap"];
 	});
 
-	this.addConfigItem("volume", "\u97f3\u6548\u97f3\u91cf", "range", 100, "0,100", function(){
+	this.addConfigItem("volume", "音效音量", "range", 100, "0,100", function(){
 		_this._.volume = _this.configValue["volume"];
 	});
 
@@ -4056,14 +4056,14 @@ vschess.load.prototype.createControlBar = function(){
 	var _this = this;
 	this.controlBar = $('<div class="vschess-control-bar"></div>');
 	this.controlBarButton = {
-		first: $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-first">\u5f00 \u5c40</button>'),
-		prevQ: $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-prevQ">\u5feb \u9000</button>'),
-		prev : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-prev" >\u540e \u9000</button>'),
-		play : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-play" >\u64ad \u653e</button>'),
-		pause: $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-pause">\u6682 \u505c</button>'),
-		next : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-next" >\u524d \u8fdb</button>'),
-		nextQ: $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-nextQ">\u5feb \u8fdb</button>'),
-		last : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-last" >\u7ec8 \u5c40</button>')
+		first: $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-first">开 局</button>'),
+		prevQ: $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-prevQ">快 退</button>'),
+		prev : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-prev" >后 退</button>'),
+		play : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-play" >播 放</button>'),
+		pause: $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-pause">暂 停</button>'),
+		next : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-next" >前 进</button>'),
+		nextQ: $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-nextQ">快 进</button>'),
+		last : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-last" >终 局</button>')
 	};
 
 	this.controlBarButton.first.bind(this.options.click, function(){ _this.pause(false).setBoardByStep(0); });
@@ -4108,14 +4108,14 @@ vschess.load.prototype.createFormatBar = function(){
 	this.formatBar = $('<form method="post" action="' + this.options.cloudApi.saveBook + '" class="vschess-format-bar"></form>');
 
 	switch (this.getMoveFormat()) {
-		case "chinese"	: var formarButton = "\u4e2d \u6587"; break;
+		case "chinese"	: var formarButton = "中 文"; break;
 	}
 
 	this.formatBarButton = {
-		copy		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-copy"   >\u590d \u5236</button>'),
-		format		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-format" >\u683c \u5f0f</button>'),
-		help		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-help"   >\u5e2e \u52a9</button>'),
-		save		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-save"   >\u4fdd \u5b58</button>'),
+		copy		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-copy"   >复 制</button>'),
+		format		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-format" >格 式</button>'),
+		help		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-help"   >帮 助</button>'),
+		save		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-save"   >保 存</button>'),
 		saveFormat	: $('<input  type="hidden" class="vschess-format-bar-save-format"   name="format" value="DhtmlXQ" />'),
 		saveInput	: $('<input  type="hidden" class="vschess-format-bar-save-input"    name="data" />'),
 		saveFilename: $('<input  type="hidden" class="vschess-format-bar-save-filename" name="filename" />')
@@ -4131,7 +4131,7 @@ vschess.load.prototype.createFormatBar = function(){
 
 		if (vschess.localDownload) {
 			var UTF8Text = _this.exportData.DhtmlXQ.replace(/\n/g, "\r\n").replace(/\r\r/g, "\r");
-			_this.localDownload((_this.chessInfo.title || "\u4e2d\u56fd\u8c61\u68cb") + ".txt", UTF8Text, { type: "text/plain" });
+			_this.localDownload((_this.chessInfo.title || "中国象棋") + ".txt", UTF8Text, { type: "text/plain" });
 		}
 		else {
 			_this.formatBarButton.saveInput   .val(_this.exportData.DhtmlXQ);
@@ -4145,7 +4145,7 @@ vschess.load.prototype.createFormatBar = function(){
 	}
 
 	this.formatBarButton.copy.bind(this.options.click, function(){
-		_this.copy(_this.getCurrentFen(), function(){ _this.showMessage("\u5c40\u9762\u590d\u5236\u6210\u529f\uff0c\u60a8\u53ef\u4ee5\u76f4\u63a5\u5728\u8c61\u68cb\u8f6f\u4ef6\u4e2d\u7c98\u8d34\u4f7f\u7528\uff01"); });
+		_this.copy(_this.getCurrentFen(), function(){ _this.showMessage("局面复制成功，您可以直接在象棋软件中粘贴使用！"); });
 	});
 
 	this.DOM.append(this.formatBar);
@@ -4196,7 +4196,7 @@ vschess.load.prototype.copy = function(str, success){
 			success();
 		}
 		else {
-			prompt("\u8bf7\u6309 Ctrl+C \u590d\u5236\uff1a", str);
+			prompt("请按 Ctrl+C 复制：", str);
 		}
 	}
 	else if (window.clipboardData) {
@@ -4204,11 +4204,11 @@ vschess.load.prototype.copy = function(str, success){
 			success();
 		}
 		else {
-			prompt("\u8bf7\u6309 Ctrl+C \u590d\u5236\uff1a", str);
+			prompt("请按 Ctrl+C 复制：", str);
 		}
 	}
 	else {
-		prompt("\u8bf7\u6309 Ctrl+C \u590d\u5236\uff1a", str);
+		prompt("请按 Ctrl+C 复制：", str);
 	}
 
 	return this;
@@ -4477,7 +4477,7 @@ vschess.load.prototype.hideNodeEditModule = function(){
 // 创建编辑局面区域开始编辑按钮
 vschess.load.prototype.createEditStartButton = function(){
 	var _this = this;
-	this.editStartButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-start-button">\u7f16\u8f91\u5c40\u9762</button>');
+	this.editStartButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-start-button">编辑局面</button>');
 	this.editStartButton.appendTo(this.editArea);
 	this.editStartButton.bind(this.options.click, function(){ _this.showEditBoard(); });
 	return this;
@@ -4502,11 +4502,11 @@ vschess.load.prototype.showEditBoard = function(){
 // 创建编辑局面区域结束编辑按钮
 vschess.load.prototype.createEditEndButton = function(){
 	var _this = this;
-	this.editEndButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-end-button">\u786e \u5b9a</button>');
+	this.editEndButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-end-button">确 定</button>');
 	this.editEndButton.appendTo(this.editArea);
 
 	this.editEndButton.bind(this.options.click, function(){
-		if (!_this.confirm("\u786e\u5b9a\u4f7f\u7528\u65b0\u7684\u5c40\u9762\u5417\uff1f\u5f53\u524d\u68cb\u8c31\u4f1a\u4e22\u5931\uff01")) {
+		if (!_this.confirm("确定使用新的局面吗？当前棋谱会丢失！")) {
 			return false;
 		}
 
@@ -4523,16 +4523,16 @@ vschess.load.prototype.createEditEndButton = function(){
 		}
 
 		if (errorList.length > 1) {
-			var errorMsg = ["\u5f53\u524d\u5c40\u9762\u51fa\u73b0\u4e0b\u5217\u9519\u8bef\uff1a\n"];
+			var errorMsg = ["当前局面出现下列错误：\n"];
 
 			for (var i = 0; i < errorList.length; ++i) {
-				errorMsg.push(i + 1, ".", errorList[i], i === errorList.length - 1 ? "\u3002" : "\uff1b\n");
+				errorMsg.push(i + 1, ".", errorList[i], i === errorList.length - 1 ? "。" : "；\n");
 			}
 
 			alert(errorMsg.join(""));
 		}
 		else if (errorList.length > 0) {
-			alert(errorList[0] + "\u3002");
+			alert(errorList[0] + "。");
 		}
 		else {
 			_this.hideNodeEditModule();
@@ -4559,7 +4559,7 @@ vschess.load.prototype.createEditEndButton = function(){
 // 创建编辑局面区域取消编辑按钮
 vschess.load.prototype.createEditCancelButton = function(){
 	var _this = this;
-	this.editCancelButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-cancel-button">\u53d6 \u6d88</button>');
+	this.editCancelButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-cancel-button">取 消</button>');
 	this.editCancelButton.appendTo(this.editArea);
 
 	this.editCancelButton.bind(this.options.click, function(){
@@ -4574,9 +4574,9 @@ vschess.load.prototype.createEditCancelButton = function(){
 // 创建编辑局面区域输入框
 vschess.load.prototype.createEditTextarea = function(){
 	var _this = this;
-	var UA = navigator.userAgent.toLowerCase(), contextMenu = "\u957f\u6309";
-	!~UA.indexOf("android") && !~UA.indexOf("iph") && !~UA.indexOf("ipad") && (contextMenu = "\u53f3\u952e\u5355\u51fb");
-	this.editTipsText = "\u70b9\u51fb\u53f3\u4fa7\u7684\u68cb\u5b50\u53ef\u5c06\u5176\u653e\u7f6e\u5728\u68cb\u76d8\u4e0a\uff0c" + contextMenu + "\u68cb\u76d8\u4e0a\u7684\u68cb\u5b50\u53ef\u4ee5\u5c06\u5176\u79fb\u9664\u3002";
+	var UA = navigator.userAgent.toLowerCase(), contextMenu = "长按";
+	!~UA.indexOf("android") && !~UA.indexOf("iph") && !~UA.indexOf("ipad") && (contextMenu = "右键单击");
+	this.editTipsText = "点击右侧的棋子可将其放置在棋盘上，" + contextMenu + "棋盘上的棋子可以将其移除。";
 	this.editTips = $('<input class="vschess-tab-body-edit-tips" value="' + this.editTipsText + '" readonly="readonly" />').appendTo(this.DOM);
 	this.editTextarea = $('<textarea class="vschess-tab-body-edit-textarea"></textarea>').appendTo(this.editArea);
 
@@ -4592,7 +4592,7 @@ vschess.load.prototype.createEditTextarea = function(){
 
 // 创建编辑局面区域空白提示
 vschess.load.prototype.createEditPlaceholder = function(){
-	var placeholderText = "\u8bf7\u5c06\u5c40\u9762\u4ee3\u7801\u7c98\u8d34\u5230\u8fd9\u91cc\uff0c\u652f\u6301\u6807\u51c6FEN\u3001\u4e1c\u840d\u8c61\u68cb\u3001\u8c61\u68cb\u4e16\u5bb6\u7b49\u683c\u5f0f\uff0c\u5176\u4ed6\u683c\u5f0f\u7a0b\u5e8f\u4f1a\u5c1d\u8bd5\u8fdb\u884c\u8bc6\u522b\u3002";
+	var placeholderText = "请将局面代码粘贴到这里，支持标准FEN、东萍象棋、象棋世家等格式，其他格式程序会尝试进行识别。";
 
 	if (vschess.placeholder) {
 		this.editTextarea.attr({ "placeholder": placeholderText });
@@ -4694,7 +4694,7 @@ vschess.load.prototype.createEditPieceArea = function(){
 // 创建编辑局面区域开始回合数编辑框
 vschess.load.prototype.createEditStartRound = function(){
 	var _this = this;
-	this.editEditStartText = $('<div class="vschess-tab-body-edit-start-text">\u56de\u5408\uff1a</div>');
+	this.editEditStartText = $('<div class="vschess-tab-body-edit-start-text">回合：</div>');
 	this.editEditStartText.appendTo(this.editArea);
 	this.editEditStartRound = $('<input type="number" class="vschess-tab-body-edit-start-round" />');
 	this.editEditStartRound.appendTo(this.editArea);
@@ -4918,7 +4918,7 @@ vschess.load.prototype.fillEditBoard = function(ignoreSelect){
 // 创建粘贴棋谱区域开始编辑按钮
 vschess.load.prototype.createNodeStartButton = function(){
 	var _this = this;
-	this.editNodeStartButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-node-start-button">\u7c98\u8d34\u68cb\u8c31</button>');
+	this.editNodeStartButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-node-start-button">粘贴棋谱</button>');
 	this.editNodeStartButton.appendTo(this.editArea);
 
 	this.editNodeStartButton.bind(this.options.click, function(){
@@ -4935,11 +4935,11 @@ vschess.load.prototype.createNodeStartButton = function(){
 // 创建粘贴棋谱区域完成编辑按钮
 vschess.load.prototype.createNodeEndButton = function(){
 	var _this = this;
-	this.editNodeEndButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-node-end-button">\u786e \u5b9a</button>');
+	this.editNodeEndButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-node-end-button">确 定</button>');
 	this.editNodeEndButton.appendTo(this.editArea);
 
 	this.editNodeEndButton.bind(this.options.click, function(){
-		if (!_this.confirm("\u786e\u5b9a\u4f7f\u7528\u65b0\u7684\u68cb\u8c31\u5417\uff1f\u5f53\u524d\u68cb\u8c31\u4f1a\u4e22\u5931\uff01")) {
+		if (!_this.confirm("确定使用新的棋谱吗？当前棋谱会丢失！")) {
 			return false;
 		}
 
@@ -4965,7 +4965,7 @@ vschess.load.prototype.createNodeEndButton = function(){
 // 创建粘贴棋谱区域取消编辑按钮
 vschess.load.prototype.createNodeCancelButton = function(){
 	var _this = this;
-	this.editNodeCancelButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-node-cancel-button">\u53d6 \u6d88</button>');
+	this.editNodeCancelButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-node-cancel-button">取 消</button>');
 	this.editNodeCancelButton.appendTo(this.editArea);
 
 	this.editNodeCancelButton.bind(this.options.click, function(){
@@ -4987,7 +4987,7 @@ vschess.load.prototype.createNodeEditTextarea = function(){
 
 // 创建粘贴棋谱区域空白提示
 vschess.load.prototype.createNodeEditPlaceholder = function(){
-	var placeholderText = "\u8bf7\u5c06\u68cb\u8c31\u4ee3\u7801\u7c98\u8d34\u5230\u8fd9\u91cc\uff0c\u6216\u8005\u76f4\u63a5\u5c06\u68cb\u8c31\u6587\u4ef6\u62d6\u62fd\u5230\u68cb\u76d8\u4e0a\u3002\u652f\u6301\u6807\u51c6PGN\u3001\u4e1c\u840d\u8c61\u68cb DhtmlXQ\u3001\u9e4f\u98de\u8c61\u68cb PFC\u3001\u8c61\u68cb\u4e16\u5bb6\u3001QQ \u65b0\u4e2d\u56fd\u8c61\u68cb\u7b49\u683c\u5f0f\uff0c\u5176\u4ed6\u683c\u5f0f\u7a0b\u5e8f\u4f1a\u5c1d\u8bd5\u8fdb\u884c\u8bc6\u522b\u3002";
+	var placeholderText = "请将棋谱代码粘贴到这里，或者直接将棋谱文件拖拽到棋盘上。支持标准PGN、东萍象棋 DhtmlXQ、鹏飞象棋 PFC、象棋世家、QQ 新中国象棋等格式，其他格式程序会尝试进行识别。";
 
 	if (vschess.placeholder) {
 		this.editNodeTextarea.attr({ "placeholder": placeholderText });
@@ -5009,7 +5009,7 @@ vschess.load.prototype.createEditOtherButton = function(){
 
 	// 打开棋谱按钮
 	var buttonId = "vschess-tab-body-edit-open-button-" + vschess.guid();
-	this.editOpenButton = $('<label for="' + buttonId + '" class="vschess-button vschess-tab-body-edit-open-button">\u6253\u5f00\u68cb\u8c31</label>');
+	this.editOpenButton = $('<label for="' + buttonId + '" class="vschess-button vschess-tab-body-edit-open-button">打开棋谱</label>');
 	this.editOpenButton.appendTo(this.editArea);
 	this.editOpenFile = $('<input type="file" class="vschess-tab-body-edit-open-file" id="' + buttonId + '" />');
 	this.editOpenFile.appendTo(this.editArea);
@@ -5022,7 +5022,7 @@ vschess.load.prototype.createEditOtherButton = function(){
 				var reader = new FileReader();
 				reader.readAsArrayBuffer(file);
 				reader.onload = function(){
-					if (!_this.confirm("\u786e\u5b9a\u6253\u5f00\u8be5\u68cb\u8c31\u5417\uff1f\u5f53\u524d\u68cb\u8c31\u4f1a\u4e22\u5931\uff01")) {
+					if (!_this.confirm("确定打开该棋谱吗？当前棋谱会丢失！")) {
 						return false;
 					}
 
@@ -5059,18 +5059,18 @@ vschess.load.prototype.createEditOtherButton = function(){
 			}
 		}
 		else {
-			alert("\u5bf9\u4e0d\u8d77\uff0c\u8be5\u6d4f\u89c8\u5668\u4e0d\u652f\u6301\u6253\u5f00\u68cb\u8c31\u3002");
+			alert("对不起，该浏览器不支持打开棋谱。");
 		}
 
 		this.value = "";
 	});
 
 	// 重新开局按钮
-	this.editBeginButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-begin-button">\u91cd\u65b0\u5f00\u5c40</button>');
+	this.editBeginButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-begin-button">重新开局</button>');
 	this.editBeginButton.appendTo(this.editArea);
 
 	this.editBeginButton.bind(this.options.click, function(){
-		if (!_this.confirm("\u786e\u5b9a\u91cd\u65b0\u5f00\u5c40\u5417\uff1f\u5f53\u524d\u68cb\u8c31\u4f1a\u4e22\u5931\uff01")) {
+		if (!_this.confirm("确定重新开局吗？当前棋谱会丢失！")) {
 			return false;
 		}
 
@@ -5088,7 +5088,7 @@ vschess.load.prototype.createEditOtherButton = function(){
 	});
 
 	// 清空棋盘按钮
-	this.editBlankButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-blank-button">\u6e05\u7a7a\u68cb\u76d8</button>');
+	this.editBlankButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-blank-button">清空棋盘</button>');
 	this.editBlankButton.appendTo(this.editArea);
 
 	this.editBlankButton.bind(this.options.click, function(){
@@ -5123,7 +5123,7 @@ vschess.load.prototype.bindDrag = function(){
 			var reader = new FileReader();
 			reader.readAsArrayBuffer(file);
 			reader.onload = function(){
-				if (!_this.confirm("\u786e\u5b9a\u4f7f\u7528\u65b0\u7684\u68cb\u8c31\u5417\uff1f\u5f53\u524d\u68cb\u8c31\u4f1a\u4e22\u5931\uff01")) {
+				if (!_this.confirm("确定使用新的棋谱吗？当前棋谱会丢失！")) {
 					return false;
 				}
 
@@ -5206,9 +5206,9 @@ vschess.load.prototype.createExport = function(){
 	this.exportTextarea = $('<textarea class="vschess-tab-body-export-textarea" readonly="readonly" name="data"></textarea>').appendTo(this.exportArea);
 	this.exportFormat   = $('<select class="vschess-tab-body-export-format"   name="format"></select>').appendTo(this.exportArea);
 	this.exportFilename = $('<input  class="vschess-tab-body-export-filename" name="filename" type="hidden" />').appendTo(this.exportArea);
-	this.exportGenerate = $('<button type="button" class="vschess-button vschess-tab-body-export-generate">\u751f\u6210\u68cb\u8c31</button>').appendTo(this.exportArea);
-	this.exportCopy     = $('<button type="button" class="vschess-button vschess-tab-body-export-copy     vschess-tab-body-export-current">\u590d\u5236</button>').appendTo(this.exportArea);
-	this.exportDownload = $('<button type="button" class="vschess-button vschess-tab-body-export-download vschess-tab-body-export-current">\u4fdd\u5b58</button>').appendTo(this.exportArea);
+	this.exportGenerate = $('<button type="button" class="vschess-button vschess-tab-body-export-generate">生成棋谱</button>').appendTo(this.exportArea);
+	this.exportCopy     = $('<button type="button" class="vschess-button vschess-tab-body-export-copy     vschess-tab-body-export-current">复制</button>').appendTo(this.exportArea);
+	this.exportDownload = $('<button type="button" class="vschess-button vschess-tab-body-export-download vschess-tab-body-export-current">保存</button>').appendTo(this.exportArea);
 	this.exportData     = {};
 	this.tabArea.children(".vschess-tab-title-export, .vschess-tab-body-export").remove();
 	this.tabArea.append(this.exportTitle);
@@ -5251,7 +5251,7 @@ vschess.load.prototype.createExportList = function(){
 		}
 
 		generating = true;
-		_this.exportTextarea.val("\u6b63\u5728\u751f\u6210\u68cb\u8c31\uff0c\u8bf7\u7a0d\u5019\u3002");
+		_this.exportTextarea.val("正在生成棋谱，请稍候。");
 
 		setTimeout(function(){
 
@@ -5263,13 +5263,13 @@ vschess.load.prototype.createExportList = function(){
 	});
 
 	this.exportCopy.bind(this.options.click, function(){
-		_this.copy(_this.exportTextarea.val(), function(){ _this.showMessage("\u68cb\u8c31\u590d\u5236\u6210\u529f\uff0c\u60a8\u53ef\u4ee5\u76f4\u63a5\u7c98\u8d34\u4f7f\u7528\uff01"); });
+		_this.copy(_this.exportTextarea.val(), function(){ _this.showMessage("棋谱复制成功，您可以直接粘贴使用！"); });
 	});
 
 	this.exportDownload.bind(this.options.click, function(){
 		if (vschess.localDownload) {
 			var UTF8Text = _this.exportTextarea.val().replace(/\n/g, "\r\n").replace(/\r\r/g, "\r");
-			var fileName = _this.chessInfo.title || "\u4e2d\u56fd\u8c61\u68cb";
+			var fileName = _this.chessInfo.title || "中国象棋";
 
             _this.localDownload(fileName + ".txt", UTF8Text, { type: "text/plain" });
 		}
@@ -5291,7 +5291,7 @@ vschess.load.prototype.setExportFormat = function(format, force){
 	format = format || this.getExportFormat();
 	this._.exportFormat = vschess.exportFormatList[format] ? format : this.getExportFormat();
 	this.exportTextarea.removeClass().addClass("vschess-tab-body-export-textarea vschess-tab-body-export-textarea-format-" + format);
-	this.exportFilename.val(this.chessInfo.title || "\u4e2d\u56fd\u8c61\u68cb");
+	this.exportFilename.val(this.chessInfo.title || "中国象棋");
 
 	if (format === "TextBoard") {
 		this.exportGenerate.removeClass("vschess-tab-body-export-current");
@@ -5315,7 +5315,7 @@ vschess.load.prototype.setExportFormat = function(format, force){
 		this.exportCopy    .removeClass("vschess-tab-body-export-current");
 		this.exportDownload.removeClass("vschess-tab-body-export-current");
 		this.exportGenerate.   addClass("vschess-tab-body-export-current");
-		this.exportTextarea.val("\u8bf7\u70b9\u51fb\u201c\u751f\u6210\u201d\u6309\u94ae\u751f\u6210\u68cb\u8c31\u3002");
+		this.exportTextarea.val("请点击“生成”按钮生成棋谱。");
     }
 	else {
 		this.exportGenerate.removeClass("vschess-tab-body-export-current");
@@ -5366,7 +5366,7 @@ vschess.load.prototype.createHelp = function(){
 	this.helpArea = $('<div class="vschess-help-area"></div>');
 	this.helpArea.html('<div class="vschess-help-area-detail">' + helpDetail + '</div>');
 	this.DOM.append(this.helpArea);
-	this.helpAreaClose = $('<button type="button" class="vschess-button vschess-help-close">\u5173 \u95ed</button>');
+	this.helpAreaClose = $('<button type="button" class="vschess-button vschess-help-close">关 闭</button>');
 	this.helpAreaClose.bind(this.options.click, function(){ _this.hideHelpArea(); });
 	this.helpArea.append(this.helpAreaClose);
 	return this;
@@ -5417,18 +5417,18 @@ vschess.load.prototype.createInfo = function(){
 vschess.load.prototype.createInfoList = function(){
 	var _this = this;
 	this.chessInfo = vschess.dataToInfo(this.chessData, this.options.parseType);
-	this.setChessTitle(this.chessInfo && this.chessInfo.title || "\u4e2d\u56fd\u8c61\u68cb");
+	this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
 	this.infoList = $('<ul class="vschess-tab-body-info-list"></ul>');
 	this.infoArea.append(this.infoList);
 	this.insertInfoByCurrent();
-	this.infoEdit  = $('<button type="button" class="vschess-button vschess-tab-body-info-edit" >\u7f16 \u8f91</button>');
-	this.infoEmpty = $('<button type="button" class="vschess-button vschess-tab-body-info-empty">\u6e05 \u7a7a</button>');
+	this.infoEdit  = $('<button type="button" class="vschess-button vschess-tab-body-info-edit" >编 辑</button>');
+	this.infoEmpty = $('<button type="button" class="vschess-button vschess-tab-body-info-empty">清 空</button>');
 	this.infoArea.append(this.infoEdit );
 	this.infoArea.append(this.infoEmpty);
 	this.infoEdit.bind(this.options.click, function(){ _this.showInfoEditor(); });
 
 	this.infoEmpty.bind(this.options.click, function(){
-		if (!confirm("\u786e\u5b9a\u8981\u6e05\u7a7a\u6240\u6709\u4fe1\u606f\u5417\uff1f")) {
+		if (!confirm("确定要清空所有信息吗？")) {
 			return false;
 		}
 
@@ -5448,7 +5448,7 @@ vschess.load.prototype.insertInfoByCurrent = function(){
 	this.infoList.empty();
 
 	for (var i in this.chessInfo) {
-		this.infoItem[i] = $('<li class="vschess-tab-body-info-item">' + vschess.info.name[i] + '\uff1a' + vschess.showText(this.chessInfo[i], i) + '</li>');
+		this.infoItem[i] = $('<li class="vschess-tab-body-info-item">' + vschess.info.name[i] + '：' + vschess.showText(this.chessInfo[i], i) + '</li>');
 		this.infoList.append(this.infoItem[i]);
 	}
 
@@ -5474,7 +5474,7 @@ vschess.load.prototype.createInfoEditor = function(){
 
 	for (var i in vschess.info.name) {
 		this.infoEditorItem     [i] = $('<li class="vschess-info-editor-item vschess-info-editor-item-' + i + '"></li>');
-		this.infoEditorItemName [i] = $('<div class="vschess-info-editor-item-name vschess-info-editor-item-name-' + i + '">' + vschess.info.name[i] + '\uff1a</div></li>');
+		this.infoEditorItemName [i] = $('<div class="vschess-info-editor-item-name vschess-info-editor-item-name-' + i + '">' + vschess.info.name[i] + '：</div></li>');
 		this.infoEditorItemValue[i] = $('<input type="' + (i === "date" ? "date" : "text") + '" class="vschess-info-editor-item-value vschess-info-editor-item-value-' + i + '" />');
 		this.infoEditorItem     [i].append(this.infoEditorItemName [i]);
 		this.infoEditorItem     [i].append(this.infoEditorItemValue[i]);
@@ -5488,10 +5488,10 @@ vschess.load.prototype.createInfoEditor = function(){
 			var u_randomId = "vschess-info-editor-item-value-result-label-id-u-" + vschess.guid();
 
 			this.infoEditorItemValueResult = {
-				r_label: $('<label class="vschess-info-editor-item-value-result-label vschess-info-editor-item-value-result-label-r" for="' + r_randomId + '">\u7ea2\u80dc</label>'),
-				b_label: $('<label class="vschess-info-editor-item-value-result-label vschess-info-editor-item-value-result-label-b" for="' + b_randomId + '">\u9ed1\u80dc</label>'),
-				d_label: $('<label class="vschess-info-editor-item-value-result-label vschess-info-editor-item-value-result-label-d" for="' + d_randomId + '">\u548c\u68cb</label>'),
-				u_label: $('<label class="vschess-info-editor-item-value-result-label vschess-info-editor-item-value-result-label-u" for="' + u_randomId + '">\u672a\u77e5</label>'),
+				r_label: $('<label class="vschess-info-editor-item-value-result-label vschess-info-editor-item-value-result-label-r" for="' + r_randomId + '">红胜</label>'),
+				b_label: $('<label class="vschess-info-editor-item-value-result-label vschess-info-editor-item-value-result-label-b" for="' + b_randomId + '">黑胜</label>'),
+				d_label: $('<label class="vschess-info-editor-item-value-result-label vschess-info-editor-item-value-result-label-d" for="' + d_randomId + '">和棋</label>'),
+				u_label: $('<label class="vschess-info-editor-item-value-result-label vschess-info-editor-item-value-result-label-u" for="' + u_randomId + '">未知</label>'),
 				r_radio: $('<input type="radio" name="' + radio_name + '" class="vschess-info-editor-item-value-result-radio vschess-info-editor-item-value-result-radio-r" id="' + r_randomId + '" />'),
 				b_radio: $('<input type="radio" name="' + radio_name + '" class="vschess-info-editor-item-value-result-radio vschess-info-editor-item-value-result-radio-b" id="' + b_randomId + '" />'),
 				d_radio: $('<input type="radio" name="' + radio_name + '" class="vschess-info-editor-item-value-result-radio vschess-info-editor-item-value-result-radio-d" id="' + d_randomId + '" />'),
@@ -5509,19 +5509,19 @@ vschess.load.prototype.createInfoEditor = function(){
 		}
 
 		if (~vschess.autoInfo.indexOf(i)) {
-			this.infoEditorItemAuto[i] = $('<button type="button" class="vschess-button vschess-info-editor-item-auto vschess-info-editor-item-auto-' + i + '" alt="\u6839\u636e\u5f53\u524d\u5206\u652f\u81ea\u52a8\u8bc6\u522b' + vschess.info.name[i] + '" title="\u6839\u636e\u5f53\u524d\u5206\u652f\u81ea\u52a8\u8bc6\u522b' + vschess.info.name[i] + '">\u8bc6 \u522b</button>');
+			this.infoEditorItemAuto[i] = $('<button type="button" class="vschess-button vschess-info-editor-item-auto vschess-info-editor-item-auto-' + i + '" alt="根据当前分支自动识别' + vschess.info.name[i] + '" title="根据当前分支自动识别' + vschess.info.name[i] + '">识 别</button>');
 			this.infoEditorItem    [i].append(this.infoEditorItemAuto[i]);
 		}
 	}
 
 	this.setInfoEditorItemValueResult(this.infoEditorItemValue.result.val());
-	this.infoEditorOK     = $('<button type="button" class="vschess-button vschess-info-editor-ok"    >\u786e \u5b9a</button>');
-	this.infoEditorEmpty  = $('<button type="button" class="vschess-button vschess-info-editor-empty" >\u6e05 \u7a7a</button>');
-	this.infoEditorCancel = $('<button type="button" class="vschess-button vschess-info-editor-cancel">\u53d6 \u6d88</button>');
+	this.infoEditorOK     = $('<button type="button" class="vschess-button vschess-info-editor-ok"    >确 定</button>');
+	this.infoEditorEmpty  = $('<button type="button" class="vschess-button vschess-info-editor-empty" >清 空</button>');
+	this.infoEditorCancel = $('<button type="button" class="vschess-button vschess-info-editor-cancel">取 消</button>');
 
 	this.infoEditorOK.bind(this.options.click, function(){
 		_this.chessInfo = _this.getInfoFromEditor();
-		_this.setChessTitle(_this.chessInfo && _this.chessInfo.title || "\u4e2d\u56fd\u8c61\u68cb");
+		_this.setChessTitle(_this.chessInfo && _this.chessInfo.title || "中国象棋");
 		_this.insertInfoByCurrent();
 		_this.hideInfoEditor();
 		_this.rebuildExportAll();
@@ -5529,7 +5529,7 @@ vschess.load.prototype.createInfoEditor = function(){
 	});
 
 	this.infoEditorEmpty.bind(this.options.click, function(){
-		if (!confirm("\u786e\u5b9a\u8981\u6e05\u7a7a\u6240\u6709\u4fe1\u606f\u5417\uff1f")) {
+		if (!confirm("确定要清空所有信息吗？")) {
 			return false;
 		}
 
@@ -5568,7 +5568,7 @@ vschess.load.prototype.refreshInfoEditor = function(){
 		}
 	}
 
-	return this.setChessTitle(this.chessInfo && this.chessInfo.title || "\u4e2d\u56fd\u8c61\u68cb");
+	return this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
 };
 
 // 根据结果设置选择结果单选按钮
@@ -5664,7 +5664,7 @@ vschess.load.prototype.localDownload = function(filename, filedata, param){
 vschess.load.prototype.createMobileTag = function () {
     var _this = this;
 
-    this.mobileCloseTab = $('<div class="vschess-mobile-close-tab">\u68cb<br />\u76d8</div>');
+    this.mobileCloseTab = $('<div class="vschess-mobile-close-tab">棋<br />盘</div>');
     this.DOM.children(".vschess-mobile-close-tab").remove();
     this.DOM.append(this.mobileCloseTab);
 
@@ -5672,7 +5672,7 @@ vschess.load.prototype.createMobileTag = function () {
         _this.showTab("board");
     });
 
-    this.mobileShowMoveList = $('<div class="vschess-mobile-show-move-list">\u7740<br />\u6cd5</div>');
+    this.mobileShowMoveList = $('<div class="vschess-mobile-show-move-list">着<br />法</div>');
     this.DOM.children(".vschess-mobile-show-move-list").remove();
     this.DOM.append(this.mobileShowMoveList);
 
@@ -5695,7 +5695,7 @@ vschess.load.prototype.createMoveSelectList = function(){
 vschess.load.prototype.refreshMoveSelectListNode = function(){
 	var _this = this;
 	var startRound = this.situationList[0][1];
-	var selectListNode = ['<li class="vschess-move-select-node-begin">===== \u68cb\u5c40\u5f00\u59cb' + (this.commentList[0] ? "*" : "") + ' =====</li>'];
+	var selectListNode = ['<li class="vschess-move-select-node-begin">===== 棋局开始' + (this.commentList[0] ? "*" : "") + ' =====</li>'];
 
 	switch (this.getMoveFormat()) {
 		default    : var moveList = this.getTurnForMove() ? this.moveNameList.ChineseM.slice(0) : this.moveNameList.Chinese.slice(0); break;
@@ -5771,7 +5771,7 @@ vschess.load.prototype.createChangeSelectList = function(){
 // 刷新变招选择列表内所有着法
 vschess.load.prototype.refreshChangeSelectListNode = function(){
 	if (this.getCurrentStep() <= 0) {
-		this.changeSelectTitle.text("\u63d0\u793a\u4fe1\u606f");
+		this.changeSelectTitle.text("提示信息");
 		this.changeSelectList.empty();
 
 		for (var i = 0; i < this.options.startTips.length; ++i) {
@@ -5798,13 +5798,13 @@ vschess.load.prototype.refreshChangeSelectListNode = function(){
 		selectListNode.push('<li class="vschess-change-select-node">');
 		selectListNode.push('<span class="vschess-change-select-node-text vschess-change-select-node-move">');
 		selectListNode.push(converter(changeMove, prevFen, this.options).move, changeList[i].comment ? "*" : "", '</span>');
-		selectListNode.push('<span class="vschess-change-select-node-text vschess-change-select-node-up">\u4e0a\u79fb</span>');
-		selectListNode.push('<span class="vschess-change-select-node-text vschess-change-select-node-down">\u4e0b\u79fb</span>');
-		selectListNode.push('<span class="vschess-change-select-node-text vschess-change-select-node-delete">\u5220\u9664</span>');
+		selectListNode.push('<span class="vschess-change-select-node-text vschess-change-select-node-up">上移</span>');
+		selectListNode.push('<span class="vschess-change-select-node-text vschess-change-select-node-down">下移</span>');
+		selectListNode.push('<span class="vschess-change-select-node-text vschess-change-select-node-delete">删除</span>');
 		selectListNode.push('</li>');
 	}
 
-	this.changeSelectTitle.text("\u53d8\u62db\u5217\u8868");
+	this.changeSelectTitle.text("变招列表");
 	this.changeSelectList.html(selectListNode.join(""));
 	this.changeSelectListChanges = this.changeSelectList.children();
 	this.changeSelectListChanges.first().addClass("vschess-change-select-node-first");
@@ -5866,7 +5866,7 @@ vschess.load.prototype.refreshChangeSelectListNode = function(){
 		each.children(".vschess-change-select-node-delete").bind(_this.options.click, function(e){
 			e.stopPropagation();
 
-			if (!confirm("\u786e\u5b9a\u8981\u5220\u9664\u8be5\u7740\u6cd5\u5417\uff1f\u8be5\u7740\u6cd5\u53ca\u4e4b\u540e\u7684\u6240\u6709\u7740\u6cd5\u90fd\u5c06\u88ab\u5220\u9664\uff01")) {
+			if (!confirm("确定要删除该着法吗？该着法及之后的所有着法都将被删除！")) {
 				return false;
 			}
 
@@ -6334,11 +6334,11 @@ vschess.load.prototype.pieceClick = function(){
 					var Move = From + To;
 
 					if (_this.getBanRepeatLongThreat() && ~_this.repeatLongThreatMoveList.indexOf(Move)) {
-						alert("\u7981\u6b62\u91cd\u590d\u957f\u6253\uff01");
+						alert("禁止重复长打！");
 					}
 
 					if (_this.getBanRepeatLongKill() && ~_this.repeatLongKillMoveList.indexOf(Move)) {
-						alert("\u7981\u6b62\u91cd\u590d\u4e00\u5c06\u4e00\u6740\uff01");
+						alert("禁止重复一将一杀！");
 					}
 				}
 
@@ -6620,11 +6620,11 @@ vschess.load.prototype.playSoundBySituation = function(step){
 	if (this.getSpeakMove()) {
 		var move = this.getMoveNameList()[this.getCurrentStep()];
 		// TTS 部分读音有错误，用同音字强行纠正
-		move = move.replace(/\u5352/g, "\u8db3");
-		move = move.replace(/\u76f8/g, "\u8c61");
-		move = move.replace(/\u5c06/g, "\u9171");
-		move = move.replace(/\u4e00/g, "\u533b");
-		move = move.replace(/\uff11/g, "\u533b");
+		move = move.replace(/\u5352/g, "足");
+		move = move.replace(/\u76f8/g, "象");
+		move = move.replace(/\u5c06/g, "酱");
+		move = move.replace(/\u4e00/g, "医");
+		move = move.replace(/\uff11/g, "医");
 		this.speakMove(move);
 	}
 	// 普通音效
@@ -6773,7 +6773,7 @@ vschess.load.prototype.toString = function(){
 
 // 程序转换为字符串信息
 vschess.toString = function(){
-	return "\u5fae\u601d\u8c61\u68cb\u64ad\u653e\u5668 V" + vschess.version + " https://www.xiaxiangqi.com/vschess/ Copyright \u00a9 2009-2023 Margin.Top \u7248\u6743\u6240\u6709";
+	return "微思象棋播放器 V" + vschess.version + " https://www.xiaxiangqi.com/vschess/ Copyright © 2009-2023 Margin.Top 版权所有";
 };
 
 // 将 vschess 提升为全局变量，这样外部脚本就可以调用了
