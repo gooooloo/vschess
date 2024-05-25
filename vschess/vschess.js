@@ -1523,7 +1523,7 @@ $.extend(vschess, {
 	dpr: window.devicePixelRatio || 1,
 
 	// 编辑局面开始按钮列表
-	editStartList: ["editStartButton", "editNodeStartButton", "editBeginButton", "editBlankButton", "editOpenButton", "editRandomReviewButton", "editQuitRandomReviewButton", "editRedOpeningButton", "editBlackOpeningButton"],
+	editStartList: ["editStartButton", "editNodeStartButton", "editBeginButton", "editBlankButton", "editOpenButton", "editRandomReviewButton", "editRedOpeningButton", "editBlackOpeningButton"],
 
 	// 编辑局面组件列表
 	editModuleList: ["editEndButton", "editCancelButton", "editTips", "editTextarea", "editTextareaPlaceholder", "editPieceArea", "editBoard", "recommendClass", "recommendList", "editEditStartText", "editEditStartRound", "editEditStartPlayer"],
@@ -5135,44 +5135,39 @@ vschess.load.prototype.createEditOtherButton = function(){
 		_this.dragPiece = null;
 	});
 
-    function setReviewNode(node)
-    {
-		_this.setNode(node);
-		_this.rebuildSituation();
-        _this.setBoardByStep(0);
-		_this.refreshMoveSelectListNode();
-		_this.chessInfo = {};
-		_this.insertInfoByCurrent();
-		_this.refreshInfoEditor();
-		_this.rebuildExportAll();
-		_this.setExportFormat();
-    }
-
 	// 随机复习按钮
 	this.editRandomReviewButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-begin-button">随机复习</button>');
 	this.editRandomReviewButton.appendTo(this.editArea);
 	this.editRandomReviewButton.bind(this.options.click, function(){
         if (!_this.global_node) _this.global_node = _this.node;
 
-        var node = {..._this.global_node};
-        var current = node;
-        while (current.next.length) {
-            const index = (current.next.length > 1) ? Math.floor(Math.random() * current.next.length) : 0;
-            current.next = [{ ...current.next[index] }];
+        const currentStep = _this.getCurrentStep();
+        var currentNode = _this.selectDefault(currentStep);
 
-            current = current.next[0];
+        let queue_todo = [[currentNode]];
+        let queue_done = []
+        while (queue_todo.length > 0) {
+            nodes = queue_todo.pop();
+            lastnode = nodes[nodes.length - 1];
+            if (lastnode.next.length == 0) {
+                queue_done.push(nodes);
+            } else {
+                for (var i = 0; i < lastnode.next.length; i++) {
+                    queue_todo.push([...nodes, lastnode.next[i]]);
+                }
+            }
         }
 
-        setReviewNode(node);
-	});
+        if (queue_done.length < 2) return;
 
-	// 退出随机复习按钮
-	this.editQuitRandomReviewButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-begin-button">退出随机复习</button>');
-	this.editQuitRandomReviewButton.appendTo(this.editArea);
-	this.editQuitRandomReviewButton.bind(this.options.click, function(){
-        if (_this.global_node) {
-            setReviewNode(_this.global_node);
-            _this.global_node = undefined;
+        const index = Math.floor(Math.random() * queue_done.length);
+        const randomNodes = queue_done[index];
+        if (randomNodes.length < 2) return;
+
+        for (var i = 1; i < randomNodes.length; i++) {
+            if (_this.setMoveDefaultAtNode(randomNodes[i].move, i + currentStep - 1)) {
+                _this.rebuildSituation().refreshBoard().refreshMoveSelectListNode();
+            }
         }
 	});
 
