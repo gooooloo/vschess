@@ -1523,7 +1523,7 @@ $.extend(vschess, {
 	dpr: window.devicePixelRatio || 1,
 
 	// 编辑局面开始按钮列表
-	editStartList: ["editStartButton", "editNodeStartButton", "editBeginButton", "editBlankButton", "editOpenButton"],
+	editStartList: ["editStartButton", "editNodeStartButton", "editBeginButton", "editBlankButton", "editOpenButton", "editRandomReviewButton"],
 
 	// 编辑局面组件列表
 	editModuleList: ["editEndButton", "editCancelButton", "editTips", "editTextarea", "editTextareaPlaceholder", "editPieceArea", "editBoard", "recommendClass", "recommendList", "editEditStartText", "editEditStartRound", "editEditStartPlayer"],
@@ -5103,6 +5103,35 @@ vschess.load.prototype.createEditOtherButton = function(){
 		_this.dragPiece = null;
 	});
 
+	// 随机复习按钮
+	this.editRandomReviewButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-begin-button">随机复习</button>');
+	this.editRandomReviewButton.appendTo(this.editArea);
+
+	this.editRandomReviewButton.bind(this.options.click, function(){
+        if (!_this.global_node) return;
+
+        var node = {..._this.global_node};
+        var current = node;
+        while (current.next.length) {
+            const index = (current.next.length > 1) ? Math.floor(Math.random() * current.next.length) : 0;
+            current.next = [{ ...current.next[index] }];
+
+            current = current.next[0];
+        }
+
+		_this.setNode(node, overwrite_global_node=false);
+		_this.rebuildSituation();
+        _this.setBoardByStep(0);
+		_this.refreshMoveSelectListNode();
+		_this.chessInfo = {};
+		_this.insertInfoByCurrent();
+		_this.refreshInfoEditor();
+		_this.rebuildExportAll();
+		_this.setExportFormat();
+		_this.setTurn(0);
+		_this.setSaved(true);
+	});
+
 	return this;
 };
 
@@ -6305,7 +6334,8 @@ vschess.load.prototype.getNodeLength = function(){
 };
 
 // 设置当前节点树
-vschess.load.prototype.setNode = function(node){
+vschess.load.prototype.setNode = function(node, overwrite_global_node = true){
+    if (overwrite_global_node) this.global_node = node;
 	this.node = node;
 	this.refreshNodeLength();
 	return this;
