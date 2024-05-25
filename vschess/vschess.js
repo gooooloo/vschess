@@ -1523,7 +1523,7 @@ $.extend(vschess, {
 	dpr: window.devicePixelRatio || 1,
 
 	// 编辑局面开始按钮列表
-	editStartList: ["editStartButton", "editNodeStartButton", "editBeginButton", "editBlankButton", "editOpenButton"],
+	editStartList: ["editStartButton", "editNodeStartButton", "editBeginButton", "editBlankButton", "editOpenButton", "editRandomReviewButton", "editQuitRandomReviewButton"],
 
 	// 编辑局面组件列表
 	editModuleList: ["editEndButton", "editCancelButton", "editTips", "editTextarea", "editTextareaPlaceholder", "editPieceArea", "editBoard", "recommendClass", "recommendList", "editEditStartText", "editEditStartRound", "editEditStartPlayer"],
@@ -5101,6 +5101,48 @@ vschess.load.prototype.createEditOtherButton = function(){
 		_this.fillEditBoardByFen(vschess.blankFen);
 		_this.editSelectedIndex = -99;
 		_this.dragPiece = null;
+	});
+
+    function setReviewNode(node)
+    {
+		_this.setNode(node);
+		_this.rebuildSituation();
+        _this.setBoardByStep(0);
+		_this.refreshMoveSelectListNode();
+		_this.chessInfo = {};
+		_this.insertInfoByCurrent();
+		_this.refreshInfoEditor();
+		_this.rebuildExportAll();
+		_this.setExportFormat();
+		_this.setTurn(0);
+    }
+
+	// 随机复习按钮
+	this.editRandomReviewButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-begin-button">随机复习</button>');
+	this.editRandomReviewButton.appendTo(this.editArea);
+	this.editRandomReviewButton.bind(this.options.click, function(){
+        if (!_this.global_node) _this.global_node = _this.node;
+
+        var node = {..._this.global_node};
+        var current = node;
+        while (current.next.length) {
+            const index = (current.next.length > 1) ? Math.floor(Math.random() * current.next.length) : 0;
+            current.next = [{ ...current.next[index] }];
+
+            current = current.next[0];
+        }
+
+        setReviewNode(node);
+	});
+
+	// 退出随机复习按钮
+	this.editQuitRandomReviewButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-begin-button">退出随机复习</button>');
+	this.editQuitRandomReviewButton.appendTo(this.editArea);
+	this.editQuitRandomReviewButton.bind(this.options.click, function(){
+        if (_this.global_node) {
+            setReviewNode(_this.global_node);
+            _this.global_node = undefined;
+        }
 	});
 
 	return this;
