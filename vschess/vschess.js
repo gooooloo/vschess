@@ -4117,14 +4117,18 @@ vschess.load.prototype.createFormatBar = function(){
 	}
 
 	this.formatBarButton = {
+		random		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-format" >随 机</button>'),
 		copy		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-copy"   >复 制</button>'),
-		format		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-format" >格 式</button>'),
 		help		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-help"   >帮 助</button>'),
 		save		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-save"   >保 存</button>'),
 		saveFormat	: $('<input  type="hidden" class="vschess-format-bar-save-format"   name="format" value="DhtmlXQ" />'),
 		saveInput	: $('<input  type="hidden" class="vschess-format-bar-save-input"    name="data" />'),
 		saveFilename: $('<input  type="hidden" class="vschess-format-bar-save-filename" name="filename" />')
 	};
+
+	this.formatBarButton.random.bind(this.options.click, function(){
+        _this.randomReview();
+	});
 
 	this.formatBarButton.help.bind(this.options.click, function(){
 		_this.showHelpArea();
@@ -5138,38 +5142,7 @@ vschess.load.prototype.createEditOtherButton = function(){
 	// 随机复习按钮
 	this.editRandomReviewButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-begin-button">随机复习</button>');
 	this.editRandomReviewButton.appendTo(this.editArea);
-	this.editRandomReviewButton.bind(this.options.click, function(){
-        if (!_this.global_node) _this.global_node = _this.node;
-
-        const currentStep = _this.getCurrentStep();
-        var currentNode = _this.selectDefault(currentStep);
-
-        let queue_todo = [[currentNode]];
-        let queue_done = []
-        while (queue_todo.length > 0) {
-            nodes = queue_todo.pop();
-            lastnode = nodes[nodes.length - 1];
-            if (lastnode.next.length == 0) {
-                queue_done.push(nodes);
-            } else {
-                for (var i = 0; i < lastnode.next.length; i++) {
-                    queue_todo.push([...nodes, lastnode.next[i]]);
-                }
-            }
-        }
-
-        if (queue_done.length < 2) return;
-
-        const index = Math.floor(Math.random() * queue_done.length);
-        const randomNodes = queue_done[index];
-        if (randomNodes.length < 2) return;
-
-        for (var i = 1; i < randomNodes.length; i++) {
-            if (_this.setMoveDefaultAtNode(randomNodes[i].move, i + currentStep - 1)) {
-                _this.rebuildSituation().refreshBoard().refreshMoveSelectListNode();
-            }
-        }
-	});
+	this.editRandomReviewButton.bind(this.options.click, function(){ _this.randomReview(); });
 
     function loadOpening(chessData) {
       const chessNode = vschess.dataToNode(chessData);
@@ -6888,6 +6861,37 @@ vschess.load.prototype.showTab = function(tabName){
 // 棋盘对象转换为字符串信息
 vschess.load.prototype.toString = function(){
 	return this.getCurrentFen();
+};
+
+vschess.load.prototype.randomReview = function () {
+  const currentStep = this.getCurrentStep();
+  var currentNode = this.selectDefault(currentStep);
+
+  let queue_todo = [[currentNode]];
+  let queue_done = [];
+  while (queue_todo.length > 0) {
+    nodes = queue_todo.pop();
+    lastnode = nodes[nodes.length - 1];
+    if (lastnode.next.length == 0) {
+      queue_done.push(nodes);
+    } else {
+      for (var i = 0; i < lastnode.next.length; i++) {
+        queue_todo.push([...nodes, lastnode.next[i]]);
+      }
+    }
+  }
+
+  if (queue_done.length < 2) return;
+
+  const index = Math.floor(Math.random() * queue_done.length);
+  const randomNodes = queue_done[index];
+  if (randomNodes.length < 2) return;
+
+  for (var i = 1; i < randomNodes.length; i++) {
+    if (this.setMoveDefaultAtNode(randomNodes[i].move, i + currentStep - 1)) {
+      this.rebuildSituation().refreshBoard().refreshMoveSelectListNode();
+    }
+  }
 };
 
 // 程序转换为字符串信息
