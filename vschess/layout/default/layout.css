@@ -1,4 +1,4 @@
-.vschess-layout-default { width:754px; height:519px; padding:2px; border:1px solid #d3c7b8; background-color:#fff; font-family: "Microsoft YaHei", "SimSun", Tahoma, "Arial Unicode MS"; box-sizing:content-box; }
+.vschess-layout-default { width:754px; height:540px; padding:2px; border:1px solid #d3c7b8; background-color:#fff; font-family: "Microsoft YaHei", "SimSun", Tahoma, "Arial Unicode MS"; box-sizing:content-box; }
 .vschess-layout-default * { font-family: "Microsoft YaHei", "SimSun", Tahoma, "Arial Unicode MS"; font-size:12px; margin:0; padding:0; box-sizing:content-box; text-decoration:none; }
 .vschess-layout-default .vschess-button { width:48px; height:24px; position:relative; display:block; font-size:12px; cursor:pointer; -webkit-appearance:none; border:1px solid #bfbfbf; background-color:#f5f5f5; text-align:center; box-sizing:border-box; }
 .vschess-layout-default .vschess-button:hover { border-color:#0078d7; background-color:#e5f1fb; }
@@ -15,7 +15,7 @@
 .vschess-layout-default .vschess-column-index-a .vschess-column-index-item { float:left ; }
 .vschess-layout-default .vschess-column-index-b .vschess-column-index-item { float:right; }
 .vschess-layout-default .vschess-control-bar { position:absolute; top:497px; left:2px; width:382px; _width:385px; height:24px; z-index:10; }
-.vschess-layout-default .vschess-control-bar-button  { width: 45px; float:left; z-index:0; margin-right:2px; }
+.vschess-layout-default .vschess-control-bar-button  { width: 45px; float:left; z-index:0; margin-right:2px; height:45px; }
 .vschess-layout-default .vschess-control-bar-play    { width: 98px; display:none; color:#008000; }
 .vschess-layout-default .vschess-control-bar-pause   { width: 98px; display:none; color:#ff0000; }
 .vschess-layout-default .vschess-control-bar-button-current { display:block; }
@@ -48,7 +48,7 @@
 .vschess-layout-default .vschess-change-select-tips a       { color:#000; font-size:12px; }
 .vschess-layout-default .vschess-change-select-tips a:hover { color:#887d6f; }
 .vschess-layout-default .vschess-format-bar { position:absolute; top:497px; left:384px; width:188px; _width:191px; height:24px; z-index:15; }
-.vschess-layout-default .vschess-format-bar-button  { position:relative; display:block; width:45px; float:left; margin-right:2px; }
+.vschess-layout-default .vschess-format-bar-button  { position:relative; display:block; width:45px; float:left; margin-right:2px; height:45px; }
 .vschess-layout-default .vschess-format-bar-chinese { display:none; position:absolute; top:-72px; left:47px; }
 .vschess-layout-default .vschess-format-bar-wxf     { display:none; position:absolute; top:-48px; left:47px; }
 .vschess-layout-default .vschess-format-bar-iccs    { display:none; position:absolute; top:-24px; left:47px; }
