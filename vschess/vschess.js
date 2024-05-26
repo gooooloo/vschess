@@ -1523,7 +1523,7 @@ $.extend(vschess, {
 	dpr: window.devicePixelRatio || 1,
 
 	// 编辑局面开始按钮列表
-	editStartList: ["editStartButton", "editNodeStartButton", "editBeginButton", "editBlankButton", "editOpenButton", "editRandomReviewButton", "editRedOpeningButton", "editBlackOpeningButton"],
+	editStartList: ["editStartButton", "editNodeStartButton", "editBeginButton", "editBlankButton", "editOpenButton", "editMergeButton", "editRandomReviewButton", "editRedOpeningButton", "editBlackOpeningButton"],
 
 	// 编辑局面组件列表
 	editModuleList: ["editEndButton", "editCancelButton", "editTips", "editTextarea", "editTextareaPlaceholder", "editPieceArea", "editBoard", "recommendClass", "recommendList", "editEditStartText", "editEditStartRound", "editEditStartPlayer"],
@@ -5097,6 +5097,57 @@ vschess.load.prototype.createEditOtherButton = function(){
 		this.value = "";
 	});
 
+	// 合并棋谱按钮
+	var buttonId = "vschess-tab-body-edit-open-button-" + vschess.guid();
+	this.editMergeButton = $('<label for="' + buttonId + '" class="vschess-button vschess-tab-body-edit-open-button">合并棋谱</label>');
+	this.editMergeButton.appendTo(this.editArea);
+	this.editMergeFile = $('<input type="file" class="vschess-tab-body-edit-open-file" id="' + buttonId + '" />');
+	this.editMergeFile.appendTo(this.editArea);
+	this.editMergeFile.bind("change", function(){
+		if (typeof FileReader === "function") {
+			if (this.files.length) {
+				var file = this.files[0];
+				var ext = file.name.split(".").pop().toLowerCase();
+				var reader = new FileReader();
+				reader.readAsArrayBuffer(file);
+				reader.onload = function(){
+					if (!_this.confirm("确定打开该棋谱吗？当前棋谱会丢失！")) {
+						return false;
+					}
+
+					var RegExp    = vschess.RegExp();
+					var fileData  = new Uint8Array(this.result);
+					var chessData = vschess.join(fileData);
+
+					if (~vschess.binaryExt.indexOf(ext)) {
+						var chessNode = vschess.binaryToNode(fileData);
+					}
+					else {
+						(chessData = vschess.iconv2UTF8(fileData));
+						var chessNode = vschess.dataToNode(chessData);
+					}
+
+					_this.setBoardByStep(0);
+					_this.mergeNode(chessNode);
+					_this.rebuildSituation();
+					_this.refreshMoveSelectListNode();
+					_this.setBoardByStep(0);
+					_this.insertInfoByCurrent();
+					_this.rebuildExportAll();
+					_this.setExportFormat();
+					_this.editNodeTextarea.val("");
+					_this.hideNodeEditModule();
+					_this.hideEditModule();
+					_this.showEditStartButton();
+					_this.setSaved(false);
+				}
+			}
+		}
+		else {
+			alert("对不起，该浏览器不支持打开棋谱。");
+		}
+	});
+
 	// 重新开局按钮
 	this.editBeginButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-begin-button">重新开局</button>');
 	this.editBeginButton.appendTo(this.editArea);
@@ -6401,6 +6452,50 @@ vschess.load.prototype.setNode = function(node){
 	this.node = node;
 	this.refreshNodeLength();
 	return this;
+};
+
+vschess.load.prototype.mergeNode = function (node2) {
+  const node1 = this.node;
+  if (node1.fen !== node2.fen) {
+    alert("初始局面不同，无法合并！");
+    return this;
+  }
+  function mergeNode2IntoNode1(node2, node1) {
+    (node1.fen === node2.fen) || alert("局面不同，无法合并！");
+    (node1.move === node2.move) || alert("局面不同，无法合并！");
+    const next1 = node1.next;
+    const next2 = node2.next;
+
+    if (node2.comment.trim()) {
+        if (node1.comment.trim()) {
+            node1.comment = node1.comment.trim() + '\n' + node2.comment.trim();
+        } else {
+            node1.comment = node2.comment.trim();
+        }
+    }
+
+    for (let i = 0; i < next2.length; ++i) {
+      const move2 = next2[i].move;
+      let match_node1 = undefined;
+      for (let j = 0; j < next1.length; ++j) {
+        const move1 = next1[j].move;
+        if (move1 === move2) {
+          match_node1 = next1[j];
+          break;
+        }
+      }
+
+      if (match_node1) {
+        mergeNode2IntoNode1(next2[i], match_node1);
+      } else {
+        next1.push(next2[i]);
+      }
+    }
+  }
+
+  mergeNode2IntoNode1(node2, node1);
+
+  return this.setNode(node1);
 };
 
 // 棋子单击事件绑定
