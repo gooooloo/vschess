@@ -4118,8 +4118,8 @@ vschess.load.prototype.createFormatBar = function(){
 
 	this.formatBarButton = {
 		random		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-format" >随 机</button>'),
+		focus		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-help"   >聚 焦</button>'),
 		copy		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-copy"   >复 制</button>'),
-		help		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-help"   >帮 助</button>'),
 		save		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-save"   >保 存</button>'),
 		saveFormat	: $('<input  type="hidden" class="vschess-format-bar-save-format"   name="format" value="DhtmlXQ" />'),
 		saveInput	: $('<input  type="hidden" class="vschess-format-bar-save-input"    name="data" />'),
@@ -4130,9 +4130,13 @@ vschess.load.prototype.createFormatBar = function(){
         _this.randomReview();
 	});
 
-	this.formatBarButton.help.bind(this.options.click, function(){
-		_this.showHelpArea();
-	});
+	this.formatBarButton.focus.bind(this.options.click, function(){
+        _this.focusSteps = [];
+        const currentStep = _this.getCurrentStep();
+        for (let i = 0; i <= currentStep; i++) {
+            _this.focusSteps.push(_this.selectDefault(i));
+        }
+    });
 
 	this.formatBarButton.save.bind(this.options.click, function(){
 		_this.rebuildExportDhtmlXQ();
@@ -4572,6 +4576,7 @@ vschess.load.prototype.createEditEndButton = function(){
 			_this.setTurn(turn);
 			_this.setSaved(true);
 
+            _this.focusSteps = undefined;
             _this.loadingRedOpening = false;
             _this.loadingBlackOpening = false;
             _this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
@@ -4983,6 +4988,7 @@ vschess.load.prototype.createNodeEndButton = function(){
 		_this.showEditStartButton();
 		_this.setSaved(true);
 
+        _this.focusSteps = undefined;
         _this.loadingRedOpening = false;
         _this.loadingBlackOpening = false;
         _this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
@@ -5084,6 +5090,7 @@ vschess.load.prototype.createEditOtherButton = function(){
 					_this.showEditStartButton();
 					_this.setSaved(true);
 
+                    _this.focusSteps = undefined;
                     _this.loadingRedOpening = false;
                     _this.loadingBlackOpening = false;
                     _this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
@@ -5169,6 +5176,7 @@ vschess.load.prototype.createEditOtherButton = function(){
 		_this.setTurn(0);
 		_this.setSaved(true);
 
+        _this.focusSteps = undefined;
         _this.loadingRedOpening = false;
         _this.loadingBlackOpening = false;
         _this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
@@ -5221,6 +5229,7 @@ vschess.load.prototype.createEditOtherButton = function(){
         if (_this.options.red_opening) {
             loadOpening(_this.options.red_opening);
             _this.setTurn(0);
+            _this.focusSteps = undefined;
             _this.loadingRedOpening = true;
             _this.loadingBlackOpening = false;
             _this.setChessTitle('红方开局库');
@@ -5235,6 +5244,7 @@ vschess.load.prototype.createEditOtherButton = function(){
         if (_this.options.black_opening) {
             loadOpening(_this.options.black_opening);
             _this.setTurn(3);
+            _this.focusSteps = undefined;
             _this.loadingRedOpening = false;
             _this.loadingBlackOpening = true;
             _this.setChessTitle('黑方开局库');
@@ -5298,6 +5308,7 @@ vschess.load.prototype.bindDrag = function(){
 				_this.hideHelpArea();
 				_this.hideInfoEditor();
 
+                _this.focusSteps = undefined;
                 _this.loadingRedOpening = false;
                 _this.loadingBlackOpening = false;
             _this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
@@ -6959,8 +6970,25 @@ vschess.load.prototype.toString = function(){
 };
 
 vschess.load.prototype.randomReview = function () {
-  const currentStep = this.getCurrentStep();
-  var currentNode = this.selectDefault(currentStep);
+  let currentStep;
+  let currentNode;
+
+  if (this.focusSteps && this.focusSteps.length > 0) {
+    for (var i = 0; i < this.focusSteps.length; i++) {
+      currentStep = i;
+      currentNode = this.focusSteps[i];
+      const move = currentNode.move;
+      if (!move) continue;
+      if (this.setMoveDefaultAtNode(move, i - 1)) {
+        this.rebuildSituation().refreshBoard().refreshMoveSelectListNode();
+      }
+    }
+  } else {
+    currentStep = this.getCurrentStep();
+    currentNode = this.selectDefault(currentStep);
+  }
+
+  this.setBoardByStep(currentStep);
 
   let queue_todo = [[currentNode]];
   let queue_done = [];
