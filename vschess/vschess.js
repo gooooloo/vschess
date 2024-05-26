@@ -1523,7 +1523,7 @@ $.extend(vschess, {
 	dpr: window.devicePixelRatio || 1,
 
 	// 编辑局面开始按钮列表
-	editStartList: ["editStartButton", "editNodeStartButton", "editBeginButton", "editBlankButton", "editOpenButton", "editMergeButton", "editRandomReviewButton", "editRedOpeningButton", "editBlackOpeningButton"],
+	editStartList: ["editStartButton", "editNodeStartButton", "editBeginButton", "editBlankButton", "editOpenButton", "editMergeButton", "editRedOpeningButton", "editBlackOpeningButton"],
 
 	// 编辑局面组件列表
 	editModuleList: ["editEndButton", "editCancelButton", "editTips", "editTextarea", "editTextareaPlaceholder", "editPieceArea", "editBoard", "recommendClass", "recommendList", "editEditStartText", "editEditStartRound", "editEditStartPlayer"],
@@ -5197,11 +5197,6 @@ vschess.load.prototype.createEditOtherButton = function(){
 		_this.editSelectedIndex = -99;
 		_this.dragPiece = null;
 	});
-
-	// 随机复习按钮
-	this.editRandomReviewButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-begin-button">随机复习</button>');
-	this.editRandomReviewButton.appendTo(this.editArea);
-	this.editRandomReviewButton.bind(this.options.click, function(){ _this.randomReview(); });
 
     function loadOpening(chessData) {
       const chessNode = vschess.dataToNode(chessData);
