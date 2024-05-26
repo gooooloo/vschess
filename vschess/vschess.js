@@ -1613,7 +1613,7 @@ $.extend(vschess.defaultOptions, {
 	animationTime: 200,
 
 	// 默认播放间隔时间，单位百毫秒（0.1秒）
-	playGap: 5,
+	playGap: 20,
 
 	// 默认着法格式
 	moveFormat: "chinese",
