@@ -16,9 +16,10 @@
 .vschess-layout-default .vschess-column-index-b .vschess-column-index-item { float:right; }
 .vschess-layout-default .vschess-control-bar { position:absolute; top:497px; left:2px; width:382px; _width:385px; height:24px; z-index:10; }
 .vschess-layout-default .vschess-control-bar-button  { width: 45px; float:left; z-index:0; margin-right:2px; height:45px; }
-.vschess-layout-default .vschess-control-bar-play    { width: 98px; display:none; color:#008000; }
-.vschess-layout-default .vschess-control-bar-pause   { width: 98px; display:none; color:#ff0000; }
+.vschess-layout-default .vschess-control-bar-play    { width: 45px; display:none; color:#008000; }
+.vschess-layout-default .vschess-control-bar-pause   { width: 45px; display:none; color:#ff0000; }
 .vschess-layout-default .vschess-control-bar-button-current { display:block; }
+.vschess-layout-default .vschess-control-bar-random  { width: 98px; }
 .vschess-layout-default .vschess-move-select-list    { width:184px; height:300px; position:absolute; top:31px; left:386px; font-size:12px; z-index:10; overflow-x:hidden; overflow-y:scroll; }
 .vschess-layout-default .vschess-recommend-class     { width:186px; height: 22px; position:absolute; top:31px; left:384px; font-size:12px; z-index:20; display:none; }
 .vschess-layout-default .vschess-recommend-list      { width:184px; height:440px; position:absolute; top:53px; left:384px; font-size:12px; z-index:20; overflow-x:hidden; overflow-y:scroll; background-color:#fff; display:none; padding:2px 0 0 2px; }
