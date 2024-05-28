@@ -4062,23 +4062,30 @@ vschess.load.prototype.createControlBar = function(){
 	this.controlBar = $('<div class="vschess-control-bar"></div>');
 	this.controlBarButton = {
 		first: $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-first">开 局</button>'),
-		prevQ: $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-prevQ">快 退</button>'),
 		prev : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-prev" >后 退</button>'),
 		play : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-play" >播 放</button>'),
 		pause: $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-pause">暂 停</button>'),
 		next : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-next" >前 进</button>'),
-		nextQ: $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-nextQ">快 进</button>'),
-		last : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-last" >终 局</button>')
+		last : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-last" >终 局</button>'),
+		random: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-format" >随 机</button>'),
+		focus: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-help"   >聚 焦</button>'),
 	};
 
 	this.controlBarButton.first.bind(this.options.click, function(){ _this.pause(false).setBoardByStep(0); });
 	this.controlBarButton.last .bind(this.options.click, function(){ _this.pause(false).setBoardByStep(_this.lastSituationIndex()); });
 	this.controlBarButton.prev .bind(this.options.click, function(){ _this.pause(false).setBoardByOffset(-1); });
 	this.controlBarButton.next .bind(this.options.click, function(){ _this.pause(false).animateToNext(); });
-	this.controlBarButton.prevQ.bind(this.options.click, function(){ _this.pause(false).setBoardByOffset(-_this.getQuickStepOffset()); });
-	this.controlBarButton.nextQ.bind(this.options.click, function(){ _this.pause(false).setBoardByOffset( _this.getQuickStepOffset()); });
 	this.controlBarButton.play .bind(this.options.click, function(){ _this.lastSituationIndex() && _this.play(); });
 	this.controlBarButton.pause.bind(this.options.click, function(){ _this.pause(); });
+	this.controlBarButton.random.bind(this.options.click, function(){ _this.randomReview(); });
+
+	this.controlBarButton.focus.bind(this.options.click, function(){
+        _this.focusSteps = [];
+        const currentStep = _this.getCurrentStep();
+        for (let i = 0; i <= currentStep; i++) {
+            _this.focusSteps.push(_this.selectDefault(i));
+        }
+    });
 
 	for (var i in this.controlBarButton) {
 		this.controlBar.append(this.controlBarButton[i]);
@@ -4117,26 +4124,12 @@ vschess.load.prototype.createFormatBar = function(){
 	}
 
 	this.formatBarButton = {
-		random		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-format" >随 机</button>'),
-		focus		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-help"   >聚 焦</button>'),
 		copy		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-copy"   >复 制</button>'),
 		save		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-save"   >保 存</button>'),
 		saveFormat	: $('<input  type="hidden" class="vschess-format-bar-save-format"   name="format" value="DhtmlXQ" />'),
 		saveInput	: $('<input  type="hidden" class="vschess-format-bar-save-input"    name="data" />'),
 		saveFilename: $('<input  type="hidden" class="vschess-format-bar-save-filename" name="filename" />')
 	};
-
-	this.formatBarButton.random.bind(this.options.click, function(){
-        _this.randomReview();
-	});
-
-	this.formatBarButton.focus.bind(this.options.click, function(){
-        _this.focusSteps = [];
-        const currentStep = _this.getCurrentStep();
-        for (let i = 0; i <= currentStep; i++) {
-            _this.focusSteps.push(_this.selectDefault(i));
-        }
-    });
 
 	this.formatBarButton.save.bind(this.options.click, function(){
 		_this.rebuildExportDhtmlXQ();
