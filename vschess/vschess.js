@@ -4077,7 +4077,10 @@ vschess.load.prototype.createControlBar = function(){
 	this.controlBarButton.next  .bind(this.options.click, function(){ _this.pause(false).animateToNext(); });
 	this.controlBarButton.play  .bind(this.options.click, function(){ _this.lastSituationIndex() && _this.play(); });
 	this.controlBarButton.pause .bind(this.options.click, function(){ _this.pause(); });
-	this.controlBarButton.random.bind(this.options.click, function(){ _this.randomReview(); });
+	this.controlBarButton.random.bind(this.options.click, function(){ 
+      _this.randomReview();
+      _this.lastSituationIndex() && _this.play();
+    });
 
 	this.controlBarButton.focus.bind(this.options.click, function(){
         _this.focusSteps = [];
@@ -4124,12 +4127,15 @@ vschess.load.prototype.createFormatBar = function(){
 	}
 
 	this.formatBarButton = {
+		refocus		: $('<button type="button" class="vschess-button vschess-format-bar-button                        "   >焦 点</button>'),
 		copy		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-copy"   >复 制</button>'),
 		save		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-save"   >保 存</button>'),
 		saveFormat	: $('<input  type="hidden" class="vschess-format-bar-save-format"   name="format" value="DhtmlXQ" />'),
 		saveInput	: $('<input  type="hidden" class="vschess-format-bar-save-input"    name="data" />'),
 		saveFilename: $('<input  type="hidden" class="vschess-format-bar-save-filename" name="filename" />')
 	};
+
+	this.formatBarButton.refocus.bind(this.options.click, function(){ _this.refocus(); });
 
 	this.formatBarButton.save.bind(this.options.click, function(){
 		_this.rebuildExportDhtmlXQ();
@@ -6956,6 +6962,23 @@ vschess.load.prototype.showTab = function(tabName){
 vschess.load.prototype.toString = function(){
 	return this.getCurrentFen();
 };
+
+vschess.load.prototype.refocus = function () {
+  if (this.focusSteps && this.focusSteps.length > 0) {
+    for (var i = 0; i < this.focusSteps.length; i++) {
+      currentStep = i;
+      currentNode = this.focusSteps[i];
+      const move = currentNode.move;
+      if (!move) continue;
+      if (this.setMoveDefaultAtNode(move, i - 1)) {
+        this.rebuildSituation().refreshBoard().refreshMoveSelectListNode();
+      }
+    }
+    this.setBoardByStep(this.focusSteps.length - 1);
+  } else {
+    alert("not focused!");
+  }
+}
 
 vschess.load.prototype.randomReview = function () {
   let currentStep;
