@@ -1584,7 +1584,7 @@ $.extend(vschess.defaultOptions, {
 	currentStep: 0,
 
 	// 音效开关
-	sound: true,
+	sound: false,
 
 	// 默认音效
 	soundStyle: "default",
@@ -1635,7 +1635,7 @@ $.extend(vschess.defaultOptions, {
 	ubbTagName: "vschess",
 
 	// 走子提示
-	moveTips: true,
+	moveTips: false,
 
 	// 保存提示
 	saveTips: false,
