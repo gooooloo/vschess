@@ -194,4 +194,3 @@
 .vschess-layout-default[data-vschess-dpr="2"] .vschess-tab-body-share-text-input { height:23.5px; border-bottom-width:0.5px; }
 .vschess-layout-default[data-vschess-dpr="2"] .vschess-tab-body-export-textarea-format-TextBoard { background-image:url(export-textboard-line-dpr-2.png); background-size:auto 100%; }
 .vschess-layout-default[data-vschess-dpr="2"] .vschess-message-box { top:243px; }
-html { touch-action: manipulation; }
