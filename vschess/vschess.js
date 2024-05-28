@@ -4127,7 +4127,7 @@ vschess.load.prototype.createFormatBar = function(){
 	}
 
 	this.formatBarButton = {
-		refocus		: $('<button type="button" class="vschess-button vschess-format-bar-button                        "   >焦 点</button>'),
+		refocus		: $('<button type="button" class="vschess-button vschess-format-bar-button                        "   >回 焦</button>'),
 		copy		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-copy"   >复 制</button>'),
 		save		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-save"   >保 存</button>'),
 		saveFormat	: $('<input  type="hidden" class="vschess-format-bar-save-format"   name="format" value="DhtmlXQ" />'),
