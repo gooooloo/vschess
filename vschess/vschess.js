@@ -4025,6 +4025,10 @@ vschess.load.prototype.addConfigItem = function(name, text, type, defaultValue, 
 			typeof action === "function" && action();
 			drag = false;
 		});
+
+		$(document).bind("dblclick", function(e){
+          e.preventDefault();
+		});
 	}
 
 	this.configItem [name].append(this.configItemM[name]);
@@ -4068,7 +4072,7 @@ vschess.load.prototype.createControlBar = function(){
 		next  : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-next"  >前 进</button>'),
 		last  : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-last"  >终 局</button>'),
 		random: $('<button type="button" class="vschess-button vschess-control-bar-button                         "  >随 机</button>'),
-		replay: $('<button type="button" class="vschess-button vschess-control-bar-button                         "  >重 播</button>'),
+		replay: $('<button type="button" class="vschess-button vschess-control-bar-button                         "  >重 播 焦</button>'),
 		focus : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-focus" >聚 焦</button>'),
 	};
 
