@@ -4067,7 +4067,8 @@ vschess.load.prototype.createControlBar = function(){
 		pause : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-pause" >暂 停</button>'),
 		next  : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-next"  >前 进</button>'),
 		last  : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-last"  >终 局</button>'),
-		random: $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-random">随 机</button>'),
+		random: $('<button type="button" class="vschess-button vschess-control-bar-button                         "  >随 机</button>'),
+		replay: $('<button type="button" class="vschess-button vschess-control-bar-button                         "  >重 播</button>'),
 		focus : $('<button type="button" class="vschess-button vschess-control-bar-button vschess-control-bar-focus" >聚 焦</button>'),
 	};
 
@@ -4081,6 +4082,11 @@ vschess.load.prototype.createControlBar = function(){
       _this.randomReview();
       _this.lastSituationIndex() && _this.play();
     });
+	this.controlBarButton.replay.bind(this.options.click, function(){ 
+      _this.refocus();
+      _this.lastSituationIndex() && _this.play();
+    });
+
 
 	this.controlBarButton.focus.bind(this.options.click, function(){
         _this.focusSteps = [];
@@ -4127,15 +4133,12 @@ vschess.load.prototype.createFormatBar = function(){
 	}
 
 	this.formatBarButton = {
-		refocus		: $('<button type="button" class="vschess-button vschess-format-bar-button                        "   >回 焦</button>'),
 		copy		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-copy"   >复 制</button>'),
 		save		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-save"   >保 存</button>'),
 		saveFormat	: $('<input  type="hidden" class="vschess-format-bar-save-format"   name="format" value="DhtmlXQ" />'),
 		saveInput	: $('<input  type="hidden" class="vschess-format-bar-save-input"    name="data" />'),
 		saveFilename: $('<input  type="hidden" class="vschess-format-bar-save-filename" name="filename" />')
 	};
-
-	this.formatBarButton.refocus.bind(this.options.click, function(){ _this.refocus(); });
 
 	this.formatBarButton.save.bind(this.options.click, function(){
 		_this.rebuildExportDhtmlXQ();
