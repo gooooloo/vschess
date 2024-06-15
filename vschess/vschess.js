@@ -1523,7 +1523,7 @@ $.extend(vschess, {
 	dpr: window.devicePixelRatio || 1,
 
 	// 编辑局面开始按钮列表
-	editStartList: ["editStartButton", "editNodeStartButton", "editBeginButton", "editBlankButton", "editOpenButton", "editMergeButton", "editRedOpeningButton", "editBlackOpeningButton"],
+	editStartList: ["editStartButton", "editNodeStartButton", "editBeginButton", "editBlankButton", "editOpenButton", "editMergeButton", "editRedOpeningButton", "editBlackOpeningButton", "editOpeningNotesButton"],
 
 	// 编辑局面组件列表
 	editModuleList: ["editEndButton", "editCancelButton", "editTips", "editTextarea", "editTextareaPlaceholder", "editPieceArea", "editBoard", "recommendClass", "recommendList", "editEditStartText", "editEditStartRound", "editEditStartPlayer"],
@@ -4162,6 +4162,11 @@ vschess.load.prototype.createFormatBar = function(){
                 title = "black_opening.txt";
             }
 
+            if (_this.loadingAllOpening) {
+                UTF8Text = "const all_opening = `\n" + UTF8Text + "\n`;";
+                title = "all_opening.txt";
+            }
+
 			_this.localDownload(title, UTF8Text, { type: "text/plain" });
 		}
 		else {
@@ -4585,6 +4590,7 @@ vschess.load.prototype.createEditEndButton = function(){
             _this.focusSteps = undefined;
             _this.loadingRedOpening = false;
             _this.loadingBlackOpening = false;
+            _this.loadingAllOpening = false;
             _this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
 		}
 	});
@@ -4997,6 +5003,7 @@ vschess.load.prototype.createNodeEndButton = function(){
         _this.focusSteps = undefined;
         _this.loadingRedOpening = false;
         _this.loadingBlackOpening = false;
+        _this.loadingAllOpening = false;
         _this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
 	});
 
@@ -5099,6 +5106,7 @@ vschess.load.prototype.createEditOtherButton = function(){
                     _this.focusSteps = undefined;
                     _this.loadingRedOpening = false;
                     _this.loadingBlackOpening = false;
+                    _this.loadingAllOpening = false;
                     _this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
 				}
 			}
@@ -5185,6 +5193,7 @@ vschess.load.prototype.createEditOtherButton = function(){
         _this.focusSteps = undefined;
         _this.loadingRedOpening = false;
         _this.loadingBlackOpening = false;
+        _this.loadingAllOpening = false;
         _this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
 	});
 
@@ -5233,6 +5242,7 @@ vschess.load.prototype.createEditOtherButton = function(){
             _this.focusSteps = undefined;
             _this.loadingRedOpening = true;
             _this.loadingBlackOpening = false;
+            _this.loadingAllOpening = false;
             _this.setChessTitle('红方开局库');
         } else {
             alert("红方开局库未开启");
@@ -5248,9 +5258,26 @@ vschess.load.prototype.createEditOtherButton = function(){
             _this.focusSteps = undefined;
             _this.loadingRedOpening = false;
             _this.loadingBlackOpening = true;
+            _this.loadingAllOpening = true;
             _this.setChessTitle('黑方开局库');
         } else {
             alert("黑方开局库未开启");
+        }
+	});
+
+	this.editOpeningNotesButton = $('<button type="button" class="vschess-button vschess-tab-body-edit-begin-button">开局全笔记</button>');
+	this.editOpeningNotesButton.appendTo(this.editArea);
+	this.editOpeningNotesButton.bind(this.options.click, function(){
+        if (_this.options.all_opening) {
+            loadOpening(_this.options.all_opening);
+            _this.setTurn(0);
+            _this.focusSteps = undefined;
+            _this.loadingRedOpening = false;
+            _this.loadingBlackOpening = false;
+            _this.loadingAllOpening = true;
+            _this.setChessTitle('开局全笔记');
+        } else {
+            alert("开局全笔记未开启");
         }
 	});
 	return this;
@@ -5312,6 +5339,7 @@ vschess.load.prototype.bindDrag = function(){
                 _this.focusSteps = undefined;
                 _this.loadingRedOpening = false;
                 _this.loadingBlackOpening = false;
+                _this.loadingAllOpening = false;
             _this.setChessTitle(this.chessInfo && this.chessInfo.title || "中国象棋");
 			}
 		}

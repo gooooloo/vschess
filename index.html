@@ -8,6 +8,7 @@
     <script type="text/javascript" src="vschess/vschess.js"></script>
     <script type="text/javascript" src="red_opening.txt"></script>
     <script type="text/javascript" src="black_opening.txt"></script>
+    <script type="text/javascript" src="all_opening.txt"></script>
     <title>中国象棋</title>
 </head>
 
@@ -16,7 +17,7 @@
 
 <script type="text/javascript">
     $(".vschess").each(function (index) {
-        new vschess.load(this, { defaultTab: "edit", black_opening: black_opening, red_opening: red_opening });
+        new vschess.load(this, { defaultTab: "edit", black_opening: black_opening, red_opening: red_opening, all_opening: all_opening });
     });
 </script>
 </body>
