@@ -4139,6 +4139,7 @@ vschess.load.prototype.createFormatBar = function(){
 	this.formatBarButton = {
 		copy		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-copy"   >复 制</button>'),
 		save		: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-save"   >保 存</button>'),
+		special_save: $('<button type="button" class="vschess-button vschess-format-bar-button vschess-format-bar-save"   >特 存</button>'),
 		saveFormat	: $('<input  type="hidden" class="vschess-format-bar-save-format"   name="format" value="DhtmlXQ" />'),
 		saveInput	: $('<input  type="hidden" class="vschess-format-bar-save-input"    name="data" />'),
 		saveFilename: $('<input  type="hidden" class="vschess-format-bar-save-filename" name="filename" />')
@@ -4174,6 +4175,39 @@ vschess.load.prototype.createFormatBar = function(){
 			_this.formatBarButton.saveFilename.val(_this.chessInfo .title  );
 			_this.formatBar.trigger("submit");
 		}
+	});
+
+	this.formatBarButton.special_save.bind(this.options.click, function(){
+        let text = _this.node.fen;
+
+        // dfs
+        let nodes = [_this.node];
+        let result = [];
+        function dfs() {
+            const last_node = nodes[nodes.length - 1];
+            if (!last_node.next || last_node.next.length === 0) {
+                let x = [];
+                for (let i = 1; i < nodes.length; i++) {
+                    const comment = nodes[i].comment;
+                    if (comment)
+                        x.push(nodes[i].move+'#'+comment);
+                    else
+                        x.push(nodes[i].move);
+                }
+                result.push(x);
+                return;
+            }
+            for (let i = 0; i < last_node.next.length; i++) {
+                nodes.push(last_node.next[i]);
+                dfs();
+                nodes.pop();
+            }
+        }
+        dfs();
+
+        result = {root_fen: _this.node.fen, moves: result};
+        let txt = JSON.stringify(result, null, 2);
+        _this.localDownload('特存.json', txt, { type: "text/plain" });
 	});
 
 	for (var i in this.formatBarButton) {
